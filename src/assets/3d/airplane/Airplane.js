@@ -16,7 +16,7 @@ export function Airplane({props, position}) {
   const group = useRef()
   const propeller = useRef(null)
 
-  useFrame(() => (group.current.position.z += (Math.sin(Date.now() * 0.0001) * 0.008)))
+  useFrame(() => (group.current.position.z += (Math.sin(Date.now() * 0.00005) * 0.008)))
   useFrame(() => (group.current.rotation.z += (Math.sin(Date.now() * 0.0005) * 0.001)))
   useFrame(() => (propeller.current.rotation.y -= 0.1))
 

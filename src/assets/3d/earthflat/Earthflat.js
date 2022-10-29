@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react'
 import { useGLTF, useScroll } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { Airplane } from '../airplane/Airplane'
-//import { calcObjectPos } from '../../../utils/utils'
+import { calcObjectPos } from '../../../utils/utils'
 
 //import { useSpring, a } from '@react-spring/three'
 
@@ -63,60 +63,60 @@ export function Earth(props) {
 
   /** FROM HERE */
 
-  function calcScrollLinearRange(init, fin){
-    const offset = scroll.offset
-    const range = (Math.min(Math.max(offset, init), fin) - init) * (1/(fin - init))
+  // function calcScrollLinearRange(init, fin){
+  //   const offset = scroll.offset
+  //   const range = (Math.min(Math.max(offset, init), fin) - init) * (1/(fin - init))
 
-    return (range)
-  }
+  //   return (range)
+  // }
 
-  function calcScrollParabolicRange(init, fin){
-    const offset = scroll.offset
-    const mid = init + ((fin - init) / 2)
-    const range = Math.max(1 - (Math.abs(offset - mid) * 2), 0)
+  // function calcScrollParabolicRange(init, fin){
+  //   const offset = scroll.offset
+  //   const mid = init + ((fin - init) / 2)
+  //   const range = Math.max(1 - (Math.abs(offset - mid) * 2), 0)
 
-    return (range)
-  }
+  //   return (range)
+  // }
 
-  function positiveOrNegative(a, b){
-    if (a > b) {
-      return -1
-    } else {
-      return 1
-    }
-  }
+  // function positiveOrNegative(a, b){
+  //   if (a > b) {
+  //     return -1
+  //   } else {
+  //     return 1
+  //   }
+  // }
 
-  function netDifference(a, b){
-    return (Math.max(a, b) - Math.min(a, b)) * positiveOrNegative(a, b)
-  }
+  // function netDifference(a, b){
+  //   return (Math.max(a, b) - Math.min(a, b)) * positiveOrNegative(a, b)
+  // }
 
-  function calcObjIndex(obj){
-    const offset = scroll.offset;
-    const isLarger = (element) => element > offset;
-    const posArray = Object.values(obj);
-    let result = posArray.map(a  => a.pos)
+  // function calcObjIndex(obj){
+  //   const offset = scroll.offset;
+  //   const isLarger = (element) => element > offset;
+  //   const posArray = Object.values(obj);
+  //   let result = posArray.map(a  => a.pos)
 
-    return result.findIndex(isLarger) - 1
-  }
+  //   return result.findIndex(isLarger) - 1
+  // }
 
-  function calcObjectPos(obj, returnVal){
-    const offset = scroll.offset;
-    const n = calcObjIndex(obj)
-    const currentPos = Object.values(obj)[n];
-    const nextPos = Object.values(obj)[n + 1];
+  // function calcObjectPos(obj, returnVal){
+  //   const offset = scroll.offset;
+  //   const n = calcObjIndex(obj)
+  //   const currentPos = Object.values(obj)[n];
+  //   const nextPos = Object.values(obj)[n + 1];
 
-    if (n + 1 <= Object.keys(obj).length && offset < nextPos['pos'] ) {
-      if (obj === planetRotation){
-        console.log('netdifference', netDifference(currentPos['y'] , nextPos['y']));
-      }
-      const value = currentPos[returnVal] + (calcScrollLinearRange(currentPos['pos'], nextPos['pos']) * netDifference(currentPos[returnVal] , nextPos[returnVal]))
+  //   if (n + 1 <= Object.keys(obj).length && offset < nextPos['pos'] ) {
+  //     if (obj === planetRotation){
+  //       console.log('netdifference', netDifference(currentPos['y'] , nextPos['y']));
+  //     }
+  //     const value = currentPos[returnVal] + (calcScrollLinearRange(currentPos['pos'], nextPos['pos']) * netDifference(currentPos[returnVal] , nextPos[returnVal]))
       
-      if (obj === planetRotation){
-        console.log('value', value);
-      }
-      return value
-    }
-  }
+  //     if (obj === planetRotation){
+  //       console.log('value', value);
+  //     }
+  //     return value
+  //   }
+  // }
 
   /** TO HERE */
 
@@ -135,12 +135,6 @@ export function Earth(props) {
 
     const offset = scroll.offset;
     console.log('offset ORIGIN', offset);
-
-    // planet.current.rotation.set (
-    //   startPositions['xPlanet'] + (calcScrollLinearRange(0.5, 1) * (startPositions['xPlanet'] - endPositions['xPlanet'])), 
-    //   startPositions['yPlanet'] - (calcScrollLinearRange(0.5, 1) * (startPositions['yPlanet'] - endPositions['yPlanet'])), 
-    //   startPositions['zPlanet']
-    // )
 
     planet.current.rotation.set (
       calcObjectPos(planetRotation, 'x', offset), 

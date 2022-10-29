@@ -54,7 +54,8 @@ import { useGLTF, useScroll } from '@react-three/drei'
         if (n + 1 <= Object.keys(obj).length && offset < nextPos['pos'] ) {
             const value = currentPos[returnVal] + (calcScrollLinearRange(
                 currentPos['pos'], 
-                (nextPos['pos']) * netDifference(currentPos[returnVal], nextPos[returnVal]), offset))
+                (nextPos['pos']) * netDifference(currentPos[returnVal], nextPos[returnVal]), 
+                offset))
             
             return value
         }
