@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 //import * as THREE from 'three'
 import { useGLTF, useScroll } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import { Airplane } from '../airplane/Airplane'
-import { calcObjectPos } from '../../../utils/utils'
+//import { calcObjectPos } from '../../../utils/utils'
 
 //import { useSpring, a } from '@react-spring/three'
 
@@ -18,25 +18,29 @@ export function Earth(props) {
       x: -5, 
       y: -4, 
       z: 13, 
-      pos: 0 
+      pos: 0,
+      end: 0.5
     },
     camCR: {
       x:0, 
       y:0, 
       z:23, 
-      pos: 0.5 
+      pos: 0.5,
+      end: 0.7
     },
     camOffset: {
       x:3, 
       y:0, 
       z:18, 
-      pos: 0.7 
+      pos: 0.7,
+      end: 1
     },
     camJpn: {
       x:0, 
       y:0, 
       z:25, 
-      pos: 1 
+      pos: 1,
+      end: 1.1
     }
   }
 
@@ -45,78 +49,75 @@ export function Earth(props) {
       x: Math.PI / 22,
       y: Math.PI / 2.3,
       z: 0,
-      pos: 0
+      pos: 0,
+      end: 0.5
     },
     rotCR: {
       x: Math.PI / 22,
       y: Math.PI / 2.3,
       z: 0,
-      pos: 0.5
+      pos: 0.5,
+      end: 1
     },
     rotJpn: {
       x: Math.PI / 6,
       y: -Math.PI / 1.32,
       z: 0,
-      pos: 1
+      pos: 1,
+      end: 1.1
     }
   }
 
   /** FROM HERE */
 
-  // function calcScrollLinearRange(init, fin){
-  //   const offset = scroll.offset
-  //   const range = (Math.min(Math.max(offset, init), fin) - init) * (1/(fin - init))
+  function calcScrollLinearRange(init, fin){
+    const offset = scroll.offset
+    //console.log('4', offset);
+    const range = (Math.min(Math.max(offset, init), fin) - init) * (1/(fin - init))
 
-  //   return (range)
-  // }
+    return (range)
+  }
 
-  // function calcScrollParabolicRange(init, fin){
-  //   const offset = scroll.offset
-  //   const mid = init + ((fin - init) / 2)
-  //   const range = Math.max(1 - (Math.abs(offset - mid) * 2), 0)
+  function calcScrollParabolicRange(init, fin){
+    const offset = scroll.offset
+    const mid = init + ((fin - init) / 2)
+    const range = Math.max(1 - (Math.abs(offset - mid) * 2), 0)
 
-  //   return (range)
-  // }
+    return (range)
+  }
 
-  // function positiveOrNegative(a, b){
-  //   if (a > b) {
-  //     return -1
-  //   } else {
-  //     return 1
-  //   }
-  // }
+  function positiveOrNegative(a, b){
+    if (a > b) {
+      return -1
+    } else {
+      return 1
+    }
+  }
 
-  // function netDifference(a, b){
-  //   return (Math.max(a, b) - Math.min(a, b)) * positiveOrNegative(a, b)
-  // }
+  function netDifference(a, b){
+    return (Math.max(a, b) - Math.min(a, b)) * positiveOrNegative(a, b)
+  }
 
-  // function calcObjIndex(obj){
-  //   const offset = scroll.offset;
-  //   const isLarger = (element) => element > offset;
-  //   const posArray = Object.values(obj);
-  //   let result = posArray.map(a  => a.pos)
+  function calcObjIndex(obj){
+    const offset = scroll.offset;
+    const isIn = (element) => (element.pos <= offset && element.end > offset)
 
-  //   return result.findIndex(isLarger) - 1
-  // }
+    return Object.values(obj).findIndex(isIn)
+  }
 
-  // function calcObjectPos(obj, returnVal){
-  //   const offset = scroll.offset;
-  //   const n = calcObjIndex(obj)
-  //   const currentPos = Object.values(obj)[n];
-  //   const nextPos = Object.values(obj)[n + 1];
+  function calcObjectPos(obj, returnVal){
+    const offset = scroll.offset;
+    //console.log('1', offset);
+    const n = calcObjIndex(obj)
+    const currentPos = Object.values(obj)[n];
+    const nextPos = Object.values(obj)[n + 1];
 
-  //   if (n + 1 <= Object.keys(obj).length && offset < nextPos['pos'] ) {
-  //     if (obj === planetRotation){
-  //       console.log('netdifference', netDifference(currentPos['y'] , nextPos['y']));
-  //     }
-  //     const value = currentPos[returnVal] + (calcScrollLinearRange(currentPos['pos'], nextPos['pos']) * netDifference(currentPos[returnVal] , nextPos[returnVal]))
+    if (n + 1 <= Object.keys(obj).length && offset < nextPos['pos'] ) {
+      const value = currentPos[returnVal] + (calcScrollLinearRange(currentPos['pos'], nextPos['pos']) * netDifference(currentPos[returnVal] , nextPos[returnVal]))
       
-  //     if (obj === planetRotation){
-  //       console.log('value', value);
-  //     }
-  //     return value
-  //   }
-  // }
+      return value
+    }
+  }
 
   /** TO HERE */
 
@@ -129,6 +130,15 @@ export function Earth(props) {
       </mesh>
   )};
 
+  //const camera = useThree(state => state.camera)
+  
+  // useEffect(() => {
+  //   camera.position.set (
+  //     calcObjectPos(camPositions, 'x'), 
+  //     calcObjectPos(camPositions, 'y'), 
+  //     calcObjectPos(camPositions, 'z')
+  //   )
+  // })
 
   useFrame((state, delta) => {
     state.camera.lookAt(0, 0, 0)

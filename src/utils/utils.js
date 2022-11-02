@@ -4,7 +4,7 @@ import { useGLTF, useScroll } from '@react-three/drei'
 //import { useFrame } from '@react-three/fiber'
 
 //function Utils(){
-    // const scroll = useScroll()
+    let scrollOffset = 0
     // const offset = scroll.offset
 
     function calcScrollLinearRange(init, fin, offset){

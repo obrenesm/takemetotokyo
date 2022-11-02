@@ -34,7 +34,6 @@ function App() {
           <ScrollControls pages={15}>
             <Earth/>
           </ScrollControls>
-          {/* <Airplane/> */}
         </Suspense>
         <CameraHelper/>
       </Canvas>      
