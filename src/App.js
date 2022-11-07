@@ -9,8 +9,9 @@ import './App.css';
 import { Suspense } from 'react';
 import { PerspectiveCamera } from 'three';
 
-import { Section } from './components/section'
-
+import { Intro } from './components/intro'
+import { CostaRica } from './components/costaRica'
+import { Structure } from './components/structure'
 
 function CameraHelper(){
   const camera = new PerspectiveCamera(75, 1.77, 0.1, 100 );
@@ -22,8 +23,9 @@ function CameraHelper(){
 function App() {
   return (
     
-    <div style={{width: '100vw', height: '100vh'}}>
-      <Section/>      
+    <div id="main" style={{width: '100vw', height: '100vh'}}>
+      <Intro/>
+      {/* <CostaRica/>       */}
       <Canvas camera={{fov: 75, near: 0.1, far: 100, position:[0, 15, 0]}}>
         {/* <OrbitControls /> */}
         <ambientLight intensity={0.5} />
@@ -31,7 +33,7 @@ function App() {
         <spotLight position={[-200, -400, 100]} angle={1} intensity={0.2}/>
         <pointLight position={[-235, 235, 0]} intensity={0.2}/>
         <Suspense fallback={null}>
-          <ScrollControls pages={15}>
+          <ScrollControls pages={3}>
             <Earth/>
           </ScrollControls>
         </Suspense>

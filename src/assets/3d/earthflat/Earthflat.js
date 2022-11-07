@@ -3,6 +3,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useGLTF, useScroll } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Airplane } from '../airplane/Airplane'
+import gasp from 'gsap'
+import { ScrollTrigger } from 'react-gsap'
+gasp.registerPlugin(ScrollTrigger);
+
 //import { calcObjectPos } from '../../../utils/utils'
 
 //import { useSpring, a } from '@react-spring/three'
@@ -10,14 +14,18 @@ import { Airplane } from '../airplane/Airplane'
 export function Earth(props) {
   const scroll = useScroll()
   const { scene, nodes, materials } = useGLTF('/earthflat.gltf')
-  const planet = useRef()
+  const planet = useRef(null)
   const planetRot = [Math.PI / 22, Math.PI / 2.3, 0]
+
+  let currentScene = 0;
+
 
   const camPositions = {
     camIntro: {
       x: -5, 
       y: -4, 
       z: 13, 
+      duration: 2,
       pos: 0,
       end: 0.5
     },
@@ -25,30 +33,34 @@ export function Earth(props) {
       x:0, 
       y:0, 
       z:23, 
+      duration: 2,
       pos: 0.5,
       end: 0.7
     },
-    camOffset: {
-      x:3, 
-      y:0, 
-      z:18, 
-      pos: 0.7,
-      end: 1
-    },
+    // camOffset: {
+    //   x:3, 
+    //   y:0, 
+    //   z:18, 
+    //   duration: 2,
+    //   pos: 0.7,
+    //   end: 1
+    // },
     camJpn: {
       x:0, 
       y:0, 
       z:25, 
+      duration: 2,
       pos: 1,
       end: 1.1
     }
   }
 
-  const planetRotation = {
-    init: {
-      x: Math.PI / 22,
-      y: Math.PI / 2.3,
+  const planetRotations = {
+    rotIntro: {
+      x: 0,
+      y: 0,
       z: 0,
+      duration: 2,
       pos: 0,
       end: 0.5
     },
@@ -56,6 +68,7 @@ export function Earth(props) {
       x: Math.PI / 22,
       y: Math.PI / 2.3,
       z: 0,
+      duration: 2,
       pos: 0.5,
       end: 1
     },
@@ -63,8 +76,24 @@ export function Earth(props) {
       x: Math.PI / 6,
       y: -Math.PI / 1.32,
       z: 0,
+      duration: 2,
       pos: 1,
       end: 1.1
+    }
+  }
+
+  const scenes = {
+    Intro: { 
+      pos: 0,
+      end: 0.25
+    },
+    CR: { 
+      pos: 0.25,
+      end: 0.75
+    },
+    Jpn: { 
+      pos: 0.75,
+      end: 1
     }
   }
 
@@ -121,6 +150,20 @@ export function Earth(props) {
 
   /** TO HERE */
 
+
+  function animate(model, motion, obj, scene){
+
+    const currentValues = obj[Object.keys(obj)[scene]]
+
+    let pos = (({x, y, z, duration}) => ({x, y, z, duration}))(currentValues)  
+
+    const selected = (motion === 'rotation') ? model.rotation : model.position
+
+    return gasp.to(
+      selected,
+      pos)
+  }
+
   function Pin({rot, pos}){
       return (
       <mesh rotation={rot} 
@@ -129,6 +172,14 @@ export function Earth(props) {
         <meshStandardMaterial color={'#ef225a'} />
       </mesh>
   )};
+
+
+        // TODO: MAKE THIS FUNCTION RUN, use it to chang the scene content
+  function updateScene(expected, current) {
+    if (expected !== current){
+      return currentScene = expected      
+    }
+  }
 
   //const camera = useThree(state => state.camera)
   
@@ -140,28 +191,174 @@ export function Earth(props) {
   //   )
   // })
 
+  // useFrame((state, delta) => {
+  //   state.camera.lookAt(0, 0, 0)
+
+  //   const offset = scroll.offset;
+
+  //   planet.current.rotation.set (
+  //     calcObjectPos(planetRotations, 'x', offset), 
+  //     calcObjectPos(planetRotations, 'y', offset),
+  //     0
+  //   )
+
+  //   state.camera.position.set (
+  //     calcObjectPos(camPositions, 'x', offset), 
+  //     calcObjectPos(camPositions, 'y', offset), 
+  //     calcObjectPos(camPositions, 'z', offset)
+  //   )
+  // })
+
+  console.log('planetRotations', planetRotations[Object.keys(planetRotations)[0]]);
+
+
+  // useEffect(()=> {
+  //   gasp.from(
+  //     planet.current.rotation,
+  //     pos)
+  // })
+
   useFrame((state, delta) => {
-    state.camera.lookAt(0, 0, 0)
 
     const offset = scroll.offset;
-    console.log('offset ORIGIN', offset);
+    //console.log('offset', offset);
+    const expectedScene = calcObjIndex(scenes)
+    const globe = planet.current
+    const cam = state.camera
 
-    planet.current.rotation.set (
-      calcObjectPos(planetRotation, 'x', offset), 
-      calcObjectPos(planetRotation, 'y', offset),
-      0
-    )
+    cam.lookAt(0, 0, 0)
 
-    state.camera.position.set (
-      calcObjectPos(camPositions, 'x', offset), 
-      calcObjectPos(camPositions, 'y', offset), 
-      calcObjectPos(camPositions, 'z', offset)
-    )
+    if (!!planet && expectedScene !== currentScene){
+      //console.log('expectedScene', expectedScene)
+      
+      //currentScene = expectedScene
+
+      updateScene(expectedScene, currentScene)
+      // const currentValues = planetRotations[Object.keys(planetRotations)[currentScene]]
+
+      // let pos = (({x, y, z}) => ({x, y, z}))(currentValues)  
+
+      // console.log('pos', pos);
+
+      // gasp.to(
+      //   planet.current.rotation,
+      //   pos)
+
+      animate(globe, 'rotation', planetRotations, currentScene)
+      animate(cam, 'position', camPositions, currentScene)
+
+    }
+
+//    animate(planet, 'rotation', planetRotations, currentScene)
+
+
+    // planet.current.rotation.set (
+    //   calcObjectPos(planetRotations, 'x', offset), 
+    //   calcObjectPos(planetRotations, 'y', offset),
+    //   0
+    // )
+
+    // state.camera.position.set (
+    //   calcObjectPos(camPositions, 'x', offset), 
+    //   calcObjectPos(camPositions, 'y', offset), 
+    //   calcObjectPos(camPositions, 'z', offset)
+    // )
   })
+
+  // useEffect(()=> {
+
+  //   const offset = scroll.offset;
+
+  //   if (!!planet){      
+  //     gasp.to(
+  //       planet.current.rotation,
+  //       {
+  //         opacity: 0,
+  //         y: -220
+  //       },
+  //       {
+  //         opacity: 1,
+  //         y: 0,
+  //         scrollTrigger: {
+  //           trigger: '#main',
+  //           start: "top top",
+  //           end: "bottom center",
+  //           scrub: true
+  //         }
+  //       }
+  //     );
+
+      // const tl = gsap.timeline();
+      // tl.from(planet.current.rotation, { x: Math.PI / 6,
+      //                                   y: -Math.PI / 1.32,
+      //                                   z: 0 })
+      //   .from(planet.current.rotation, { x: 0,
+      //                                   y: 0,
+      //                                   z: 0 })
+      //   .from(planet.current.rotation, { x: Math.PI / 6,
+      //                                   y: -Math.PI / 1.32,
+      //                                   z: 0 });
+
+      // ScrollTrigger.create({
+      //   animation: tl,
+      //   trigger: '#main',
+      //   start: 'top top',
+      //   end: '+=4000',
+      //   scrub: true,
+      //   pin: true,
+      //   anticipatePin: 1
+      // });
+
+
+
+
+      // gsap.timeline().to(planet.current.rotation, {
+      //   x: Math.PI / 6,
+      //   y: -Math.PI / 1.32,
+      //   z: 0,
+      //   delay: 2,
+      //   scrollTrigger: {
+      //     //trigger: '.dfg',
+      //     markers: true,
+      //     start: "top top",
+      //     end: "top top ",
+      //     scrub: 0.2,
+      //   }
+      // })
+
+      // .to(planet.current.rotation, {
+      //   x: 0,
+      //   y: 0,
+      //   z: 0,
+      //   delay: 4,
+      //   scrollTrigger: {
+      //     // trigger: planet.current,
+      //     markers: true,
+      //     start: "top bottom",
+      //     end: "top top ",
+      //     scrub: 0.2,
+      //   }
+      // })
+
+      // .to(planet.current.rotation, {
+      //   x: Math.PI / 6,
+      //   y: -Math.PI / 1.32,
+      //   z: 0,
+      //   //delay: 2,
+      //   scrollTrigger: {
+      //     // trigger: planet.current,
+      //     markers: true,
+      //     start: "top bottom",
+      //     end: "top top ",
+      //     scrub: 0.2,
+      //   }
+      // })
+//  }
+// }, [])
 
   return (
     <>
-      <group ref={planet} scale={1.6} rotation={planetRot} dispose={null}>
+      <group ref={planet} scale={1.6} rotation={[Math.PI / 22, Math.PI / 2.3, 0]} dispose={null}>
         <mesh geometry={nodes.earth4_lambert1_0.geometry} material={materials['Material.001']} />
         <mesh>
           <sphereGeometry args={[8.45]}/>

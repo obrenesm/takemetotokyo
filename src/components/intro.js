@@ -1,12 +1,12 @@
 import React from "react";
 
-export function Section() {
+export function Intro() {
   return (
-    <section>
-      <div className='popup intro visible'>
+    <section className="intro visible">
+      <div className='popup center headline'>
         <h1>Take me to <span>Tokyo</span></h1>
       </div>
-      <div className='popup scroll visible'>
+      <div className='popup center scroll'>
         <div className='mouse'>
           <div className='mouse-wheel'></div>
         </div>
