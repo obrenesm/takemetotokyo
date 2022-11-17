@@ -10,15 +10,24 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { a } from '@react-spring/three'
+import gsap from 'gsap'
+
+//gsap.registerPlugin(ScrollTrigger);
+
 
 export function Airplane({props, position}) {
   const { nodes, materials } = useGLTF('/airplane.gltf')
-  const group = useRef()
+  const group = useRef(null)
   const propeller = useRef(null)
 
-  useFrame(() => (group.current.position.z += (Math.sin(Date.now() * 0.00005) * 0.008)))
+  var tl = gsap.timeline( {repeat:-1, repeatDelay: 2} );
+
+  //useFrame(() => (group.current.position.z += (Math.sin(Date.now() * 0.00005) * 0.008)))
   useFrame(() => (group.current.rotation.z += (Math.sin(Date.now() * 0.0005) * 0.001)))
   useFrame(() => (propeller.current.rotation.y -= 0.1))
+  // useFrame(() => ( 
+      
+  // ))
 
   return (
     <a.group scale={0.2} position={position} rotation={[Math.PI / 2, Math.PI / 1.7, 0]} ref={group} {...props} dispose={null}>

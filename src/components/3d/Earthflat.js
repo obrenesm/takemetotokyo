@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 //import * as THREE from 'three'
 import { useGLTF, useScroll } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
-import { Airplane } from '../airplane/Airplane'
+import { Airplane } from './Airplane'
 import gasp from 'gsap'
 import { ScrollTrigger } from 'react-gsap'
 gasp.registerPlugin(ScrollTrigger);
