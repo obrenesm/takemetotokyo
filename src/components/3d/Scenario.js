@@ -11,83 +11,7 @@ import gsap from 'gsap'
 export function Scenario(props) {
   //const scroll = useScroll()
   const planet = useRef(null)
-  //const currentScene = props.scene;
-
-  // const camPositions = {
-  //   camIntro: {
-  //     x: -5, 
-  //     y: -4, 
-  //     z: 13, 
-  //     duration: 2,
-  //     pos: 0,
-  //     end: 0.5
-  //   },
-  //   camCR: {
-  //     x:0, 
-  //     y:0, 
-  //     z:23, 
-  //     duration: 2,
-  //     pos: 0.5,
-  //     end: 0.7
-  //   },
-  //   camJpn: {
-  //     x:0, 
-  //     y:0, 
-  //     z:25, 
-  //     duration: 2,
-  //     pos: 1,
-  //     end: 1.1
-  //   }
-  // }
-
-  // const planetRotations = {
-  //   rotIntro: {
-  //     x: Math.PI / 35,
-  //     y: Math.PI / 1.5,
-  //     z: 0,
-  //     duration: 2,
-  //     pos: 0,
-  //     end: 0.5
-  //   },
-  //   rotCR: {
-  //     x: Math.PI / 22,
-  //     y: Math.PI / 2.3,
-  //     z: 0,
-  //     duration: 2,
-  //     pos: 0.5,
-  //     end: 1
-  //   },
-  //   rotJpn: {
-  //     x: Math.PI / 6,
-  //     y: -Math.PI / 1.32,
-  //     z: 0,
-  //     duration: 2,
-  //     pos: 1,
-  //     end: 1.1
-  //   }
-  // }
-
-  // const scenes = {
-  //   Intro: { 
-  //     pos: 0,
-  //     end: 0.25
-  //   },
-  //   CR: { 
-  //     pos: 0.25,
-  //     end: 0.75
-  //   },
-  //   Jpn: { 
-  //     pos: 0.75,
-  //     end: 1
-  //   }
-  // }
-
-  // function calcObjIndex(obj){
-  //   const offset = scroll.offset;
-  //   const isIn = (element) => (element.pos <= offset && element.end > offset)
-
-  //   return Object.values(obj).findIndex(isIn)
-  // }
+  const cam = useThree(state => state.camera)
 
   function animate3D(model, motion, obj, scene){
     const currentValues = obj[Object.keys(obj)[scene]]
@@ -100,17 +24,33 @@ export function Scenario(props) {
   }
   
   useFrame((state, delta) => {
-    // const expectedScene = calcObjIndex(scenes)
-    const globe = planet.current
-    const cam = state.camera
+    // const cam = state.camera
+
+    // TODO:
+    // figure out how to access cam variable from the useEffect, 
+    // that way it's not set it and animated every frame
 
     cam.lookAt(0, 0, 0)
 
-    if (!!planet){
-      animate3D(globe, 'rotation', planetRotations, props.scene)
-      animate3D(cam, 'position', camPositions, props.scene)
-    }
+    // TODO:
+    // Why 'message' & 'requestAnimationFrame' took more once the animate3D was moved into useEffect?
+    // is it related at all? prev it was 150/250 now ~500 to 1000
+
   })
+
+  useEffect(() => {
+    //const cam = RootState.camera
+
+    console.log('camer', cam);
+
+    //cam.lookAt(0, 0, 0)
+
+    if (!!planet){
+      animate3D(planet.current, 'rotation', planetRotations, props.scene)
+      animate3D(cam, 'position', camPositions, props.scene)
+
+    }
+  },[props.scene, cam])
 
   return (
     <>
