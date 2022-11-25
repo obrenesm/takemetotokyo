@@ -2,15 +2,11 @@ import React, { useEffect, useRef, useState, useContext } from 'react'
 import { useGLTF, useScroll } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import {scenes} from '../data/scenesData'
-//import { Scenario } from './3d/Scenario'
-
-import { Context } from './ContextProvider'
-
-
+import { Scenario } from './3d/Scenario'
 
 export function Scene() {
   const scroll = useScroll()
-  const [currentScene, setCurrentScene] = useContext(Context)
+  const [currentScene, setCurrentScene] = useState(0)
 
   function calcArrayIndex(array){
     const offset = scroll.offset;
@@ -33,7 +29,7 @@ export function Scene() {
 
   return (
     <>
-      {/* <Scenario scene={currentScene}/> */}
+      <Scenario scene={currentScene}/>
     </>
   )
   

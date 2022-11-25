@@ -8,10 +8,18 @@ import { Earthh } from './Earth'
 import { Pin } from './Pin'
 import gsap from 'gsap'
 
+import { Context } from '../ContextProvider'
+
+
+//import { useScene } from '../Scene'
+
 export function Scenario(props) {
   //const scroll = useScroll()
   const planet = useRef(null)
   const cam = useThree(state => state.camera)
+  //const actualScene = useScene
+
+  const [currentScene, setCurrentScene] = useContext(Context)
 
   function animate3D(model, motion, obj, scene){
     const currentValues = obj[Object.keys(obj)[scene]]
@@ -46,11 +54,11 @@ export function Scenario(props) {
     //cam.lookAt(0, 0, 0)
 
     if (!!planet){
-      animate3D(planet.current, 'rotation', planetRotations, props.scene)
-      animate3D(cam, 'position', camPositions, props.scene)
+      animate3D(planet.current, 'rotation', planetRotations, currentScene)
+      animate3D(cam, 'position', camPositions, currentScene)
 
     }
-  },[props.scene, cam])
+  },[currentScene, cam])
 
   return (
     <>
