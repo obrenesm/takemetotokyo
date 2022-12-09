@@ -6,8 +6,6 @@ import {scenes} from '../data/scenesData'
 
 import { Context } from './ContextProvider'
 
-
-
 export function Scene() {
   const scroll = useScroll()
   const [currentScene, setCurrentScene] = useContext(Context)
@@ -21,7 +19,8 @@ export function Scene() {
 
   function updateScene(expected, current) {
     if (expected !== current){
-      console.log('currentScene', expected);
+      // console.log('currentScene', expected);
+      // console.log('scroll.offset', scroll.offset);
       return setCurrentScene(expected)      
     }
   }
@@ -32,9 +31,7 @@ export function Scene() {
   })
 
   return (
-    <>
-      {/* <Scenario scene={currentScene}/> */}
-    </>
+    <></>
   )
   
 }

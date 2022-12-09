@@ -48,9 +48,6 @@ export function Scenario(props) {
 
   useEffect(() => {
     //const cam = RootState.camera
-
-    console.log('camer', cam);
-
     //cam.lookAt(0, 0, 0)
 
     if (!!planet){

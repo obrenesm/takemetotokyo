@@ -7,22 +7,22 @@ export const camPositions = {
     z: 13, 
     duration: 2,
     pos: 0,
-    end: 0.3
+    end: 0.4
   },
   camCR: {
     x:0, 
     y:0, 
     z:23, 
     duration: 2,
-    pos: 0.3,
-    end: 0.6
+    pos: 0.4,
+    end: 0.8
   },
   camJpn: {
     x:0, 
     y:0, 
     z:25, 
     duration: 2,
-    pos: 0.6,
+    pos: 0.8,
     end: 1
   }
 }
@@ -34,23 +34,23 @@ export const planetRotations = {
     z: 0,
     duration: 2,
     pos: 0,
-    end: 0.5
+    end: 0.4
   },
   rotCR: {
     x: Math.PI / 22,
     y: Math.PI / 2.3,
     z: 0,
     duration: 2,
-    pos: 0.5,
-    end: 1
+    pos: 0.4,
+    end: 0.8
   },
   rotJpn: {
     x: Math.PI / 6,
     y: -Math.PI / 1.32,
     z: 0,
     duration: 2,
-    pos: 1,
-    end: 1.1
+    pos: 0.8,
+    end: 1
   }
 }
 
@@ -59,16 +59,16 @@ export const scenes = [
     { 
         id: 'Intro',
         pos: 0,
-        end: 0.25
+        end: 0.4
     },
     { 
         id: 'CR',
-        pos: 0.25,
-        end: 0.75
+        pos: 0.4,
+        end: 0.8
     },
     { 
         id: 'Jpn',
-        pos: 0.75,
+        pos: 0.8,
         end: 1
     }
 ]
