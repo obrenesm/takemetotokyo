@@ -7,6 +7,7 @@ import { Earth } from './components/3d/Earthflat';
 import { Scenario } from './components/3d/Scenario';
 import { Scene } from './components/Scene';
 import { Content } from './components/Content';
+import { Nav } from './components/Nav';
 
 import './App.scss';
 import { Suspense } from 'react';
@@ -18,6 +19,7 @@ import { Structure } from './components/Structure'
 import { ScrollControl } from './components/ScrollControl'
 
 import { Context } from './components/ContextProvider';
+import { ContactMe } from './components/ContactMe';
 
 // function CameraHelper(){
 //   const camera = new PerspectiveCamera(75, 1.77, 0.1, 100 );
@@ -29,10 +31,12 @@ import { Context } from './components/ContextProvider';
 function App() {
 
   const [currentScene, setCurrentScene] = useState(0)
+  const [toggleContact, setToggleContact] = useState(false)
 
   return (  
     <div id="main" style={{width: '100vw', height: '100vh'}}>
       <Context.Provider value={[currentScene, setCurrentScene]}>
+        <Nav toggle={toggleContact}/>
         <Content/>
         <Canvas camera={{fov: 75, near: 0.1, far: 100, position:[-5, -4, 13]}}>
           <ambientLight intensity={0.5} />

@@ -27,6 +27,13 @@
       segoe ui, arial, sans-serif;
   }
 
+  #contact-btn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 1;
+  }
+
   .inactive {
     visibility: hidden;
 
@@ -218,7 +225,7 @@
     .arrow {
       display: none;
     }
-    
+
     .mouse {
       margin: 10px auto;
       height: 25px;

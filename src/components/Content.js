@@ -7,7 +7,6 @@ export function Content(props) {
     const [currentScene, setCurrentScene] = useContext(Context)
 //    const currentContent = contentData[currentScene]
 
-
 //     switch (currentContent) {
 //         case 2:
 //             const jpn = true
