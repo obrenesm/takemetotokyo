@@ -18,7 +18,7 @@ import { CostaRica } from './components/costaRica'
 import { Structure } from './components/Structure'
 import { ScrollControl } from './components/ScrollControl'
 
-import { Context } from './components/ContextProvider';
+import { ContactContext, Context } from './components/ContextProvider';
 import { ContactMe } from './components/ContactMe';
 
 // function CameraHelper(){
@@ -31,13 +31,15 @@ import { ContactMe } from './components/ContactMe';
 function App() {
 
   const [currentScene, setCurrentScene] = useState(0)
-  const [toggleContact, setToggleContact] = useState(false)
-
+  //const [toggleContact, setToggleContact] = useState(false)
+  const [toggleCont, setToggleCont] = useState(false)
   return (  
     <div id="main" style={{width: '100vw', height: '100vh'}}>
       <Context.Provider value={[currentScene, setCurrentScene]}>
-        <Nav toggle={toggleContact}/>
-        <Content/>
+        <ContactContext.Provider value={[toggleCont, setToggleCont]}>
+          <Nav/>
+          <Content/>
+        </ContactContext.Provider>
         <Canvas camera={{fov: 75, near: 0.1, far: 100, position:[-5, -4, 13]}}>
           <ambientLight intensity={0.5} />
           <spotLight position={[200, 300, -100]} angle={0.3} intensity={0.4}/>
