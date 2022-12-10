@@ -9,7 +9,7 @@ export function ContactMe(props) {
   const [toggleCont, setToggleCont] = useContext(ContactContext)
   return (
     <>
-        <section className= {`modal ${toggleCont ? 'modal-visible' : ''}`} id='contact-modal' 
+        <section className={`modal ${toggleCont ? 'modal-open' : ''}`} id='contact-modal' 
         // open={toggleCont}
         >
           <div className='modal-container'>

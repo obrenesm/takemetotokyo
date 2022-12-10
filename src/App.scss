@@ -325,6 +325,56 @@
   right: 20px;
   top: 20px;
   z-index: 999;
+  background-color: transparent;
+  border: none;
+  color: #d7d7d7;
+  font-weight: 400;
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  transition: color 0.4s ease;
+
+  svg {
+    stroke: #d7d7d7;
+  }
+
+  span {
+    padding-right: 10px;
+    animation: moveIn 1000ms ease-in forwards;
+  }
+
+  &:hover {
+  color: #fff;
+  cursor: pointer;
+
+    svg {
+      stroke: #fff;
+    }
+
+    .line1, .line2 {
+      stroke-dashoffset: -10;
+      stroke-dasharray: 50 1000;
+    }
+  }
+
+  .line1, .line2 {
+    transition: 0.7s;
+    stroke-dasharray: 75 1000;
+  }
+
+  &.open {
+    &:hover {
+      .line1, .line2 {
+        stroke-dashoffset: -160;
+        stroke-dasharray: 50 1000;
+      }
+    }
+  
+    .line1, .line2 {
+      stroke-dashoffset: -150;
+      stroke-dasharray: 70 1000;
+    }
+  }
 }
 
 .modal {
@@ -380,7 +430,7 @@
     transition: transform 0.4s ease-in-out;
   }
 
-  &.modal-visible {
+  &.modal-open {
     //display: grid;
     //visibility: visible;
     //animation: showUp .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
@@ -444,17 +494,17 @@
 //   }
 // }
 
-@keyframes showUp {
-  0% {
-    backdrop-filter: blur(0px);
-    opacity: 0;
-    //visibility: hidden;
-  }
-  100% {
-    backdrop-filter: blur(8px);
-    opacity: 1;
-  }
-}
+// @keyframes showUp {
+//   0% {
+//     backdrop-filter: blur(0px);
+//     opacity: 0;
+//     //visibility: hidden;
+//   }
+//   100% {
+//     backdrop-filter: blur(8px);
+//     opacity: 1;
+//   }
+// }
 
 
 @keyframes fadeIn {
@@ -490,5 +540,15 @@
   }
   100% {
     backdrop-filter: blur(6px);
+  }
+}
+
+
+@keyframes moveIn {
+  from {
+    translate: 0px, 0px;
+  }
+  to {
+    translate: 10px, 0px;
   }
 }
