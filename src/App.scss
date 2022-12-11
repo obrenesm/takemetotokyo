@@ -71,11 +71,12 @@
 
       &.top.left, 
       &.bottom.left {
-        left: 50px;
+        left: 30px;
       }
       &.top.right,
       &.bottom.right {
-        right: 50px;
+        left: 30px;
+        right: unset;
       }
       
       &.center {
@@ -176,6 +177,26 @@
     width: 90%;
   }
 
+  // .left {
+  //   left: 30px;
+  // }
+
+  // .right {
+  //   right: unset;
+  //   left: 30px;
+  // }
+
+  .top {
+    top: 50px;
+  }
+
+  .bottom {
+    bottom: 50px;
+  }
+}
+
+@media (min-width: 768px) {
+
   .left {
     left: 50px;
   }
@@ -186,14 +207,29 @@
 
   .right {
     right: 50px;
+    left: unset;
+  }
+
+
+  .active {
+    .popup {
+      &.top.left, 
+      &.bottom.left {
+        left: 30px;
+        right: unset;
+      }
+
+      &.top.right,
+      &.bottom.right {
+        left: unset;
+        right: 30px;
+      }
+    }
   }
 
   .bottom {
     bottom: 50px;
   }
-}
-
-@media (min-width: 768px) {
 
   p {
     font-size: 1.8em;
@@ -210,12 +246,28 @@
 
 @media (min-width: 1200px) {
 
-  p {
-    font-size: 2em;
-  }
+  // p {
+  //   font-size: 2em;
+  // }
 
   .third {
     width: 30%;
+  }
+
+  .active {
+    .popup {
+      &.top.left, 
+      &.bottom.left {
+        left: 50px;
+        right: unset;
+      }
+      
+      &.top.right,
+      &.bottom.right {
+        left: unset;
+        right: 50px;
+      }
+    }
   }
 }
 
@@ -362,6 +414,17 @@
     stroke-dasharray: 75 1000;
   }
 
+  .text-container {
+    width: 110px;
+    height: 20px;
+    overflow: hidden;
+    transition: 500ms ease-in-out;
+
+    span {
+      white-space: nowrap;
+    }
+  }
+
   &.open {
     &:hover {
       .line1, .line2 {
@@ -373,6 +436,10 @@
     .line1, .line2 {
       stroke-dashoffset: -150;
       stroke-dasharray: 70 1000;
+    }
+
+    .text-container {
+      width: 0px;
     }
   }
 }
