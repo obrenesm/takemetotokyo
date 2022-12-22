@@ -48,7 +48,7 @@ function App() {
           <Suspense fallback={null}>
             <ScrollControls pages={0} distance={1}>
               <ScrollControl/>
-              <Scene/>
+              {/* <Scene/> */}
               <Scenario/> 
             </ScrollControls>
           </Suspense>
