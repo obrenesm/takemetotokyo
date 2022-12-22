@@ -14,9 +14,9 @@ export const ScrollControl = () => {
 
   function scrollDirection (e, start, end) {
     if (e && e.type === "wheel"){
-      return start > end ? 'up' : 'down'
+      return start > end ? 'up' : start < end ? 'down' : ''
     } else if (e && e.type === "touchend" ){
-      return start < end ? 'up' : 'down'
+      return start < end ? 'up' : start > end ? 'down' : ''
     } else {
       console.error('Error while scrolling');
     }
@@ -26,8 +26,9 @@ export const ScrollControl = () => {
     let prevScrollVariable = scrollVariable
     let inputIn;
     let inputOut;
-    console.log('prevScrollVariable', prevScrollVariable);
-    console.log('e.type', e.type);
+    // console.log('prevScrollVariable', prevScrollVariable);
+    // console.log('e.type', e.type);
+    
     if (e.type === "wheel") {
       scrollVariable += e.deltaY;
       inputIn = prevScrollVariable
@@ -36,6 +37,7 @@ export const ScrollControl = () => {
       inputIn = touchStart
       inputOut = touchEnd
     }
+
     const direction = scrollDirection(e, inputIn, inputOut)
 
     if (scene > 0 && direction === 'up') {
@@ -60,6 +62,8 @@ export const ScrollControl = () => {
     window.addEventListener('touchend', handleTouchEnd);
     touchStart = event.changedTouches[0].screenY
 
+    console.log('touchStart', touchStart);
+
     return () => {
       window.removeEventListener('touchend', handleTouchEnd);
     }; 
@@ -68,6 +72,8 @@ export const ScrollControl = () => {
   const handleTouchEnd = (event) => {
     touchEnd = event.changedTouches[0].screenY;
     updateScene (event, touchStart, touchEnd)
+
+    console.log('touchEnd', touchEnd);
   }
 
   useEffect(() => {
