@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState, useContext } from 'react'
-import { useGLTF, useScroll } from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
 import {scenes} from '../data/scenesData'
 
 import { Context } from './ContextProvider'

@@ -11,13 +11,10 @@ import gsap from 'gsap'
 import { Context } from '../ContextProvider'
 
 
-//import { useScene } from '../Scene'
 
 export function Scenario(props) {
-  //const scroll = useScroll()
   const planet = useRef(null)
   const cam = useThree(state => state.camera)
-  //const actualScene = useScene
 
   const [currentScene, setCurrentScene] = useContext(Context)
 
@@ -53,7 +50,6 @@ export function Scenario(props) {
     if (!!planet){
       animate3D(planet.current, 'rotation', planetRotations, currentScene)
       animate3D(cam, 'position', camPositions, currentScene)
-
     }
   },[currentScene, cam])
 
