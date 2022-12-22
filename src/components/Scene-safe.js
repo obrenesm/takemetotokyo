@@ -17,7 +17,7 @@ export function Scene() {
 
   function updateScene(expected, current) {
     if (expected !== current){
-      console.log('currentScene', expected);
+      console.log('expected currentScene', expected);
       return setCurrentScene(expected)      
     }
   }

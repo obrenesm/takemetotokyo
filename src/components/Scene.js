@@ -21,7 +21,7 @@ export function Scene() {
     if (expected !== current){
       // console.log('currentScene', expected);
       // console.log('scroll.offset', scroll.offset);
-      return setCurrentScene(expected)      
+      //return setCurrentScene(expected)      
     }
   }
 

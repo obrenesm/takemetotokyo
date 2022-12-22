@@ -46,7 +46,7 @@ function App() {
           <spotLight position={[-200, -400, 100]} angle={1} intensity={0.2}/>
           <pointLight position={[-235, 235, 0]} intensity={0.2}/>
           <Suspense fallback={null}>
-            <ScrollControls pages={3} distance={2}>
+            <ScrollControls pages={0} distance={1}>
               <ScrollControl/>
               <Scene/>
               <Scenario/> 

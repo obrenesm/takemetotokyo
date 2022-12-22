@@ -2,9 +2,11 @@ import React, { useContext } from 'react'
 import { Context } from './ContextProvider'
 import { contentData } from '../data/contentData'
 import { ScrollDown } from './scrollDown'
+import { ContactContext } from './ContextProvider'
 
 export function Content(props) {
     const [currentScene, setCurrentScene] = useContext(Context)
+    const [toggleCont, setToggleCont] = useContext(ContactContext)
 //    const currentContent = contentData[currentScene]
 
 //     switch (currentContent) {
@@ -25,13 +27,13 @@ export function Content(props) {
 
   return (
     <>
-        <section id="intro" className={currentScene === 0 ? "active" : "inactive"}>
+        <section id="intro" className={currentScene === 0 && !toggleCont ? "active" : "inactive"}>
             <div className='popup full center headline'>
               <h1>Take me to <span>Tokyo</span></h1>
             </div>
             <ScrollDown/>
         </section>
-        <section id="cr" className={currentScene === 1 ? "active" : "inactive"}>
+        <section id="cr" className={currentScene === 1 && !toggleCont ? "active" : "inactive"}>
             <div className='popup third left top'>
                 <p> I'm Oscar Brenes a Front End developer from Costa Rica, have been working for Critical Mass Latam for the past 7 years</p>
             </div>
@@ -39,7 +41,7 @@ export function Content(props) {
                 <p> The last 4 years I have been on the tech team of the BMW USA, before that I worked as a Designer on the GoDaddy team</p>
             </div>
         </section>
-        <section id="jpn" className={currentScene === 2 ? "active" : "inactive"}>
+        <section id="jpn" className={currentScene === 2 && !toggleCont ? "active" : "inactive"}>
             <div className='popup third left top'>
                 <p> 3 years ago I visited Japan and fell in love with the culture and the beauty of the country, now I want to go back</p>
             </div>

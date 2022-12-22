@@ -5,43 +5,46 @@ import {scenes} from '../data/scenesData'
 
 import { Context } from './ContextProvider'
 
-const allPositions = scenes.map((element) => element.pos);
-
-export function ScrollControl() {
-  const scroll = useScroll()
+export const ScrollControl = () => {
   const [currentScene, setCurrentScene] = useContext(Context)
+  const scenesLengthCap = scenes.length - 1
+  let scrollTimeout;
+  let scrollVariable = 0;
+  let scene = 0
 
-  console.log('allPositions', allPositions);
+  console.log('scenesLength', scenesLengthCap);
 
-  function calcNearestScene(){
-    const offset = scroll.offset;
-    const output = allPositions.reduce((prev, curr) => Math.abs(curr - offset) < Math.abs(prev - offset) ? curr : prev);
- //   console.log('output', output);
+  function updateScene(delta) {
+    const prevScrollVariable = scrollVariable
+    scrollVariable += delta;
 
-    return output
-  }
-
-
-  useFrame((state, delta) => {
-//    const offset = scroll.offset;
-    const curr = scenes[currentScene].pos
-    //console.log('curr', curr);
-    const near = calcNearestScene()
-
-    if (curr !== near) {
-      console.log('curr', curr);
-      console.log('near', near);
-      // document.scroll({
-      //   top: 1000,
-      //   left: 0,
-      //   behavior: 'smooth'
-      // });
-      console.log('HERE');
+    if (scene > 0 && prevScrollVariable > scrollVariable){
+      scene = scene-1      
     }
-  })
+    else if (scene < scenesLengthCap && prevScrollVariable < scrollVariable){
+      scene = scene+1
+    }
+
+    return setCurrentScene(scene)
+  }
+  const handleScroll = (event) => {
+    const { deltaY } = event;
+
+    clearTimeout(scrollTimeout);
+
+    scrollTimeout = setTimeout(() => {
+        updateScene(deltaY)
+    }, 60);
+  };
+
+  useEffect(() => {
+    window.addEventListener('wheel', handleScroll);
+    return () => {
+      window.removeEventListener('wheel', handleScroll);
+    };
+  }, []);
 
   return (
     <></>
-  )
-  
-}
+  );
+};
