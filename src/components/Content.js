@@ -35,21 +35,20 @@ export function Content(props) {
         </section>
         <section id="cr" className={currentScene === 1 && !toggleCont ? "active" : "inactive"}>
             <div className='popup third left top'>
-                <p> I'm Oscar Brenes a Front End developer from Costa Rica, have been working for Critical Mass Latam for the past 7 years</p>
+                <p>I'm Oscar Brenes a frontend developer from Costa Rica, I have been working for what now it's Critical Mass Latam for the past 7&nbsp;years</p>
             </div>
             <div className='popup third right bottom'>
-                <p> The last 4 years I have been on the tech team of the BMW USA, before that I worked as a Designer on the GoDaddy team</p>
+                <p>I have gain experience on different positions and moved from a small design team that supported GoDaddy to a giant tech team that carry on BMW USA website</p>
             </div>
         </section>
         <section id="jpn" className={currentScene === 2 && !toggleCont ? "active" : "inactive"}>
             <div className='popup third left top'>
-                <p> 3 years ago I visited Japan and fell in love with the culture and the beauty of the country, now I want to go back</p>
+                <p>4 years ago I visited Japan and fell in love with the culture and the beauty of the country, now I feel that's my time go back but not as a tourist</p>
             </div>
             <div className='popup third right bottom'>
-                <p> Currently I'm looking for a job opportunity that takes me to Tokyo </p>
+                <p>Currently I'm looking for a job opportunity that takes me to Tokyo, feel free to reach me out</p>
             </div>
         </section>
-
     </>
   )
 }
