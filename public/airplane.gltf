@@ -611,9 +611,9 @@
       "name": "Rosso",
       "pbrMetallicRoughness": {
         "baseColorFactor": [
-          0.566836,
-          0.0231535,
-          0.00304371,
+          0.8,		
+          0,		
+          0.1,		
           1
         ],
         "metallicFactor": 0,
@@ -631,9 +631,9 @@
       "name": "Vetro",
       "pbrMetallicRoughness": {
         "baseColorFactor": [
-          0.505371,
-          0.505371,
-          0.505371,
+          0.5,
+          0.5,
+          0.5,
           1
         ],
         "metallicFactor": 0,
@@ -651,9 +651,9 @@
       "name": "Grigio",
       "pbrMetallicRoughness": {
         "baseColorFactor": [
-          0.036671,
-          0.036671,
-          0.036671,
+          0.0366,
+          0.0366,
+          0.0366,
           1
         ],
         "metallicFactor": 0,

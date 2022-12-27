@@ -9,7 +9,9 @@ import { Pin } from './Pin'
 import gsap from 'gsap'
 
 import { Context } from '../ContextProvider'
+import { CamDeviationContext } from '../ContextProvider'
 
+//import { MousePosition } from '../MousePosition'
 
 
 export function Scenario(props) {
@@ -17,16 +19,28 @@ export function Scenario(props) {
   const cam = useThree(state => state.camera)
 
   const [currentScene, setCurrentScene] = useContext(Context)
+  const [camDeviation, setCamDeviation] = useContext(CamDeviationContext)
+
 
   function animate3D(model, motion, obj, scene){
     const currentValues = obj[Object.keys(obj)[scene]]
     let pos = (({x, y, z, duration}) => ({x, y, z, duration}))(currentValues)  
+    console.log('pos X', pos['x']);
     const selected = (motion === 'rotation') ? model.rotation : model.position
+
+    if (motion === 'position' && scene !== 0) {
+      Object.assign(pos, {x: camDeviation[0] + pos['x'], y: camDeviation[1] + pos['y']})
+    }
+    //TODO : calculate mouse position into the original rendering on scene change
 
     return gsap.to(
       selected,
       pos)
   }
+
+//  const mouse = MousePosition();
+
+//  console.log('mouse', mouse);
   
   useFrame((state, delta) => {
     // const cam = state.camera

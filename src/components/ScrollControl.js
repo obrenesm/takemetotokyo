@@ -22,6 +22,8 @@ export const ScrollControl = () => {
     }
   }
 
+  // TODO: generate a Prevent Default (?) to avoid scroll when just clicking a btn
+
   function updateScene(e) {
     let prevScrollVariable = scrollVariable
     let inputIn;
@@ -43,7 +45,6 @@ export const ScrollControl = () => {
     if (scene > 0 && direction === 'up') {
       scene = scene-1      
     } else if (scene < sceneCap && direction === 'down') {
-      console.log('DIRECTION down');
       scene = scene+1
     }
 
