@@ -59,7 +59,7 @@ export function MousePosition(){
     return () => {
       window.removeEventListener('mousemove', calculateDeviation);
     };
-  }, [currentScene, calculateDeviation]);      
+  });      
 
   return <></>
 };
