@@ -26,7 +26,7 @@ export function Content(props) {
         </section>
         <section id="jpn" className={currentScene === 2 && !toggleCont ? "active" : "inactive"}>
             <div className='popup third left top'>
-                <p>4 years ago I visited Japan and fell in love with the culture and the beauty of the country, now I feel that's my time go back and stablish myself</p>
+                <p>3 years ago I visited Japan and fell in love with the culture and the beauty of the country, now I feel that's my time go back and stablish myself</p>
             </div>
             <div className='popup third right bottom'>
                 <p>Currently I'm looking for a job opportunity that takes me to Tokyo, feel free to reach me out</p>
