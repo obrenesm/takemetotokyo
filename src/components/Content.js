@@ -18,7 +18,7 @@ export function Content(props) {
         </section>
         <section id="cr" className={currentScene === 1 && !toggleCont ? "active" : "inactive"}>
             <div className='popup third left top'>
-                <p>I'm Oscar Brenes a frontend developer from Costa Rica, I have been working for what now it's Critical Mass Latam for the past 7&nbsp;years</p>
+                <p>Hi! I'm Oscar Brenes a frontend developer from Costa Rica, I have been working for what now it's Critical Mass Latam for the past 7&nbsp;years</p>
             </div>
             <div className='popup third right bottom'>
                 <p>I have gain experience on different positions and moved from a small design team that supported GoDaddy to a giant tech team that carry on BMW USA website</p>
