@@ -26,7 +26,6 @@ export function MousePosition(){
     console.log('resize centerWidth', centerWidth);
     console.log('resize centerHeight', centerHeight);
   }
-
   
   const calculateDeviation = (event) => {
     const verticalDeviation = centerHeight - event.pageY
@@ -40,11 +39,6 @@ export function MousePosition(){
       y: camVerticalOffset,
       duration: 1
     }
-
-    // if (currentScene !== 0){    
-    
-    //const deviation = [camHorizontalOffset, camVerticalOffset]
-    //console.log('deviation', deviation);
       
       return (
         setCamDeviation([camHorizontalOffset, camVerticalOffset]),
@@ -53,9 +47,6 @@ export function MousePosition(){
           cam.position,
           posUpdated)
       )
-    // } else {
-    //   return setCamDeviation([camHorizontalOffset, camVerticalOffset])
-    // }
   }
 
   useEffect(() => {

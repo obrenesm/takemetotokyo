@@ -50,16 +50,13 @@ function App() {
               <ScrollControls pages={0} distance={1}>
                 <ScrollControl/>
                 <MousePosition/>
-                {/* <Scene/> */}
                 <Scenario/> 
               </ScrollControls>
             </Suspense>
-            {/* <CameraHelper/> */}
           </Canvas>
         </CamDeviationContext.Provider>
       </Context.Provider>    
     </div>
-    
   );
 }
 
