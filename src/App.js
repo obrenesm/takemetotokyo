@@ -42,7 +42,7 @@ function App() {
           <Content/>
         </ContactContext.Provider>
         <CamDeviationContext.Provider value={[camDeviation, setCamDeviation]}>
-          <Canvas camera={{fov: 75, near: 0.1, far: 100, position:[-15, -4, 13]}}>
+          <Canvas camera={{fov: 75, near: 0.1, far: 100, position:[-5, -4, 13]}}>
             <ambientLight intensity={0.5} />
             <spotLight position={[200, 300, -100]} angle={0.3} intensity={0.4}/>
             <spotLight position={[-200, -400, 100]} angle={1} intensity={0.2}/>
