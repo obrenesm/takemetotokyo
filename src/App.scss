@@ -30,7 +30,7 @@
   .inactive {
     visibility: hidden;
 
-    .popup {
+    .content {
       opacity: 0;
       transition: all 0.8s ease-in-out;
 
@@ -67,7 +67,7 @@
   }
   
   .active {
-    .popup {
+    .content {
       opacity: 1;
       transition: all 0.8s 1s ease-in-out;
 
@@ -91,7 +91,7 @@
     }
   }
 
-  .popup {
+  .content {
     z-index: 2;
     pointer-events: none;
     position: absolute;
@@ -213,7 +213,7 @@
   }
 
   .inactive {
-    .popup {
+    .content {
       &.top.left, 
       &.bottom.left {
         left: 0px;
@@ -229,7 +229,7 @@
   }
 
   .active {
-    .popup {
+    .content {
       &.top.left, 
       &.bottom.left {
         left: 30px;
@@ -272,7 +272,7 @@
   }
 
   .active {
-    .popup {
+    .content {
       &.top.left, 
       &.bottom.left {
         left: 50px;
