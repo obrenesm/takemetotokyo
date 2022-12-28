@@ -18,7 +18,6 @@ import { CostaRica } from './components/costaRica'
 import { Structure } from './components/Structure'
 import { ScrollControl } from './components/ScrollControl'
 import { MousePosition } from './components/MousePosition';
-import { Parallax } from './components/ParallaxAnimation';
 import { CamDeviationContext, ContactContext, Context } from './components/ContextProvider';
 import { ContactMe } from './components/ContactMe';
 
@@ -51,7 +50,6 @@ function App() {
               <ScrollControls pages={0} distance={1}>
                 <ScrollControl/>
                 <MousePosition/>
-                {/* <Parallax/> */}
                 {/* <Scene/> */}
                 <Scenario/> 
               </ScrollControls>
