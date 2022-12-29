@@ -1,5 +1,10 @@
 //import { createRoot } from 'react-dom/client';
 import * as THREE from 'three'
+import { useFrame, useThree } from '@react-three/fiber'
+import gsap from 'gsap'
+import { CalculateMousePosition } from './components/CalculateMouseDeviation'
+
+
 import { Canvas } from '@react-three/fiber';
 import React, {useState} from 'react';
 import { OrbitControls, ScrollControls, Scroll, useScroll } from '@react-three/drei';
@@ -29,14 +34,15 @@ import { Resume } from './components/Resume';
 //   </group>
 // }
 
-function App() {
 
+
+function App() {
   const [currentScene, setCurrentScene] = useState(0)
   const [toggleCont, setToggleCont] = useState(false)
   const [camDeviation, setCamDeviation] = useState([0,0])
-  return (  
+  return (
     <div id="main" style={{width: '100vw', height: '100vh'}}>
-      {/* <Context.Provider value={[currentScene, setCurrentScene]}>
+      <Context.Provider value={[currentScene, setCurrentScene]}>
         <ContactContext.Provider value={[toggleCont, setToggleCont]}>
           <Nav/>
           <Content/>
@@ -48,16 +54,18 @@ function App() {
             <spotLight position={[-200, -400, 100]} angle={1} intensity={0.2}/>
             <pointLight position={[-235, 235, 0]} intensity={0.2}/>
             <Suspense fallback={null}>
-              <ScrollControls pages={0} distance={1}>
+              {/* <ScrollControls pages={0} distance={1}> */}
                 <ScrollControl/>
-                <MousePosition/>
-                <Scenario/> 
-              </ScrollControls>
+                {/* <MousePosition/> */}
+                <CalculateMousePosition>
+                  <Scenario/>
+                </CalculateMousePosition>
+              {/* </ScrollControls> */}
             </Suspense>
           </Canvas>
         </CamDeviationContext.Provider>
-      </Context.Provider>     */}
-      <Resume/>
+      </Context.Provider>
+      {/* <Resume/> */}
     </div>
   );
 }

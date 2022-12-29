@@ -14,7 +14,7 @@ let centerHeight = window.innerHeight/2
 let camHorizontalOffset = 0
 let camVerticalOffset = 0
 
-export function MousePosition(){  
+export function CalculateMousePosition({children}){  
   const cam = useThree(state => state.camera)
   const [camDeviation, setCamDeviation] = useContext(CamDeviationContext)
   const [currentScene, setCurrentScene] = useContext(Context)
@@ -29,7 +29,6 @@ export function MousePosition(){
     event.preventDefault()
 
     if (currentScene !== 0){
-
       const verticalDeviation = centerHeight - event.pageY
       const horizontalDeviation = event.pageX - centerWidth
       
@@ -43,27 +42,29 @@ export function MousePosition(){
       }
       
       //return (
-        setCamDeviation([camHorizontalOffset, camVerticalOffset])
-        
-        gsap.to(
-          cam.position,
-          posUpdated)
+      setCamDeviation([camHorizontalOffset, camVerticalOffset])
+      
+      gsap.to(
+        cam.position,
+        posUpdated)
       //)
     }
   }
 
-//  useEffect(() => {
-    
-    // if (currentScene !== 0){
-      window.addEventListener('mousemove', calculateDeviation);
-      window.addEventListener("resize", onResize);  
-      
-    // }
-    
-    // return () => {
-    //   window.removeEventListener('mousemove', calculateDeviation);
-    // };
- // });      
+  useEffect(() => {
+    const canvas = document.querySelector('canvas')
 
-  return <></>
+    canvas.addEventListener('mousemove', calculateDeviation);
+    window.addEventListener("resize", onResize);  
+    
+    return () => {
+      canvas.removeEventListener('mousemove', calculateDeviation);
+    };
+  });      
+
+  return (
+  <group className='mob'>
+    {children}
+  </group>
+  )
 };
