@@ -20,6 +20,7 @@ import { ScrollControl } from './components/ScrollControl'
 import { MousePosition } from './components/MousePosition';
 import { CamDeviationContext, ContactContext, Context } from './components/ContextProvider';
 import { ContactMe } from './components/ContactMe';
+import { Resume } from './components/Resume';
 
 // function CameraHelper(){
 //   const camera = new PerspectiveCamera(75, 1.77, 0.1, 100 );
@@ -35,7 +36,7 @@ function App() {
   const [camDeviation, setCamDeviation] = useState([0,0])
   return (  
     <div id="main" style={{width: '100vw', height: '100vh'}}>
-      <Context.Provider value={[currentScene, setCurrentScene]}>
+      {/* <Context.Provider value={[currentScene, setCurrentScene]}>
         <ContactContext.Provider value={[toggleCont, setToggleCont]}>
           <Nav/>
           <Content/>
@@ -55,7 +56,8 @@ function App() {
             </Suspense>
           </Canvas>
         </CamDeviationContext.Provider>
-      </Context.Provider>    
+      </Context.Provider>     */}
+      <Resume/>
     </div>
   );
 }

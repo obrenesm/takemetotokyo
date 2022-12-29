@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { Context } from './ContextProvider'
-import { contentData } from '../data/contentData'
 import { ScrollDown } from './scrollDown'
 import { ContactContext } from './ContextProvider'
 
