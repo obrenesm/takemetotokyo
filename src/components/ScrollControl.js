@@ -28,8 +28,6 @@ export const ScrollControl = () => {
     let prevScrollVariable = scrollVariable
     let inputIn;
     let inputOut;
-    // console.log('prevScrollVariable', prevScrollVariable);
-    // console.log('e.type', e.type);
     
     if (e.type === "wheel") {
       scrollVariable += e.deltaY;
@@ -63,8 +61,6 @@ export const ScrollControl = () => {
     window.addEventListener('touchend', handleTouchEnd);
     touchStart = event.changedTouches[0].screenY
 
-    console.log('touchStart', touchStart);
-
     return () => {
       window.removeEventListener('touchend', handleTouchEnd);
     }; 
@@ -73,17 +69,16 @@ export const ScrollControl = () => {
   const handleTouchEnd = (event) => {
     touchEnd = event.changedTouches[0].screenY;
     updateScene (event, touchStart, touchEnd)
-
-    console.log('touchEnd', touchEnd);
   }
 
   useEffect(() => {
-    window.addEventListener('wheel', handleScroll);
-    window.addEventListener('touchstart', handleTouchStart);
+    const canvas = document.querySelector('canvas')
+    canvas.addEventListener('wheel', handleScroll);
+    canvas.addEventListener('touchstart', handleTouchStart);
 
     return () => {
-      window.removeEventListener('wheel', handleScroll);
-      window.removeEventListener('touchstart', handleTouchStart);
+      canvas.removeEventListener('wheel', handleScroll);
+      canvas.removeEventListener('touchstart', handleTouchStart);
     };
   }, []);
 
