@@ -32,11 +32,7 @@ const links = document.querySelector('.text-container');
       } else if (currentScene === scenes.length - 1) {
         return 'Return'
       } else {
-        if (camDeviation[0] < 0) {
-          return 'Back'
-        } else if (camDeviation[0] >= 0) {
-          return 'Siguiente'
-        }
+        return camDeviation[0] < 0 ? 'Back' : 'Siguiente'
       }
    //});      
   }
