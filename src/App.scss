@@ -655,7 +655,6 @@
   }
 }
 
-
 @keyframes moveIn {
   from {
     translate: 0px, 0px;
@@ -664,6 +663,48 @@
     translate: 10px, 0px;
   }
 }
+
+// CURSOR
+
+body {
+  cursor: none;
+}
+
+.cursor-circle {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  //border: 2px solid #fff;
+  background-color: #ef225a;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  z-index: 999;
+  //filter: invert(1);
+  mix-blend-mode: difference;
+  translate: -50% -50%;
+  pointer-events: none;
+
+  span {
+    color: #000;
+    align-self: center;
+    text-align: center;
+    font-size: 0.8em;
+  }
+}
+
+// .cursor-circle.over-link {
+//   width: 20px;
+//   height: 20px;
+//   border-radius: 0;
+// }
+
+// button:hover {
+//   .cursor-circle {
+//     width: 20px;
+//     height: 20px;  
+//   }
+// }
 
 
 

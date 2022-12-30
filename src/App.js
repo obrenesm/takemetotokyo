@@ -26,6 +26,7 @@ import { MousePosition } from './components/MousePosition';
 import { CamDeviationContext, ContactContext, Context } from './components/ContextProvider';
 import { ContactMe } from './components/ContactMe';
 import { Resume } from './components/Resume';
+import { Cursor } from './components/Cursor';
 
 // function CameraHelper(){
 //   const camera = new PerspectiveCamera(75, 1.77, 0.1, 100 );
@@ -43,11 +44,13 @@ function App() {
   return (
     <div id="main" style={{width: '100vw', height: '100vh'}}>
       <Context.Provider value={[currentScene, setCurrentScene]}>
+        <CamDeviationContext.Provider value={[camDeviation, setCamDeviation]}>
         <ContactContext.Provider value={[toggleCont, setToggleCont]}>
           <Nav/>
-          <Content/>
+          <Cursor>
+            <Content/>
+          </Cursor>
         </ContactContext.Provider>
-        <CamDeviationContext.Provider value={[camDeviation, setCamDeviation]}>
           <Canvas camera={{fov: 75, near: 0.1, far: 100, position:[-5, -4, 13]}}>
             <ambientLight intensity={0.5} />
             <spotLight position={[200, 300, -100]} angle={0.3} intensity={0.4}/>
