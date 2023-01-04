@@ -2,7 +2,7 @@
 import * as THREE from 'three'
 import { useFrame, useThree } from '@react-three/fiber'
 import gsap from 'gsap'
-import { CalculateMousePosition } from './components/CalculateMouseDeviation'
+
 
 
 import { Canvas } from '@react-three/fiber';
@@ -10,25 +10,19 @@ import React, { useRef, useState, useReducer } from 'react';
 import { OrbitControls, ScrollControls, Scroll, useScroll } from '@react-three/drei';
 import { Earth } from './components/3d/Earthflat';
 import { Scenario } from './components/3d/Scenario';
-import { Scene } from './components/Scene';
 import { Content } from './components/Content';
 import { Nav } from './components/Nav';
 
 import './App.scss';
 import { Suspense } from 'react';
-import { PerspectiveCamera } from 'three';
 
-import { Intro } from './components/intro'
-import { CostaRica } from './components/costaRica'
-import { Structure } from './components/structure'
-import { ScrollControl } from './components/ScrollControl'
-import { MousePosition } from './components/MousePosition';
 import { CamDeviationContext, ContactContext, Context } from './components/ContextProvider';
-import { ContactMe } from './components/ContactMe';
 import { Resume } from './components/Resume';
 import { Cursor, followCursorEvent } from './components/Cursor';
 import { initialSceneState, sceneReducer } from './reducers/scene.reducer';
 import { getActionByCursor } from './utils/scene-actions'
+import { CalculateMousePosition } from './components/CalculateMouseDeviation'
+
 // function CameraHelper(){
 //   const camera = new PerspectiveCamera(75, 1.77, 0.1, 100 );
 //   return <group position={[0, 0, 30]}>
