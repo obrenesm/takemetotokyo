@@ -6,7 +6,7 @@ import { CalculateMousePosition } from './components/CalculateMouseDeviation'
 
 
 import { Canvas } from '@react-three/fiber';
-import React, {useState} from 'react';
+import React, { useRef, useState, useReducer } from 'react';
 import { OrbitControls, ScrollControls, Scroll, useScroll } from '@react-three/drei';
 import { Earth } from './components/3d/Earthflat';
 import { Scenario } from './components/3d/Scenario';
@@ -20,14 +20,15 @@ import { PerspectiveCamera } from 'three';
 
 import { Intro } from './components/intro'
 import { CostaRica } from './components/costaRica'
-import { Structure } from './components/Structure'
+import { Structure } from './components/structure'
 import { ScrollControl } from './components/ScrollControl'
 import { MousePosition } from './components/MousePosition';
 import { CamDeviationContext, ContactContext, Context } from './components/ContextProvider';
 import { ContactMe } from './components/ContactMe';
 import { Resume } from './components/Resume';
-import { Cursor } from './components/Cursor';
-
+import { Cursor, followCursorEvent } from './components/Cursor';
+import { initialSceneState, sceneReducer } from './reducers/scene.reducer';
+import { getActionByCursor } from './utils/scene-actions'
 // function CameraHelper(){
 //   const camera = new PerspectiveCamera(75, 1.77, 0.1, 100 );
 //   return <group position={[0, 0, 30]}>
@@ -35,37 +36,37 @@ import { Cursor } from './components/Cursor';
 //   </group>
 // }
 
-
-
 function App() {
-  const [currentScene, setCurrentScene] = useState(0)
-  const [toggleCont, setToggleCont] = useState(false)
-  const [camDeviation, setCamDeviation] = useState([0,0])
+  const [currentScene, setCurrentScene] = useState(0);
+  const [toggleCont, setToggleCont] = useState(false);
+  const [camDeviation, setCamDeviation] = useState([0, 0]);
+  const mouseRef = useRef();
+  const [sceneState, dispatch] = useReducer(sceneReducer, initialSceneState);
   return (
-    <div id="main" style={{width: '100vw', height: '100vh'}}>
+    <div id="main" style={{ width: '100vw', height: '100vh' }} onMouseMove={(e) => followCursorEvent(mouseRef)(e)}
+      onClick={(e) => dispatch({ type: getActionByCursor(sceneState.currentScene, camDeviation) }) }>
       <Context.Provider value={[currentScene, setCurrentScene]}>
         <CamDeviationContext.Provider value={[camDeviation, setCamDeviation]}>
-        <ContactContext.Provider value={[toggleCont, setToggleCont]}>
-          <Nav/>
-          <Cursor>
-            <Content/>
-          </Cursor>
-        </ContactContext.Provider>
-          <Canvas camera={{fov: 75, near: 0.1, far: 100, position:[-5, -4, 13]}}>
-            <ambientLight intensity={0.5} />
-            <spotLight position={[200, 300, -100]} angle={0.3} intensity={0.4}/>
-            <spotLight position={[-200, -400, 100]} angle={1} intensity={0.2}/>
-            <pointLight position={[-235, 235, 0]} intensity={0.2}/>
-            <Suspense fallback={null}>
-              {/* <ScrollControls pages={0} distance={1}> */}
-                <ScrollControl/>
-                {/* <MousePosition/> */}
-                <CalculateMousePosition>
-                  <Scenario/>
+          <ContactContext.Provider value={[toggleCont, setToggleCont]}>
+            <Nav />
+            <Cursor currentScene={sceneState.currentScene} ref={mouseRef}/>
+            <Content currentScene={sceneState.currentScene} />
+
+            <Canvas camera={{ fov: 75, near: 0.1, far: 100, position: [-5, -4, 13] }}>
+              <ambientLight intensity={0.5} />
+              <spotLight position={[200, 300, -100]} angle={0.3} intensity={0.4} />
+              <spotLight position={[-200, -400, 100]} angle={1} intensity={0.2} />
+              <pointLight position={[-235, 235, 0]} intensity={0.2} />
+              <Suspense fallback={null}>
+                {/* <ScrollControls pages={0} distance={1}> */}
+                {/* <ScrollControl /> */}
+                <CalculateMousePosition currentScene={sceneState.currentScene}>
+                  <Scenario currentScene={sceneState.currentScene}/>
                 </CalculateMousePosition>
-              {/* </ScrollControls> */}
-            </Suspense>
-          </Canvas>
+                {/* </ScrollControls> */}
+              </Suspense>
+            </Canvas>
+          </ContactContext.Provider>
         </CamDeviationContext.Provider>
       </Context.Provider>
       {/* <Resume/> */}

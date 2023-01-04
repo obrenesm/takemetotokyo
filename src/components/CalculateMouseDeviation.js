@@ -1,12 +1,8 @@
 import React, { useEffect, useRef, useState, useContext } from 'react'
-import {scenes, camPositions} from '../data/scenesData'
-
-import { Context } from './ContextProvider'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useThree } from '@react-three/fiber'
 import gsap from 'gsap'
 
 import { CamDeviationContext } from './ContextProvider'
-//import { animate3D } from '../utils/utils'
 
 let centerWidth = window.innerWidth/2
 let centerHeight = window.innerHeight/2
@@ -14,10 +10,9 @@ let centerHeight = window.innerHeight/2
 let camHorizontalOffset = 0
 let camVerticalOffset = 0
 
-export function CalculateMousePosition({children}){  
+export function CalculateMousePosition({currentScene, children}){  
   const cam = useThree(state => state.camera)
   const [camDeviation, setCamDeviation] = useContext(CamDeviationContext)
-  const [currentScene, setCurrentScene] = useContext(Context)
 
   function onResize() { 
     centerWidth = window.innerWidth/2
@@ -25,7 +20,6 @@ export function CalculateMousePosition({children}){
   }
   
   const calculateDeviation = (event) => {
-
     event.preventDefault()
 
     if (currentScene !== 0){

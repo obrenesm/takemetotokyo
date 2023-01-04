@@ -3,8 +3,8 @@ import { Context } from './ContextProvider'
 import { ScrollDown } from './scrollDown'
 import { ContactContext } from './ContextProvider'
 
-export function Content(props) {
-    const [currentScene, setCurrentScene] = useContext(Context)
+export function Content({currentScene, ...props}) {
+    // const [currentScene, setCurrentScene] = useContext(Context)
     const [toggleCont, setToggleCont] = useContext(ContactContext)
 
   return (
