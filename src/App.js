@@ -47,8 +47,8 @@ function App() {
         <CamDeviationContext.Provider value={[camDeviation, setCamDeviation]}>
           <ContactContext.Provider value={[toggleCont, setToggleCont]}>
             <Nav/>
-            <Cursor currentScene={sceneState.currentScene} ref={mouseRef} />
             <Content currentScene={sceneState.currentScene} />
+            <Cursor currentScene={sceneState.currentScene} ref={mouseRef} />
 
             {/* { console.log('centerOfWindow', centerOfWindow)} */}
             {/* // TODO NOTE: app is reloading all the time, is a resize function necessary? */}

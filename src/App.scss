@@ -694,19 +694,28 @@ body {
   }
 }
 
-button:hover ~ .cursor-circle
-//.modal .modal-container .mail:hover ~ .cursor-circle 
-{
-  width: 25px;
-  height: 25px;
+button:hover ~ .cursor-circle,
+section:has(.modal-cta:hover) ~ .cursor-circle,
+section:has(a:hover) ~ .cursor-circle {
+  width: 30px;
+  height: 30px;
   transition: width 0.4s ease, height 0.4s ease;
+
+  span {
+    display: none;
+  }
 }
 
-p span.modal-cta {
+.modal-cta:hover {
+  cursor: pointer;
+}
+
+section .content:has(a:hover) {
+  color: pink;
+}
+
+.modal-cta {
   pointer-events: all;
-  //text-underline-offset: 0.2em;
-  //text-decoration: underline;
-  //letter-spacing: normal;
   background: 
     linear-gradient(to right, #d7d7d7, #d7d7d7),
     linear-gradient(to right, #fff , #fff);
@@ -715,20 +724,18 @@ p span.modal-cta {
   background-repeat: no-repeat;
   transition: background-size 400ms;
 }
-p span.modal-cta:hover {
-  //color: pink;
-  //text-underline-offset: 0.2em;
+
+.modal-cta:hover {
   transition: all 0.5s ease;
-  //letter-spacing: 0.05em;
   background-size: 0 0.1em, 100% 0.1em;
-
 }
 
-.modal .modal-container:has(> a:hover) ~ .cursor-circle {
-    width: 25px;
-    height: 25px;
-    transition: width 0.4s ease, height 0.4s ease;
-}
+// section > span.modal-cta:hover ~ .cursor-circle,
+// .modal > a:hover ~ .cursor-circle {
+//     width: 25px;
+//     height: 25px;
+//     transition: width 0.4s ease, height 0.4s ease;
+// }
 
 // RESUME
 #resume {
