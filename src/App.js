@@ -41,7 +41,7 @@ function App() {
   return (
     <div id="main" style={{ width: '100vw', height: '100vh' }} 
       onMouseMove={(e) => followCursorEvent(mouseRef)(e)}
-      onClick={(e) => dispatch({ type: getActionByCursor(sceneState.currentScene, camDeviation)})}>
+      >
       <Context.Provider value={[currentScene, setCurrentScene]}>
         {/* <WindowSize.Provider value={[centerOfWindow, setCenterOfWindow]}> */}
         <CamDeviationContext.Provider value={[camDeviation, setCamDeviation]}>
@@ -53,7 +53,8 @@ function App() {
             {/* { console.log('centerOfWindow', centerOfWindow)} */}
             {/* // TODO NOTE: app is reloading all the time, is a resize function necessary? */}
 
-            <Canvas camera={{ fov: 75, near: 0.1, far: 100, position: [-5, -4, 13] }}>
+            <Canvas camera={{ fov: 75, near: 0.1, far: 100, position: [-5, -4, 13] }}
+            onClick={(e) => dispatch({ type: getActionByCursor(sceneState.currentScene, camDeviation)})}>
               <ambientLight intensity={0.5} />
               <spotLight position={[200, 300, -100]} angle={0.3} intensity={0.4} />
               <spotLight position={[-200, -400, 100]} angle={1} intensity={0.2} />
