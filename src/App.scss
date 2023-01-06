@@ -684,6 +684,7 @@ body {
   mix-blend-mode: difference;
   translate: -50% -50%;
   pointer-events: none;
+  scale: 1;
 
   span {
     color: #000;
@@ -693,17 +694,23 @@ body {
   }
 }
 
-// .cursor-circle.over-link {
-//   width: 20px;
-//   height: 20px;
-//   border-radius: 0;
-// }
+.cursor-circle.over-link {
+  width: 20px;
+  height: 20px;
+}
 
-// button:hover {
-//   .cursor-circle {
-//     width: 20px;
-//     height: 20px;  
-//   }
+button:hover ~ .cursor-circle {
+  width: 20px;
+  height: 20px;
+  scale: 0.5;
+
+  .cursor-circle {  
+    scale: 0.5;
+  }
+}
+
+// #contact-btn:hover ~ .cursor-circle {
+//   transform: scale(50%);
 // }
 
 
