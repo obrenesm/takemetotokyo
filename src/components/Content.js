@@ -7,6 +7,10 @@ export function Content({currentScene, ...props}) {
     // const [currentScene, setCurrentScene] = useContext(Context)
     const [toggleCont, setToggleCont] = useContext(ContactContext)
 
+    const toggleContactState = () => {
+      setToggleCont(current => !current);
+    };
+
   return (
     <>
         <section id="intro" className={currentScene === 0 && !toggleCont ? "active" : "inactive"}>
@@ -28,7 +32,7 @@ export function Content({currentScene, ...props}) {
                 <p>3 years ago I visited Japan and fell in love with the culture and the beauty of the country, now I feel that's my time go back and stablish myself</p>
             </div>
             <div className='content third right bottom'>
-                <p>Currently I'm looking for a job opportunity that takes me to Tokyo, feel free to reach me out</p>
+                <p>Currently I'm looking for a job opportunity that takes me to Tokyo, feel free to <span onClick={toggleContactState} className={'modal-cta'}>reach me out</span></p>
             </div>
         </section>
     </>

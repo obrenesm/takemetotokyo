@@ -10,14 +10,25 @@ export const followCursorEvent = (cursorRef) => {
   }
 }
 
+// export const overClickable = (cursorRef) => {
+//   console.log('over cickable');
+
+//   return (e) => {
+//     if (typeof cursorRef !== undefined && cursorRef.current) {
+//       cursorRef.current.addClass('over-link')
+//       console.log('if on cursor Over Clickable');
+//     }
+//   }
+// }
+
 
 export const Cursor = React.forwardRef(({ currentScene }, ref) => {
   const [camDeviation] = useContext(CamDeviationContext);
   return (
-    <div className='cursor-container' >
+    // <div className='cursor-container' >
       <div className='cursor-circle' ref={ref}>
         <span>{getActionByCursor(currentScene, camDeviation)}</span>
       </div>
-    </div>
+    // </div>
   )
 });

@@ -16,7 +16,7 @@ import { Nav } from './components/Nav';
 import './App.scss';
 import { Suspense } from 'react';
 
-import { CamDeviationContext, ContactContext, Context, WindowSize } from './components/ContextProvider';
+import { CamDeviationContext, ContactContext, Context } from './components/ContextProvider';
 import { Resume } from './components/Resume';
 import { Cursor, followCursorEvent } from './components/Cursor';
 import { initialSceneState, sceneReducer } from './reducers/scene.reducer';
@@ -33,23 +33,24 @@ import { CalculateMousePosition } from './components/CalculateMouseDeviation'
 function App() {
   const [currentScene, setCurrentScene] = useState(0);
   const [toggleCont, setToggleCont] = useState(false);
-  const [centerOfWindow, setCenterOfWindow] = useState([window.innerWidth/2, window.innerHeight/2]);
+//  const [centerOfWindow, setCenterOfWindow] = useState([window.innerWidth/2, window.innerHeight/2]);
   const [camDeviation, setCamDeviation] = useState([0, 0]);
   const mouseRef = useRef();
   const [sceneState, dispatch] = useReducer(sceneReducer, initialSceneState);
   
   return (
-    <div id="main" style={{ width: '100vw', height: '100vh' }} onMouseMove={(e) => followCursorEvent(mouseRef)(e)}
-      onClick={(e) => dispatch({ type: getActionByCursor(sceneState.currentScene, camDeviation) }) }>
+    <div id="main" style={{ width: '100vw', height: '100vh' }} 
+      onMouseMove={(e) => followCursorEvent(mouseRef)(e)}
+      onClick={(e) => dispatch({ type: getActionByCursor(sceneState.currentScene, camDeviation)})}>
       <Context.Provider value={[currentScene, setCurrentScene]}>
-        <WindowSize.Provider value={[centerOfWindow, setCenterOfWindow]}>
+        {/* <WindowSize.Provider value={[centerOfWindow, setCenterOfWindow]}> */}
         <CamDeviationContext.Provider value={[camDeviation, setCamDeviation]}>
           <ContactContext.Provider value={[toggleCont, setToggleCont]}>
-            <Nav />
-            <Cursor currentScene={sceneState.currentScene} ref={mouseRef}/>
+            <Nav/>
+            <Cursor currentScene={sceneState.currentScene} ref={mouseRef} />
             <Content currentScene={sceneState.currentScene} />
 
-            { console.log('centerOfWindow', centerOfWindow)}
+            {/* { console.log('centerOfWindow', centerOfWindow)} */}
             {/* // TODO NOTE: app is reloading all the time, is a resize function necessary? */}
 
             <Canvas camera={{ fov: 75, near: 0.1, far: 100, position: [-5, -4, 13] }}>
@@ -61,13 +62,13 @@ function App() {
                 {/* <ScrollControls pages={0} distance={1}> */}
                 {/* <ScrollControl /> */}
                 <CalculateMousePosition currentScene={sceneState.currentScene}>
-                  <Scenario currentScene={sceneState.currentScene}/>
+                  <Scenario currentScene={sceneState.currentScene} />
                 </CalculateMousePosition>
               </Suspense>
             </Canvas>
           </ContactContext.Provider>
         </CamDeviationContext.Provider>
-        </WindowSize.Provider>
+        {/* </WindowSize.Provider> */}
       </Context.Provider>
       {/* <Resume/> */}
     </div>
