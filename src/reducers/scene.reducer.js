@@ -9,8 +9,6 @@ export function sceneReducer(state, action){
       return { currentScene: state.currentScene - 1 };
     case SCENE_ACTIONS.RETURN:
       return { currentScene: 0 };
-    case SCENE_ACTIONS.NONE:
-      return '';
     default:
       return new Error('Invalid action');
   }

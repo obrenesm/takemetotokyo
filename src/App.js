@@ -23,6 +23,11 @@ import { initialSceneState, sceneReducer } from './reducers/scene.reducer';
 import { getActionByCursor } from './utils/scene-actions'
 import { CalculateMousePosition } from './components/CalculateMouseDeviation'
 
+import { ScrollControl } from './components/ScrollControl';
+
+
+import { onTouchStart, onTouchMove, onTouchEnd, ActionOnTouchEnd } from './utils/scene-touch-actions'
+
 // function CameraHelper(){
 //   const camera = new PerspectiveCamera(75, 1.77, 0.1, 100 );
 //   return <group position={[0, 0, 30]}>
@@ -38,9 +43,17 @@ function App() {
   const mouseRef = useRef();
   const [sceneState, dispatch] = useReducer(sceneReducer, initialSceneState);
   
+  const [touchStart, setTouchStart] = useState(null)
+  const [touchEnd, setTouchEnd] = useState(null)
+
   return (
     <div id="main" style={{ width: '100vw', height: '100vh' }} 
       onMouseMove={(e) => followCursorEvent(mouseRef)(e)}
+      onTouchStart={(e) => onTouchStart(e, setTouchStart, setTouchEnd)}
+      onTouchMove={(e) => onTouchMove(e, setTouchEnd)}
+      onTouchEnd={(e) => {
+        //onTouchEnd(touchStart, touchEnd)
+        dispatch({ type: ActionOnTouchEnd(sceneState.currentScene, touchStart, touchEnd)})}}
       >
       <Context.Provider value={[currentScene, setCurrentScene]}>
         {/* <WindowSize.Provider value={[centerOfWindow, setCenterOfWindow]}> */}

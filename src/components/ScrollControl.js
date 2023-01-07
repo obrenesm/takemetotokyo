@@ -58,6 +58,7 @@ export const ScrollControl = () => {
   };
 
   const handleTouchStart = (event) => {
+    console.log('TOUCH START');
     window.addEventListener('touchend', handleTouchEnd);
     touchStart = event.changedTouches[0].screenY
 
