@@ -26,7 +26,7 @@ import { CalculateMousePosition } from './components/CalculateMouseDeviation'
 import { ScrollControl } from './components/ScrollControl';
 
 
-import { onTouchStart, onTouchMove, onTouchEnd, ActionOnTouchEnd } from './utils/scene-touch-actions'
+import { onTouchStart, onTouchMove, onTouchEnd, actionOnTouchEnd } from './utils/scene-touch-actions'
 
 // function CameraHelper(){
 //   const camera = new PerspectiveCamera(75, 1.77, 0.1, 100 );
@@ -53,7 +53,7 @@ function App() {
       onTouchMove={(e) => onTouchMove(e, setTouchEnd)}
       onTouchEnd={(e) => {
         //onTouchEnd(touchStart, touchEnd)
-        dispatch({ type: ActionOnTouchEnd(sceneState.currentScene, touchStart, touchEnd)})}}
+        dispatch({ type: actionOnTouchEnd(sceneState.currentScene, touchStart, touchEnd)})}}
       >
       <Context.Provider value={[currentScene, setCurrentScene]}>
         {/* <WindowSize.Provider value={[centerOfWindow, setCenterOfWindow]}> */}

@@ -14,21 +14,21 @@ export const onTouchStart = (e, setTouchStart, setTouchEnd) => {
 
 export const onTouchMove = (e, setTouchEnd) => setTouchEnd(e.targetTouches[0].clientY)
 
-export const onTouchEnd = (touchStart, touchEnd) => {
-  if (!touchStart || !touchEnd) return
-  const distance = touchStart - touchEnd
+// export const onTouchEnd = (touchStart, touchEnd) => {
+//   if (!touchStart || !touchEnd) return
+//   const distance = touchStart - touchEnd
 
-  // 20 is the minSwipeDistance
-  const isDownSwipe = distance > 20
-  const isUpSwipe = distance < -20
+//   // 20 is the minSwipeDistance
+//   const isDownSwipe = distance > 20
+//   const isUpSwipe = distance < -20
 
   
-  if (isDownSwipe || isUpSwipe) console.log('swipe', isDownSwipe ? 'down' : 'up')
-  // add your conditional logic here
+//   if (isDownSwipe || isUpSwipe) console.log('swipe', isDownSwipe ? 'down' : 'up')
+//   // add your conditional logic here
 
-}
+// }
 
-export const ActionOnTouchEnd = (currentScene, touchStart, touchEnd) => {
+export const actionOnTouchEnd = (currentScene, touchStart, touchEnd) => {
   if (!touchStart || !touchEnd) return
   const distance = touchStart - touchEnd
 
@@ -52,8 +52,4 @@ export const ActionOnTouchEnd = (currentScene, touchStart, touchEnd) => {
   } else {
     return SCENE_ACTIONS.NONE
   }
-
-  // add your conditional logic here
-
-  return 
 }
