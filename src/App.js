@@ -25,15 +25,8 @@ import { CalculateMousePosition } from './components/CalculateMouseDeviation'
 
 import { ScrollControl } from './components/ScrollControl';
 
-
-import { onTouchStart, onTouchMove, onTouchEnd, actionOnTouchEnd } from './utils/scene-touch-actions'
-
-// function CameraHelper(){
-//   const camera = new PerspectiveCamera(75, 1.77, 0.1, 100 );
-//   return <group position={[0, 0, 30]}>
-//     <cameraHelper args={[camera]} />
-//   </group>
-// }
+import { isTouchEnabled } from './utils/utils'
+import { onTouchStart, onTouchMove, onTouchEnd } from './utils/scene-touch-actions'
 
 function App() {
   const [currentScene, setCurrentScene] = useState(0);
@@ -42,18 +35,18 @@ function App() {
   const [camDeviation, setCamDeviation] = useState([0, 0]);
   const mouseRef = useRef();
   const [sceneState, dispatch] = useReducer(sceneReducer, initialSceneState);
-  
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
 
   return (
     <div id="main" style={{ width: '100vw', height: '100vh' }} 
-      onMouseMove={(e) => followCursorEvent(mouseRef)(e)}
+      onMouseMove={isTouchEnabled() ? undefined : (e) => followCursorEvent(mouseRef)(e)}
       onTouchStart={(e) => onTouchStart(e, setTouchStart, setTouchEnd)}
       onTouchMove={(e) => onTouchMove(e, setTouchEnd)}
       onTouchEnd={(e) => {
         //onTouchEnd(touchStart, touchEnd)
-        dispatch({ type: actionOnTouchEnd(sceneState.currentScene, touchStart, touchEnd)})}}
+        // actionOnTouchEnd(sceneState.currentScene, touchStart, touchEnd)}}
+        dispatch({ type: onTouchEnd(sceneState.currentScene, touchStart, touchEnd)})}}
       >
       <Context.Provider value={[currentScene, setCurrentScene]}>
         {/* <WindowSize.Provider value={[centerOfWindow, setCenterOfWindow]}> */}
@@ -61,13 +54,14 @@ function App() {
           <ContactContext.Provider value={[toggleCont, setToggleCont]}>
             <Nav/>
             <Content currentScene={sceneState.currentScene} />
-            <Cursor currentScene={sceneState.currentScene} ref={mouseRef} />
+            {isTouchEnabled() ? undefined : <Cursor currentScene={sceneState.currentScene} ref={mouseRef} />}
 
             {/* { console.log('centerOfWindow', centerOfWindow)} */}
             {/* // TODO NOTE: app is reloading all the time, is a resize function necessary? */}
 
             <Canvas camera={{ fov: 75, near: 0.1, far: 100, position: [-5, -4, 13] }}
-            onClick={(e) => dispatch({ type: getActionByCursor(sceneState.currentScene, camDeviation)})}>
+            onClick={isTouchEnabled() ? undefined : (e) => dispatch({ type: getActionByCursor(sceneState.currentScene, camDeviation)})}
+            >
               <ambientLight intensity={0.5} />
               <spotLight position={[200, 300, -100]} angle={0.3} intensity={0.4} />
               <spotLight position={[-200, -400, 100]} angle={1} intensity={0.2} />

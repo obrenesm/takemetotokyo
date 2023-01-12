@@ -28,7 +28,7 @@ export function Scenario({currentScene, ...props}) {
     const selected = (motion === 'rotation') ? model.rotation : model.position
 
     if (motion === 'position' && scene !== 0) {
-      Object.assign(pos, {x: camDeviation[0] + pos['x'], y: camDeviation[1] + pos['y']})
+      Object.assign(pos, {x: /*camDeviation[0] +*/ pos['x'], y: /*camDeviation[1] + */pos['y']})
     }
 
     return gsap.to(
