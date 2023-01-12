@@ -23,7 +23,7 @@ import { initialSceneState, sceneReducer } from './reducers/scene.reducer';
 import { getActionByCursor } from './utils/scene-actions'
 import { CalculateMousePosition } from './components/CalculateMouseDeviation'
 
-import { ScrollControl } from './components/ScrollControl';
+// import { ScrollControl } from './components/ScrollControl';
 
 import { isTouchEnabled } from './utils/utils'
 import { onTouchStart, onTouchMove, onTouchEnd } from './utils/scene-touch-actions'
@@ -44,8 +44,6 @@ function App() {
       onTouchStart={(e) => onTouchStart(e, setTouchStart, setTouchEnd)}
       onTouchMove={(e) => onTouchMove(e, setTouchEnd)}
       onTouchEnd={(e) => {
-        //onTouchEnd(touchStart, touchEnd)
-        // actionOnTouchEnd(sceneState.currentScene, touchStart, touchEnd)}}
         dispatch({ type: onTouchEnd(sceneState.currentScene, touchStart, touchEnd)})}}
       >
       <Context.Provider value={[currentScene, setCurrentScene]}>
