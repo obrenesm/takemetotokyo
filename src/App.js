@@ -22,15 +22,12 @@ import { initialSceneState, sceneReducer } from './reducers/scene.reducer';
 import { getActionByCursor } from './utils/scene-actions'
 import { CalculateMousePosition } from './components/CalculateMouseDeviation'
 
-// import { ScrollControl } from './components/ScrollControl';
-
 import { isTouchEnabled } from './utils/utils'
 import { onTouchStart, onTouchMove, onTouchEnd } from './utils/scene-touch-actions'
 
 function App() {
   const [currentScene, setCurrentScene] = useState(0);
   const [toggleCont, setToggleCont] = useState(false);
-//  const [centerOfWindow, setCenterOfWindow] = useState([window.innerWidth/2, window.innerHeight/2]);
   const [camDeviation, setCamDeviation] = useState([0, 0]);
   const mouseRef = useRef();
   const [sceneState, dispatch] = useReducer(sceneReducer, initialSceneState);
@@ -46,14 +43,12 @@ function App() {
         dispatch({ type: onTouchEnd(sceneState.currentScene, touchStart, touchEnd)})}}
       >
       <Context.Provider value={[currentScene, setCurrentScene]}>
-        {/* <WindowSize.Provider value={[centerOfWindow, setCenterOfWindow]}> */}
         <CamDeviationContext.Provider value={[camDeviation, setCamDeviation]}>
           <ContactContext.Provider value={[toggleCont, setToggleCont]}>
             <Nav/>
             <Content currentScene={sceneState.currentScene} />
             {isTouchEnabled() ? undefined : <Cursor currentScene={sceneState.currentScene} ref={mouseRef} />}
 
-            {/* { console.log('centerOfWindow', centerOfWindow)} */}
             {/* // TODO NOTE: app is reloading all the time, is a resize function necessary? */}
 
             <Canvas camera={{ fov: 75, near: 0.1, far: 100, position: [-5, -4, 13] }}
@@ -64,8 +59,6 @@ function App() {
               <spotLight position={[-200, -400, 100]} angle={1} intensity={0.2} />
               <pointLight position={[-235, 235, 0]} intensity={0.2} />
               <Suspense fallback={null}>
-                {/* <ScrollControls pages={0} distance={1}> */}
-                {/* <ScrollControl /> */}
                 <CalculateMousePosition currentScene={sceneState.currentScene}>
                   <Scenario currentScene={sceneState.currentScene} />
                 </CalculateMousePosition>
@@ -73,7 +66,6 @@ function App() {
             </Canvas>
           </ContactContext.Provider>
         </CamDeviationContext.Provider>
-        {/* </WindowSize.Provider> */}
       </Context.Provider>
       {/* <Resume/> */}
     </div>
