@@ -8,7 +8,6 @@ import gsap from 'gsap'
 import { Canvas } from '@react-three/fiber';
 import React, { useRef, useState, useReducer } from 'react';
 import { OrbitControls, ScrollControls, Scroll, useScroll } from '@react-three/drei';
-import { Earth } from './components/3d/Earthflat';
 import { Scenario } from './components/3d/Scenario';
 import { Content } from './components/Content';
 import { Nav } from './components/Nav';

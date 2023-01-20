@@ -3,15 +3,13 @@ import React, { useEffect, useRef, useState, useContext } from 'react'
 import { useGLTF, useScroll } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { camPositions, planetRotations } from './../../data/scenesData'
+import { Planet } from './Planet'
 import { Airplane } from './Airplane'
-import { Earthh } from './Earth'
 import { Pin } from './Pin'
 import gsap from 'gsap'
 
 import { Context } from '../ContextProvider'
 import { CamDeviationContext } from '../ContextProvider'
-
-//import { MousePosition } from '../MousePosition'
 
 
 export function Scenario({currentScene, ...props}) {
@@ -65,9 +63,9 @@ export function Scenario({currentScene, ...props}) {
     <>
       <Airplane position={[-0.2, 0.6, 14]}/>
       <group scale={1.6} ref={planet} rotation={[Math.PI / 35, Math.PI / 1.5, 0]}>
-        <Earthh />
-        <Pin pos={[-8.6, 1.5, 1]} rot={[0, 0, Math.PI / 2]} />
-        <Pin pos={[4.7, 5.4, -5.5]} rot={[-Math.PI / 2, -Math.PI / 3.2, -Math.PI / 3.0]} />
+        <Planet/>
+        <Pin pos={[-8.7, 1.6, 0.7]} rot={[0, 0, Math.PI / 2]} />
+        <Pin pos={[4.4, 5.4, -5.6]} rot={[-Math.PI / 2, -Math.PI / 3.2, -Math.PI / 3.0]} />
       </group>
     </>
   )

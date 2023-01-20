@@ -62,16 +62,25 @@ export const planetRotations = {
     end: 0.4
   },
   rotCR: {
-    x: Math.PI / 22,
-    y: Math.PI / 2.3,
+    x: Math.PI / 20,
+    y: Math.PI / 2.24,
     z: 0,
     duration: 2,
     pos: 0.4,
     end: 0.8
   },
+  // rotJpn: {
+  //   x: Math.PI / 195,
+  //   y: -Math.PI / 1.25,
+  //   z: 0,
+  //   duration: 2,
+  //   pos: 0.8,
+  //   end: 1
+  // }
+  // original
   rotJpn: {
-    x: Math.PI / 6,
-    y: -Math.PI / 1.32,
+    x: Math.PI / 5.8,
+    y: -Math.PI / 1.28,
     z: 0,
     duration: 2,
     pos: 0.8,
