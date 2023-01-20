@@ -21,18 +21,18 @@ export function Content({currentScene, ...props}) {
         </section>
         <section id="cr" className={currentScene === 1 && !toggleCont ? "active" : "inactive"}>
             <div className='content third left top'>
-                <p>Hi! I'm Oscar Brenes a frontend developer from Costa Rica, I have been working for what now it's Critical Mass Latam for the past 7&nbsp;years</p>
+                <p>Hi! I'm Oscar, a detail-oriented front-end developer from Costa Rica. I've been working for Critical Mass Latam for the past 7 years and it has been a great journey, learning more about my skills and honing my craft.</p>
             </div>
             <div className='content third right bottom'>
-                <p>I have gain experience on different positions and moved from a small design team that supported GoDaddy to a giant tech team that carry on BMW USA website</p>
+                <p>Grew a lot learning from different positions while moving from a small design team providing creative services for GoDaddy to a giant tech team that supports the BMW USA website experience. Now, it's time for my next big step: Tokyo.</p>
             </div>
         </section>
         <section id="jpn" className={currentScene === 2 && !toggleCont ? "active" : "inactive"}>
             <div className='content third left top'>
-                <p>3 years ago I visited Japan and fell in love with the culture and the beauty of the country, now I feel that's my time go back and stablish myself</p>
+                <p>Three years ago, I visited Japan for the first time and was captivated by the culture. Since then, I've been longing to return and establish a life in this beautiful country.</p>
             </div>
             <div className='content third right bottom'>
-                <p>Currently I'm looking for a job opportunity that takes me to Tokyo, feel free to <span onClick={toggleContactState} className={'modal-cta'}>reach me out</span></p>
+                <p>This is where you can join the journey! I'm looking for an opportunity that takes me to Tokyo. Feel free to <span onClick={toggleContactState} className={'modal-cta'}>reach&nbsp;out.</span></p>
             </div>
         </section>
     </>
