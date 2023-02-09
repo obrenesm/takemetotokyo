@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Context } from './ContextProvider'
-import { ScrollDown } from './scrollDown'
+import { ScrollDown } from './scrolldown/scrollDown'
 import { ContactContext } from './ContextProvider'
 
 export function Content({currentScene, ...props}) {

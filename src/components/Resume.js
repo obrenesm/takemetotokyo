@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ScrollDown } from './scrollDown'
+import { ScrollDown } from './scrolldown/scrollDown'
 
 export function Resume(props) {
   return (

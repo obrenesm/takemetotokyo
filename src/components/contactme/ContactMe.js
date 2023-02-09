@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { Context } from '../ContextProvider'
-import { ScrollDown } from '../scrollDown'
+import { ScrollDown } from '../scrolldown/scrollDown'
 import { ContactContext } from '../ContextProvider'
-import './ContactMe.scss';
+import './ContactMe.scss'
 
 
 export function ContactMe(props) {
