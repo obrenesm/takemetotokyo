@@ -122,9 +122,9 @@
   .scroll {
     position: absolute;
     bottom: 20px;
-    left: 50%;
+    width: 100%;
     text-align: center;
-    z-in
+    z-index: 1;
 
     h6 {
       margin: 15px 0;
@@ -575,13 +575,11 @@ body {
   position: absolute;
   width: 80px;
   height: 80px;
-  //border: 2px solid #fff;
   background-color: #ef225a;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   z-index: 999;
-  //filter: invert(1);
   mix-blend-mode: difference;
   translate: -50% -50%;
   pointer-events: none;
