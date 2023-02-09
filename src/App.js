@@ -17,7 +17,7 @@ import { Suspense } from 'react';
 
 import { CamDeviationContext, ContactContext, Context } from './components/ContextProvider';
 import { Resume } from './components/Resume';
-import { Cursor, followCursorEvent } from './components/Cursor';
+import { Cursor, followCursorEvent } from './components/cursor/Cursor';
 import { initialSceneState, sceneReducer } from './reducers/scene.reducer';
 import { getActionByCursor } from './utils/scene-actions'
 import { CalculateMousePosition } from './components/CalculateMouseDeviation'

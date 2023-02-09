@@ -1,0 +1,147 @@
+@import '../../Global.scss';
+
+// Default & Mobile
+@media (min-width: 0px) {
+
+  #contact-btn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 999;
+    background-color: transparent;
+    border: none;
+    color: #d7d7d7;
+    font-weight: 400;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    transition: color 0.4s ease;
+    font-family: PPNeueMachina-InktrapMedium, montserrat, -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
+    segoe ui, arial, sans-serif;
+
+    svg {
+      stroke: #d7d7d7;
+      position: relative;
+      top: -0.1em;
+    }
+
+    span {
+      padding-right: 10px;
+      animation: moveIn 1000ms ease-in forwards;
+    }
+
+    &:hover {
+    color: #fff;
+    cursor: pointer;
+
+      svg {
+        stroke: #fff;
+      }
+
+      .line1, .line2 {
+        stroke-dashoffset: -10;
+        stroke-dasharray: 50 1000;
+      }
+    }
+
+    .line1, .line2 {
+      transition: 0.7s;
+      stroke-dasharray: 75 1000;
+    }
+
+    .text-container {
+      width: 120px;
+      height: 20px;
+      overflow: hidden;
+      transition: 500ms ease-in-out;
+
+      span {
+        white-space: nowrap;
+      }
+    }
+
+    &.open {
+      &:hover {
+        .line1, .line2 {
+          stroke-dashoffset: -160;
+          stroke-dasharray: 50 1000;
+        }
+      }
+    
+      .line1, .line2 {
+        stroke-dashoffset: -150;
+        stroke-dasharray: 70 1000;
+      }
+
+      .text-container {
+        width: 0px;
+      }
+    }
+  }
+
+  .modal {
+    background-color: rgba(3, 0, 52, 0.6);
+    backdrop-filter: blur(8px);
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 9;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    visibility: hidden;
+    animation: fadeOut 1500ms forwards;
+    transition: visibility 1s;
+
+    h2 {
+      color: #ef225a;
+      font-size: 3em;
+      position: relative;
+      margin-top: 0;
+    }
+
+    p {
+      color: #fff;
+      font-size: 1em;
+      font-style: oblique;
+      font-weight: 400;
+    }
+
+    a {
+      position: relative;
+      display: block;
+      color: #fff;
+      padding: 10px 0;
+      font-size: 1.5em;
+      font-weight: 500;
+      text-decoration: none;
+      transform: translate(0px, 0px);
+      transition: transform 0.4s ease-in-out;
+    }
+
+    a:hover {
+      position: relative;
+      transform: translate(5px, 0px);
+      transition: transform 0.4s ease-in-out;
+    }
+
+    &.modal-open {
+      animation: fadeIn 500ms 300ms forwards;
+      animation: blurIn 800ms forwards;
+      opacity: 1;
+      visibility: visible;
+
+      .modal-container {
+        place-self: center;
+        overflow: hidden;
+        animation: fadeIn 1000ms ease-in forwards;
+        margin: 0 10vw;
+
+      }
+    }
+
+    .modal-container {
+      animation: fadeOut 500ms forwards;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Context } from './ContextProvider'
 import { ScrollDown } from './scrollDown'
-import { ContactMe } from './ContactMe'
+import { ContactMe } from './contactme/ContactMe'
 import { ContactContext } from './ContextProvider'
 
 export function Nav(props) {

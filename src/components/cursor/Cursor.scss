@@ -1,0 +1,81 @@
+body {
+  cursor: none;
+}
+
+.cursor-circle {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background-color: #ef225a;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  z-index: 999;
+  mix-blend-mode: difference;
+  translate: -50% -50%;
+  pointer-events: none;
+  transition: width 0.4s ease, height 0.4s ease;
+
+  span {
+    color: #000;
+    align-self: center;
+    text-align: center;
+    font-size: 0.8em;
+  }
+}
+
+.modal:hover ~ .cursor-circle {
+  width: 60px;
+  height: 60px;
+  transition: width 0.4s ease, height 0.4s ease;
+
+  span {
+    display: none;
+  }
+}
+
+button:hover ~ .cursor-circle,
+.modal:has(.modal-cta:hover) ~ .cursor-circle,
+.modal:has(a:hover) ~ .cursor-circle, 
+section:has(.modal-cta:hover) ~ .cursor-circle,
+section:has(a:hover) ~ .cursor-circle {
+  width: 30px;
+  height: 30px;
+  transition: width 0.4s ease, height 0.4s ease;
+
+  span {
+    display: none;
+  }
+}
+
+// .modal-open:hover {
+//   .cursor-circle {
+//     span {
+//       display: none;
+//     }
+//   }
+// }
+
+.modal-cta:hover {
+  cursor: pointer;
+}
+
+section .content:has(a:hover) {
+  color: pink;
+}
+
+.modal-cta {
+  pointer-events: all;
+  background: 
+    linear-gradient(to right, #d7d7d7, #d7d7d7),
+    linear-gradient(to right, #fff , #fff);
+  background-size: 100% 0.07em, 0 0.07em;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 400ms;
+}
+
+.modal-cta:hover {
+  transition: all 0.5s ease;
+  background-size: 0 0.1em, 100% 0.1em;
+}

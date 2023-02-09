@@ -1,0 +1,77 @@
+// Animations 
+
+@keyframes scrollAnimation {
+  0% { 
+    opacity: 0;
+  }
+
+  15% { 
+    top: 0px;
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% { 
+    top: 5px; 
+    opacity: 0;
+  }
+}
+
+@keyframes modalContentAnimation {
+  0% { 
+    opacity: 0;
+  }
+
+  100% { 
+    opacity: 1;
+  }
+}
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes blurIn {
+  0% {
+    backdrop-filter: blur(0px);
+  }
+  100% {
+    backdrop-filter: blur(8px);
+  }
+}
+
+@keyframes blurOut {
+  0% {
+    backdrop-filter: blur(8px);
+  }
+  100% {
+    backdrop-filter: blur(6px);
+  }
+}
+
+@keyframes moveIn {
+  from {
+    translate: 0px, 0px;
+  }
+  to {
+    translate: 10px, 0px;
+  }
+}
