@@ -119,22 +119,6 @@
     }
   }
 
-  .scroll {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-    z-index: 1;
-
-    h6 {
-      margin: 15px 0;
-      height: 20px;
-      font-size: 1em;
-      font-weight: 400;
-      color: #fff;
-    }
-  }
-
   p {
     color: #fff;
     font-size: 1.1em;
@@ -250,6 +234,7 @@
 @media (hover:hover) {
 
   .scroll {
+    display: none;
     .arrow {
       display: none;
     }
@@ -261,6 +246,20 @@
 @media (hover: none) {
 
   .scroll {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+
+    h6 {
+      margin: 15px 0;
+      height: 20px;
+      font-size: 1em;
+      font-weight: 400;
+      color: #fff;
+    }
+
     .arrow {
       position: relative;
       margin: 0 auto;
