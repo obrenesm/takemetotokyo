@@ -15,6 +15,7 @@ body {
   translate: -50% -50%;
   pointer-events: none;
   transition: width 0.4s ease, height 0.4s ease;
+  transform: translate3d(-100px, 0px, 0px);
 
   span {
     color: #000;
