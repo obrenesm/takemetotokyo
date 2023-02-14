@@ -7,7 +7,7 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export function Planet(props) {
-  const { nodes, materials } = useGLTF('/obrenesm/planet.gltf')
+  const { nodes, materials } = useGLTF('/takemetotokyo/planet.gltf')
   const planet = useRef(null)
 
   return (
@@ -21,4 +21,4 @@ export function Planet(props) {
   )
 }
 
-useGLTF.preload('/obrenesm/planet.gltf')
+useGLTF.preload('/takemetotokyo/planet.gltf')
