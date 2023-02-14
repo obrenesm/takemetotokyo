@@ -16,7 +16,7 @@ import gsap from 'gsap'
 
 
 export function Airplane({props, position}) {
-  const { nodes, materials } = useGLTF('/airplane.gltf')
+  const { nodes, materials } = useGLTF('/obrenesm/airplane.gltf')
   const group = useRef(null)
   const propeller = useRef(null)
 
