@@ -1,4 +1,4 @@
-// Default & Mobile
+// Default & Mobile XS
 @media (min-width: 0px) {
 
   * {
@@ -121,8 +121,8 @@
 
   p {
     color: #fff;
-    font-size: 1.1em;
-    line-height: 1.5em;
+    font-size: 0.9em;
+    line-height: 1.2em;
     text-align: justify;
   }
 
@@ -139,10 +139,42 @@
   }
 
   .bottom {
+    bottom: 15px;
+  }
+}
+
+// Mobile
+@media (min-width: 400px) {
+
+  p {
+    color: #fff;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    text-align: justify;
+  }
+
+  .inactive {
+    .content {
+      &.top.left {
+        top: 70px;
+      }
+
+      &.top.right {
+        top: 70px;
+      }
+    }
+  }
+
+  .top {
+    top: 70px;
+  }
+
+  .bottom {
     bottom: 50px;
   }
 }
 
+// Tablet
 @media (min-width: 768px) {
 
   .left {

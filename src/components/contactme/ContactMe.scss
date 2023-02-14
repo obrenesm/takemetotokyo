@@ -5,7 +5,7 @@
 
   #contact-btn {
     position: absolute;
-    right: 20px;
+    right: calc(10% - 10px);
     top: 20px;
     z-index: 999;
     background-color: transparent;
@@ -143,5 +143,12 @@
     .modal-container {
       animation: fadeOut 500ms forwards;
     }
+  }
+}
+
+
+@media (min-width: 768px) {
+  #contact-btn {
+    right: 20px;
   }
 }
