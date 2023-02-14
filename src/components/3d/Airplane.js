@@ -48,4 +48,4 @@ export function Airplane({props, position}) {
   )
 }
 
-useGLTF.preload('/airplane.gltf')
+useGLTF.preload('/obrenesm/airplane.gltf')
