@@ -1,0 +1,71 @@
+
+// RESUME
+
+#root {
+  &.cv {
+    overflow: auto;
+
+    cursor: url('../../assets/pointer.svg'), auto;
+    user-select: text;
+    
+    ::-moz-selection { 
+      background: #ef225a;
+    }
+    
+    ::selection {
+      background: #ef225a;
+    }
+
+
+    h3, h4, h5 {
+      font-weight: 400;
+    }
+    
+    h3 {
+      font-size: 2.3em;
+      font-weight: 600;
+      margin: 5em 0 3em;
+    }
+    
+    h4 {
+      font-size: 2em;
+      font-weight: 400;
+      margin: 1em 0 0;
+      &:first-child {
+        margin: 2em 0 0;
+      }
+    }
+    
+    h5 {
+      font-size: 1.4em;
+      font-weight: 400;
+      margin: 0.3em 0;
+      color: #ccc;
+    }
+    
+    h6 {
+      font-size: 1.2em;
+      font-weight: 300;
+      margin: 0.5em 0;
+      color: #ccc;
+    }
+
+    section:last-child {
+      margin-bottom: 6em;
+    }
+  }
+}
+
+#resume {
+  width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 40% auto;
+}
+
+.box {
+  width: 20vw;
+  height: 20vh;
+  border: #ef225a solid;
+}
+
