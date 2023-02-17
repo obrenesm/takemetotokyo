@@ -5,14 +5,14 @@
 
   #contact-btn {
     position: absolute;
-    right: calc(10% - 10px);
+    right: calc(10% - 15px);
     top: 20px;
     z-index: 999;
     background-color: transparent;
     border: none;
     color: #d7d7d7;
     font-weight: 400;
-    font-size: 1.2em;
+    font-size: 1.1em;
     display: flex;
     align-items: center;
     transition: color 0.4s ease;
@@ -23,6 +23,8 @@
       stroke: #d7d7d7;
       position: relative;
       top: -0.1em;
+      height: 25px;
+      width: 25px;
     }
 
     span {
@@ -147,8 +149,25 @@
 }
 
 
+@media (min-width: 400px) {
+  #contact-btn {
+    font-size: 1.2em;
+
+    svg {
+      height: 30px;
+      width: 30px;
+    }
+  }
+}
+
 @media (min-width: 768px) {
   #contact-btn {
-    right: 20px;
+    right: 12px;
+  }
+}
+
+@media (min-width: 1200px) {
+  #contact-btn {
+    right: 32px;
   }
 }
