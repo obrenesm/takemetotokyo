@@ -1,7 +1,7 @@
 //import { createRoot } from 'react-dom/client';
-import * as THREE from 'three'
-import { useFrame, useThree } from '@react-three/fiber'
-import gsap from 'gsap'
+// import * as THREE from 'three'
+// import { useFrame, useThree } from '@react-three/fiber'
+// import gsap from 'gsap'
 
 
 
