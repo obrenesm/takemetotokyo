@@ -7,9 +7,11 @@ import gsap from 'gsap'
 
 import { Canvas } from '@react-three/fiber';
 import React, { useRef, useState, useReducer } from 'react';
+
+import { Route, Routes } from 'react-router-dom'
 import { Main } from './pages/Main'
 import { Resume } from './pages/resume/Resume'
-import { Route, Routes } from 'react-router-dom'
+import { Credits } from './pages/credits/Credits'
 // import { OrbitControls, ScrollControls, Scroll, useScroll } from '@react-three/drei';
 // import { Scenario } from './components/3d/Scenario';
 // import { Content } from './components/Content';
@@ -74,8 +76,8 @@ function App() {
     // </div>
     <Routes>
       <Route path="/takemetotokyo" element={<Main/>} />
-
       <Route path="/takemetotokyo/resume" element={<Resume/>} />
+      <Route path="/takemetotokyo/credits" element={<Credits/>} />
     </Routes>
   );
 }

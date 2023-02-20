@@ -62,7 +62,6 @@ export function Main() {
           </ContactContext.Provider>
         </CamDeviationContext.Provider>
       </Context.Provider>
-      {/* <Resume/> */}
     </div>
   );
 }

@@ -5,17 +5,7 @@ import { CV } from './cv'
 export function Resume(props) {
 
     document.getElementsByTagName('body')[0].classList.add('cv')
-
-    document.getElementsByClassName('box')
-
-    // const cvHeight = document.getElementById('resume').clientHeight
-    const scrollAmount = window.pageYOffset
-    const scrollPercentage = scrollAmount * 0.2
-    // console.log('cvHeight', cvHeight);
-    console.log('scrollAmountt', scrollAmount);
-
-
-
+    
     const [scrollEquivalent, setScrollEquivalent] = useState(0);
 
     useEffect(() => {

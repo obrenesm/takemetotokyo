@@ -20,11 +20,11 @@ export function Airplane({props, position}) {
   const group = useRef(null)
   const propeller = useRef(null)
 
-  var tl = gsap.timeline( {repeat:-1, repeatDelay: 2} );
+  let tl = gsap.timeline( {repeat:-1, repeatDelay: 2} );
 
   //useFrame(() => (group.current.position.z += (Math.sin(Date.now() * 0.00005) * 0.008)))
   useFrame(() => (group.current.rotation.z += (Math.sin(Date.now() * 0.0005) * 0.001)))
-  useFrame(() => (propeller.current.rotation.y -= 0.1))
+  useFrame(() => (propeller.current.rotation.y += 0.1))
   // useFrame(() => ( 
       
   // ))

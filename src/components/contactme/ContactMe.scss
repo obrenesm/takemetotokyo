@@ -109,6 +109,18 @@
       font-weight: 400;
     }
 
+    .credits-disclaimer {
+      p { 
+        font-size: 0.8em;
+      }
+
+      a {
+        display: inline;
+        font-size: 1em;
+        text-decoration: underline;
+      }
+    }
+
     a {
       position: relative;
       display: block;

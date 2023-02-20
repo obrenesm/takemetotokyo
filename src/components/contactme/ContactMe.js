@@ -24,6 +24,9 @@ export function ContactMe(props) {
               <a href="/takemetotokyo/resume" target="_blank" className='external'>Resume</a>
               <a href="https://www.linkedin.com/in/obrenesm" rel="noopener noreferrer" target="_blank" className='external'>LinkedIn</a>
             </section>
+            <section className='credits-disclaimer'>
+              <p>I used and modified assets under a creative commons license. If you want to check the authors, or just see what I modified <a href="/takemetotokyo/credits" target="_blank" className='external'>click here</a></p>
+            </section>
           </div>
         </section>
     </>
