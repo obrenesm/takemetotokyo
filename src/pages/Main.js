@@ -23,6 +23,7 @@ import { CalculateMousePosition } from '../components/CalculateMouseDeviation'
 import { isTouchEnabled } from '../utils/utils'
 import { onTouchStart, onTouchMove, onTouchEnd } from '../utils/scene-touch-actions'
 
+
 export function Main() {
   const [currentScene, setCurrentScene] = useState(0);
   const [toggleCont, setToggleCont] = useState(false);
