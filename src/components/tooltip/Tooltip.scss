@@ -1,6 +1,6 @@
 /* Custom properties */
 :root {
-  --tooltip-text-color: black;
+  --tooltip-text-color: #0c0449;
   --tooltip-background-color: rgb(255,255,255);
   --tooltip-margin: 20px;
   --tooltip-arrow-size: 6px;
@@ -30,47 +30,67 @@
   z-index: 100;
   min-width: 300px;
   text-align: center;
+  line-height: 1.5em;
 
   span {
     color: var(--tooltip-text-color);
     font-size: 0.8em;
-    line-height: 0.5em;
+    // line-height: 0.5em;
     // font-weight: 400;
     text-align: center;
     // margin: 10px;
   }
 }
 
-/* CSS border triangles */
-.Tooltip-Tip::before {
-  content: " ";
-  left: 50%;
-  border: solid transparent;
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-  border-width: var(--tooltip-arrow-size);
-  margin-left: calc(var(--tooltip-arrow-size) * -1);
-  z-index: 9999;
-}
+// /* CSS border triangles */
+// .Tooltip-Tip::before {
+//   content: " ";
+//   left: 50%;
+//   border: solid transparent;
+//   height: 0;
+//   width: 0;
+//   position: absolute;
+//   pointer-events: none;
+//   border-width: var(--tooltip-arrow-size);
+//   margin-left: calc(var(--tooltip-arrow-size) * -1);
+//   z-index: 9999;
+// }
 
 // /* Absolute positioning */
 .Tooltip-Tip.top {
   top: calc(var(--tooltip-margin) * -1);
 }
-/* CSS border triangles */
-.Tooltip-Tip.top::before {
-  top: 100%;
-  border-top-color: var(--tooltip-background-color);
-}
+// /* CSS border triangles */
+// .Tooltip-Tip.top::before {
+//   top: 100%;
+//   border-top-color: var(--tooltip-background-color);
+// }
 
 /* Absolute positioning */
 .Tooltip-Tip.bottom {
   bottom: calc(var(--tooltip-margin) * -1);
 }
-/* CSS border triangles */
-.Tooltip-Tip.bottom::before {
-  bottom: 100%;
-  border-bottom-color: var(--tooltip-background-color);
+// /* CSS border triangles */
+// .Tooltip-Tip.bottom::before {
+//   bottom: 100%;
+//   border-bottom-color: var(--tooltip-background-color);
+// }
+
+
+
+// Tablet
+@media (min-width: 768px) {
+  .Tooltip-Tip {
+    left: 0;
+    transform: translateX(0);
+  }
+}
+
+
+// Tablet
+@media (min-width: 1380px) {
+  .Tooltip-Tip {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }

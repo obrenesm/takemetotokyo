@@ -110,8 +110,14 @@
     }
 
     .credits-disclaimer {
+      position: absolute;
+      bottom: 1em;
+      margin: 0 10vw;
+
       p { 
         font-size: 0.8em;
+        color: #fff;
+        opacity: 0.5;
       }
 
       a {
@@ -149,7 +155,7 @@
 
         &:hover {
           position: relative;
-          transform: translate(0px, -4px);
+          transform: translate(0px, -2px);
           transition: transform 0.4s ease-in-out;
         }
       }
@@ -194,6 +200,12 @@
 @media (min-width: 768px) {
   #contact-btn {
     right: 12px;
+  }
+
+  .modal {
+    .credits-disclaimer {
+      bottom: 2em;
+    }
   }
 }
 

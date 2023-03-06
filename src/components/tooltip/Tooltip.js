@@ -22,7 +22,7 @@ export const Tooltip = (props) => {
       onMouseEnter={showTip}
       onMouseLeave={hideTip}
     >
-      &nbsp;{props.children}<sup>?</sup>&nbsp;
+      {props.children}<sup>?</sup>&nbsp;
       
       {active && (
         <span className={`Tooltip-Tip ${props.direction || "top"}`}>
