@@ -75,9 +75,9 @@ function App() {
     //   {/* <Resume/> */}
     // </div>
     <Routes>
-      <Route path="/takemetotokyo" element={<Main/>} />
-      <Route path="/takemetotokyo/resume" element={<Resume/>} />
-      <Route path="/takemetotokyo/credits" element={<Credits/>} />
+      <Route path="/" element={<Main/>} />
+      <Route path="/resume" element={<Resume/>} />
+      <Route path="/credits" element={<Credits/>} />
     </Routes>
   );
 }
