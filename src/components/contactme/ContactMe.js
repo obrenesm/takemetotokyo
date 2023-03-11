@@ -21,12 +21,12 @@ export function ContactMe(props) {
               <a href="tel:+50688117533" className='tel'>+506 88 11 75 33</a>
             </section>
             <section className='extLinks'>
-              <a href="/takemetotokyo/resume" target="_blank" className='external'>Resume</a>
+              <a href="/resume" target="_blank" className='external'>Resume</a>
               <a href="https://www.linkedin.com/in/obrenesm" rel="noopener noreferrer" target="_blank" className='external'>LinkedIn</a>
             </section>
           </div>
           <div className='credits-disclaimer'>
-              <p>I used and modified assets under a creative commons license. If you want to check the authors, or just see what I modified <a href="/takemetotokyo/credits" target="_blank" className='external'>click here</a></p>
+              <p>I used and modified assets under a creative commons license. If you want to check the authors, or just see what I modified <a href="/credits" target="_blank" className='external'>click here</a></p>
           </div>
         </div>
     </>
