@@ -54,6 +54,7 @@
     .text-container {
       width: 120px;
       height: 20px;
+      overflow: hidden;
       transition: 500ms ease-in-out;
 
       span {
@@ -168,7 +169,7 @@
 
       .modal-container {
         place-self: center;
-        overflow: hidden;
+        // overflow: hidden;
         animation: fadeIn 1000ms ease-in forwards;
         margin: 0 10vw;
 
