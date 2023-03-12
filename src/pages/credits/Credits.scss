@@ -1,0 +1,129 @@
+
+// RESUME
+
+// XS
+@media (min-width: 0px) {
+  body {
+    &.credits {
+      pointer-events: all;
+
+      #root {
+      background-color: #0F0757;
+      }
+
+      cursor: url('../../assets/pointer.svg'), auto;
+      user-select: text;
+      
+      ::-moz-selection { 
+        background: #ef225a;
+      }
+      
+      ::selection {
+        background: #ef225a;
+      }
+
+      a:hover {
+        transform: translate(0, 10px);
+        // color: red;
+      }
+
+      .grid {
+        position: absolute;
+        width: 100%;
+        height: 50%;
+        bottom: 0;
+        text-align: center;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 46% 46%;
+        grid-column-gap: 8%;
+        padding: 0 10%;
+      }
+
+      .plain {
+        top: 0;
+      }
+      .planet {
+        bottom: 0;
+      }
+
+      .center {
+        margin: 3vh 5vw 0;
+        position: absolute;
+        width: 90%;
+        text-align: center;
+
+        p {
+          text-align: center;
+          font-size: 0.9em;
+        }
+      }
+
+      .right {
+        text-align: left;
+        align-self: end;
+
+        p {
+          text-align: left;
+          font-size: 0.9em;
+        }
+      }
+
+      .left {
+        text-align: right;
+        align-self: start;
+
+        p {
+          text-align: right;
+          font-size: 0.9em;
+        }
+      }
+    }
+  }
+}
+
+// Mobile
+@media (min-width: 400px) {
+  body {
+    &.credits {
+      .center,
+      .right,
+      .left {
+        p {
+          font-size: 1.1em;
+        }
+      }
+    }
+  }
+}
+
+
+// Tablet
+@media (min-width: 768px) {
+  body {
+    &.credits {
+      .center,
+      .right,
+      .left {
+        p {
+          font-size: 1.1em;
+        }
+      }
+
+      .center {
+        margin: 5vh 5vw 0;
+      }
+    }
+  }
+}
+
+// Desktop
+@media (min-width: 1200px) {
+  body {
+    &.credits {
+      .grid {
+        padding: 0 20%;
+      }
+    }
+  }
+}

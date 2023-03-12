@@ -5,20 +5,19 @@
     box-sizing: border-box;
   }
 
-  html,
   body,
   #root {
     width: 100vw;
     height: 100vh;
     margin: 0;
     padding: 0;
+    overflow: hidden;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    overflow: hidden;
     background: #23168c;
   }
 
@@ -147,10 +146,8 @@
 @media (min-width: 400px) {
 
   p {
-    color: #fff;
     font-size: 1.1em;
     line-height: 1.5em;
-    text-align: justify;
   }
 
   .inactive {
@@ -260,87 +257,4 @@
       }
     }
   }
-}
-
-
-// @media (hover:hover) {
-
-//   .scroll {
-//     display: none;
-//     .arrow {
-//       display: none;
-//     }
-//   } 
-// }
-
-
-
-// @media (hover: none) {
-
-//   .scroll {
-//     position: absolute;
-//     bottom: 20px;
-//     width: 100%;
-//     text-align: center;
-//     z-index: 1;
-
-//     h6 {
-//       margin: 15px 0;
-//       height: 20px;
-//       font-size: 1em;
-//       font-weight: 400;
-//       color: #fff;
-//     }
-
-//     .arrow {
-//       position: relative;
-//       margin: 0 auto;
-//       height: 15px;
-//       width: 15px;
-//       border-right: solid 1.5px #fff;
-//       border-bottom: solid 1.5px #fff;
-//       rotate: 45deg;
-//       animation: scrollAnimation 1s ease-out infinite;
-//     }
-//   } 
-// }
-
-// RESUME
-
-#resume {
-  width: 90%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 40% auto;
-}
-
-.box {
-  width: 20vw;
-  height: 20vh;
-  border: #ef225a solid;
-}
-
-h3, h4, h5 {
-  font-size: 2em;
-  font-weight: 400;
-}
-
-h3 {
-  font-weight: 600;
-  margin: 4em 0;
-}
-
-h4 {
-  margin: 2em 0 0;
-}
-
-h5 {
-  font-size: 1.4em;
-  margin: 0.2em 0;
-}
-
-h6 {
-  font-size: 1.2em;
-  font-weight: 300;
-  margin: 0.5em 0;
 }

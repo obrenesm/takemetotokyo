@@ -10,16 +10,25 @@ export function ContactMe(props) {
   const [toggleCont, setToggleCont] = useContext(ContactContext)
   return (
     <>
-        <section className={`modal ${toggleCont ? 'modal-open' : ''}`} id='contact-modal' 
+        <div className={`modal ${toggleCont ? 'modal-open' : ''}`} id='contact-modal' 
         // open={toggleCont}
         >
           <div className='modal-container'>
-            <h2>Let's talk!</h2>
-            <p>Here goes a text that say something catchy.</p>
-            <a href="mailto:exor.os car@gmail.com" className='mail'>exor.oscar@gmail.com</a>
-            <a href="tel:+50688117533" className='mail'>+506 88 11 75 33</a>
+            <section>
+              <h2>Let's talk!</h2>
+              <p>I would love to hear from you, even if your aren't exactly on Tokyo</p>
+              <a href="mailto:contact@oscarbrenes.in" className='mail'>contact@oscarbrenes.in</a>
+              <a href="tel:+50688117533" className='tel'>+506 88 11 75 33</a>
+            </section>
+            <section className='extLinks'>
+              <a href="/resume" target="_blank" className='external'>Resume</a>
+              <a href="https://www.linkedin.com/in/obrenesm" rel="noopener noreferrer" target="_blank" className='external'>LinkedIn</a>
+            </section>
           </div>
-        </section>
+          <div className='credits-disclaimer'>
+              <p>I used and modified assets under a creative commons license. If you want to check the authors, or just see what I modified <a href="/credits" target="_blank" className='external'>click here</a></p>
+          </div>
+        </div>
     </>
   )
 }

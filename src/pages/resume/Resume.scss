@@ -1,0 +1,183 @@
+
+// RESUME
+
+
+// XS Mobile
+@media (min-width: 0px) {
+
+  body {
+    &.cv {
+      overflow: auto;
+      height: fit-content;
+      background-color: #0F0757;
+  
+      #root {
+      overflow: auto;
+      height: fit-content;
+      background-color: #0F0757;
+      }
+  
+      cursor: url('../../assets/pointer.svg'), auto;
+      user-select: text;
+      
+      ::-moz-selection { 
+        background: #ef225a;
+      }
+      
+      ::selection {
+        background: #ef225a;
+      }
+  
+  
+      h3, h4, h5 {
+        font-weight: 400;
+      }
+      
+      h3 {
+        font-size: 2.3em;
+        font-weight: 600;
+        margin: 5em 0 2.5em;
+      }
+      
+      h4 {
+        font-size: 2em;
+        font-weight: 400;
+        margin: 1em 0 0;
+        &:first-child {
+          margin: 2em 0 0;
+        }
+      }
+      
+      h5 {
+        font-size: 1.4em;
+        font-weight: 400;
+        margin: 0.3em 0;
+        color: #ccc;
+      }
+      
+      h6 {
+        font-size: 1.2em;
+        font-weight: 300;
+        margin: 0.5em 0;
+        color: #ccc;
+      }
+  
+      section:first-of-type {
+        h3 {
+          margin-top: 150px;
+        }
+      }
+  
+      section:last-child {
+        margin-bottom: 6em;
+      }
+      
+    }
+  }
+  
+  .minimap {
+    display: none;
+  }
+  
+  .curriculum {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+  
+  #resume {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+}
+
+// Mobile
+@media (min-width: 400px) {
+
+  // body {
+  //   &.cv {
+  //     section:first-of-type {
+  //       h3 {
+  //         margin-top: 00px;
+  //       }
+  //     }
+  //   }
+  // }
+
+  .minimap {
+    display: block;
+    scale: 0.1;
+    position: fixed;
+    transform-origin: 0 0;
+    pointer-events: none;
+    // top: 260px;
+    left: 5%;
+  
+    .box {
+      width: 100vw;
+      height: 100vh;
+      border: #ef225a solid 10px;
+      position: absolute;
+    }
+  
+    .curriculum {
+      width: 60vw;
+    }
+  }
+
+  .curriculum {
+    margin-left: 30%;
+  }
+}
+
+
+// Tablet
+@media (min-width: 768px) {
+
+  body {
+    &.cv {
+      section:first-of-type {
+        h3 {
+          margin-top: 190px;
+        }
+      }
+    }
+  }
+
+  .minimap {
+    scale: 0.15;
+    top: 165px;
+    left: 5%;
+  }
+
+  .curriculum {
+    margin-left: 40%;
+    margin-right: 5%;
+  }
+}
+
+// Desktop
+@media (min-width: 1200px) {
+
+  body {
+    &.cv {
+      section:first-of-type {
+        h3 {
+          margin-top: 300px;
+        }
+      }
+    }
+  }
+
+  .minimap {
+    scale: 0.15;
+    top: 260px;
+    left: 5%;
+  }
+
+  .curriculum {
+    margin-right: 5%;
+  }
+
+
+}

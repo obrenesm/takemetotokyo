@@ -5,14 +5,14 @@
 
   #contact-btn {
     position: absolute;
-    right: calc(10% - 10px);
+    right: calc(10% - 15px);
     top: 20px;
     z-index: 999;
     background-color: transparent;
     border: none;
     color: #d7d7d7;
     font-weight: 400;
-    font-size: 1.2em;
+    font-size: 1.1em;
     display: flex;
     align-items: center;
     transition: color 0.4s ease;
@@ -23,6 +23,8 @@
       stroke: #d7d7d7;
       position: relative;
       top: -0.1em;
+      height: 25px;
+      width: 25px;
     }
 
     span {
@@ -97,7 +99,7 @@
       color: #ef225a;
       font-size: 3em;
       position: relative;
-      margin-top: 0;
+      margin: 0;
     }
 
     p {
@@ -105,6 +107,25 @@
       font-size: 1em;
       font-style: oblique;
       font-weight: 400;
+      margin-bottom: 3em;
+    }
+
+    .credits-disclaimer {
+      position: absolute;
+      bottom: 1em;
+      margin: 0 10vw;
+
+      p { 
+        font-size: 0.8em;
+        color: #fff;
+        opacity: 0.5;
+      }
+
+      a {
+        display: inline;
+        font-size: 1em;
+        text-decoration: underline;
+      }
     }
 
     a {
@@ -125,6 +146,22 @@
       transition: transform 0.4s ease-in-out;
     }
 
+    .extLinks {
+      margin-top: 50px;
+      
+      a {
+        font-size: 1em;
+        margin-right: 20px;
+        display: inline-block;
+
+        &:hover {
+          position: relative;
+          transform: translate(0px, -2px);
+          transition: transform 0.4s ease-in-out;
+        }
+      }
+    }
+
     &.modal-open {
       animation: fadeIn 500ms 300ms forwards;
       animation: blurIn 800ms forwards;
@@ -133,10 +170,12 @@
 
       .modal-container {
         place-self: center;
-        overflow: hidden;
         animation: fadeIn 1000ms ease-in forwards;
         margin: 0 10vw;
 
+        p {
+          text-align: left;
+        }
       }
     }
 
@@ -147,8 +186,31 @@
 }
 
 
+@media (min-width: 400px) {
+  #contact-btn {
+    font-size: 1.2em;
+
+    svg {
+      height: 30px;
+      width: 30px;
+    }
+  }
+}
+
 @media (min-width: 768px) {
   #contact-btn {
-    right: 20px;
+    right: 12px;
+  }
+
+  .modal {
+    .credits-disclaimer {
+      bottom: 2em;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  #contact-btn {
+    right: 32px;
   }
 }

@@ -1,7 +1,10 @@
 import React, { useContext } from 'react'
-import { Context } from './ContextProvider'
+// import { Context } from './ContextProvider'
 import { ScrollDown } from './scrolldown/scrollDown'
 import { ContactContext } from './ContextProvider'
+import { Tooltip } from './tooltip/Tooltip'
+// import { TooltipIcon } from '/assets/icon-tooltip-info.png'
+
 
 export function Content({currentScene, ...props}) {
     // const [currentScene, setCurrentScene] = useContext(Context)
@@ -21,7 +24,9 @@ export function Content({currentScene, ...props}) {
         </section>
         <section id="cr" className={currentScene === 1 && !toggleCont ? "active" : "inactive"}>
             <div className='content third left top'>
-                <p>Hi! I'm Oscar, a detail-oriented front-end developer from Costa Rica. I've been working for Critical Mass Latam for the past 7 years and it has been a great journey, learning more about my skills and honing my craft.</p>
+            <p>
+                Hi! I'm Oscar, a detail-oriented front-end developer from Costa Rica. I've been working for <Tooltip content="Previously known as Hangar, later Hangar Worldwide, and recently fully integrated as part of Critical Mass" direction="down">Critical Mass</Tooltip>the past 7 years and it has been a great journey, learning more about my skills and honing my craft.
+            </p>
             </div>
             <div className='content third right bottom'>
                 <p>Grew a lot learning from different positions, from a small design team providing creative services for GoDaddy to a giant tech team that supports the BMW USA website experience. Now, it's time for my next big step: Tokyo.</p>

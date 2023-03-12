@@ -5,10 +5,13 @@ Command: npx gltfjsx@6.1.3 planet.gltf
 
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 
 export function Planet(props) {
-  const { nodes, materials } = useGLTF('/takemetotokyo/planet.gltf')
+  const { nodes, materials } = useGLTF('/planet.gltf')
   const planet = useRef(null)
+
+  // useFrame(() => (planet.current.rotation.z += 0.1))
 
   return (
     <group {...props} ref={planet} dispose={null}>
@@ -21,4 +24,4 @@ export function Planet(props) {
   )
 }
 
-useGLTF.preload('/takemetotokyo/planet.gltf')
+useGLTF.preload('/planet.gltf')
