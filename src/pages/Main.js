@@ -17,11 +17,11 @@ import { Suspense } from 'react';
 import { CamDeviationContext, ContactContext, Context } from '../components/ContextProvider';
 import { Cursor, followCursorEvent } from '../components/cursor/Cursor';
 import { initialSceneState, sceneReducer } from '../reducers/scene.reducer';
-import { getActionByCursor } from '../utils/scene-actions'
+import { getActionByCursor } from '../utils/sceneActions'
 import { CalculateMousePosition } from '../components/CalculateMouseDeviation'
 
 import { isTouchEnabled } from '../utils/utils'
-import { onTouchStart, onTouchMove, onTouchEnd } from '../utils/scene-touch-actions'
+import { onTouchStart, onTouchMove, onTouchEnd } from '../utils/sceneTouchActions'
 
 
 export function Main() {

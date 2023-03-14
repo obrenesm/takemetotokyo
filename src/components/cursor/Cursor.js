@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { getActionByCursor  } from '../../utils/scene-actions'
+import { getActionByCursor  } from '../../utils/sceneActions'
 import { CamDeviationContext } from '../ContextProvider';
 import './Cursor.scss';
 
