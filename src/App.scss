@@ -1,4 +1,10 @@
 @font-face {
+  font-family: 'PPNeueMachina-InktrapUltraBold';
+  src:  url('./assets/fonts/PPNeueMachina-InktrapUltrabold.woff2') format('woff2'),
+        url('./assets/fonts/PPNeueMachina-InktrapUltrabold.woff') format('woff');
+}
+
+@font-face {
   font-family: 'PPNeueMachina-InktrapLight';
   src:  url('./assets/fonts/PPNeueMachina-InktrapLight.woff2') format('woff2'),
         url('./assets/fonts/PPNeueMachina-InktrapLight.woff') format('woff');
@@ -125,6 +131,8 @@
       h1 {
         text-align: center;
         font-size: 5em;
+        font-family: PPNeueMachina-InktrapUltraBold, montserrat, -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
+        segoe ui, arial, sans-serif;;
         font-weight: 900;
         color: #ef225a;
       }
