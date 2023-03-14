@@ -10,7 +10,7 @@ export function CV(props) {
                 <h3>Work Experience</h3>
                 <div>
                     <h4>Frontend Developer</h4>
-                    <h5>Critical Mass for BMW USA</h5>
+                    <h5><Tooltip content="Previously known as Hangar, later Hangar Worldwide, and recently fully integrated as part of Critical Mass" direction="down">Critical Mass</Tooltip>for BMW USA</h5>
                     <h6>2021-today</h6>
                 </div>
                 <div>
@@ -20,7 +20,7 @@ export function CV(props) {
                 </div>
                 <div>
                     <h4>Production Designer</h4>
-                    <h5><Tooltip content="Previously known as Hangar, later Hangar Worldwide, and recently fully integrated as part of Critical Mass" direction="down">Critical Mass</Tooltip>for GoDaddy</h5>
+                    <h5>Critical Mass for GoDaddy</h5>
                     <h6>2016-2018</h6>
                 </div>
                 {/* <div>
