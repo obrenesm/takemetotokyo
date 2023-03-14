@@ -1,3 +1,15 @@
+@font-face {
+  font-family: 'PPNeueMachina-InktrapLight';
+  src:  url('./assets/fonts/PPNeueMachina-InktrapLight.woff2') format('woff2'),
+        url('./assets/fonts/PPNeueMachina-InktrapLight.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'PPNeueMachina-InktrapMedium';
+  src:  url('./assets/fonts/PPNeueMachina-InktrapMedium.woff2') format('woff2'),
+        url('./assets/fonts/PPNeueMachina-InktrapMedium.woff') format('woff');
+}
+
 // Default & Mobile XS
 @media (min-width: 0px) {
 
