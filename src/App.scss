@@ -82,6 +82,7 @@
       &.bottom.left {
         left: 10%;
       }
+      
       &.top.right,
       &.bottom.right {
         left: 10%;
@@ -199,6 +200,11 @@
       &.bottom.right {
         left: unset;
         right: 0px;
+      }
+
+      &.top.left,
+      &.top.right {
+        top: 50px;
       }
     }
   }
