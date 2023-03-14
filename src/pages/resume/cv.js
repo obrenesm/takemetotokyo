@@ -1,7 +1,7 @@
 import React from 'react'
 import { Tooltip } from '../../components/tooltip/Tooltip'
 
-export function CV(props) {
+export function CV() {
 
   return (
     <>
@@ -23,11 +23,11 @@ export function CV(props) {
                     <h5>Critical Mass for GoDaddy</h5>
                     <h6>2016-2018</h6>
                 </div>
-                {/* <div>
+                <div>
                     <h4>Founder and Sport Manager</h4>
                     <h5>Clean Cycling</h5>
                     <h6>2014-2017</h6>
-                </div> */}
+                </div>
                 <div>
                     <h4>Freelance Web & Graphic Designer</h4>
                     <h6>2011-2015</h6>
