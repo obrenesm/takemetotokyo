@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+// import React, { useEffect, useRef, useState } from 'react'
 //import * as THREE from 'three'
-import { useGLTF, useScroll } from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useScroll } from '@react-three/drei'
+// import { useFrame, useThree } from '@react-three/fiber'
 import gsap from 'gsap'
 
 
@@ -83,8 +83,6 @@ export function UpdateScene(expected, current) {
       return current = expected      
     }
 }
-
-
 
 export function isTouchEnabled() {
   return ( 'ontouchstart' in window ) ||

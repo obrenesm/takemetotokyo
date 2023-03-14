@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useThree } from '@react-three/fiber'
 import gsap from 'gsap'
 

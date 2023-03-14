@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState, useContext } from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
 //import * as THREE from 'three'
-import { useGLTF, useScroll } from '@react-three/drei'
+// import { useGLTF, useScroll } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { camPositions, planetRotations } from './../../data/scenesData'
 import { Planet } from './Planet'
@@ -8,7 +8,7 @@ import { Airplane } from './Airplane'
 import { Pin } from './Pin'
 import gsap from 'gsap'
 
-import { Context } from '../ContextProvider'
+// import { Context } from '../ContextProvider'
 import { CamDeviationContext } from '../ContextProvider'
 
 
@@ -17,6 +17,8 @@ export function Scenario({currentScene, ...props}) {
   const cam = useThree(state => state.camera)
 
   // const [currentScene, setCurrentScene] = useContext(Context)
+
+  // this value could fix the position when repentinily moving while transitioning?
   const [camDeviation, setCamDeviation] = useContext(CamDeviationContext)
 
 

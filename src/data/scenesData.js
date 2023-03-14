@@ -1,30 +1,3 @@
-import React, { useContext } from "react"
-//import { Context } from '../ContextProvider'
-
-// import { CamDeviationContext } from "../components/ContextProvider"
-// function CamDeviation(v) {
-//  //const [camDeviation, setCamDeviation] = useContext(Context)
-
-//   const x = camDeviation[0]
-//   const y = camDeviation[1]
-  
-//   return v === x ? x : y
-// }
-
-// console.log('CamDeviation(v)', CamDeviation('x'));
-
-//import { MousePosition } from '../components/MousePosition'
-
-// const some = MousePosition()
-
-
-// console.log('MP', some);
-
-
-// const xDeviation = MousePosition.camDeviation[0]
-
-// console.log('xDeviation', xDeviation);
-
 export const camPositions = {
   camIntro: {
     x: -5, 
