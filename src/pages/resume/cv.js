@@ -10,7 +10,7 @@ export function CV() {
                 <h3>Work Experience</h3>
                 <div>
                     <h4>Frontend Developer</h4>
-                    <h5><Tooltip content="Previously known as Hangar, later Hangar Worldwide, and recently fully integrated as part of Critical Mass" direction="down">Critical Mass</Tooltip>for BMW USA</h5>
+                    <h5><Tooltip content="Previously known as Hangar, latter Hangar Worldwide, and recently fully integrated as part of Critical Mass" direction="down">Critical Mass</Tooltip>for BMW USA</h5>
                     <h6>2021-today</h6>
                 </div>
                 <div>
