@@ -20,16 +20,15 @@
   }
 }
 
-@keyframes modalContentAnimation {
-  0% { 
-    opacity: 0;
-  }
+// @keyframes modalContentAnimation {
+//   0% { 
+//     opacity: 0;
+//   }
 
-  100% { 
-    opacity: 1;
-  }
-}
-
+//   100% { 
+//     opacity: 1;
+//   }
+// }
 
 @keyframes intro {
   0% {
@@ -83,14 +82,14 @@
   }
 }
 
-@keyframes blurOut {
-  0% {
-    backdrop-filter: blur(8px);
-  }
-  100% {
-    backdrop-filter: blur(6px);
-  }
-}
+// @keyframes blurOut {
+//   0% {
+//     backdrop-filter: blur(8px);
+//   }
+//   100% {
+//     backdrop-filter: blur(6px);
+//   }
+// }
 
 @keyframes moveIn {
   from {
