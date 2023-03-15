@@ -54,7 +54,7 @@ section:has(.tooltip:hover) ~ .cursor-circle {
   width: 30px;
   height: 30px;
   transition: width 0.4s ease, height 0.4s ease;
-  background-color: $highlight_focus_dark_base;
+  background-color: $highlight_mix_on_base;
 
   span {
     display: none;
