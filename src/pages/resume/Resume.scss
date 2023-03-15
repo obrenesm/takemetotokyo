@@ -1,6 +1,7 @@
 
 // RESUME
 
+@import './../../utils/scss/colors.scss';
 
 // XS Mobile
 @media (min-width: 0px) {
@@ -9,23 +10,23 @@
     &.cv {
       overflow: auto;
       height: fit-content;
-      background-color: #0F0757;
+      background-color: $dark_base;
   
       #root {
       overflow: auto;
       height: fit-content;
-      background-color: #0F0757;
+      background-color: $dark_base;
       }
   
       cursor: url('../../assets/pointer.svg'), auto;
       user-select: text;
       
       ::-moz-selection { 
-        background: #ef225a;
+        background: $highlight;
       }
       
       ::selection {
-        background: #ef225a;
+        background: $highlight;
       }
   
   
@@ -52,14 +53,14 @@
         font-size: 1.4em;
         font-weight: 400;
         margin: 0.3em 0;
-        color: #ccc;
+        color: $mid_grey;
       }
       
       h6 {
         font-size: 1.2em;
         font-weight: 300;
         margin: 0.5em 0;
-        color: #ccc;
+        color: $mid_grey;
       }
   
       section:first-of-type {
@@ -94,29 +95,18 @@
 // Mobile
 @media (min-width: 400px) {
 
-  // body {
-  //   &.cv {
-  //     section:first-of-type {
-  //       h3 {
-  //         margin-top: 00px;
-  //       }
-  //     }
-  //   }
-  // }
-
   .minimap {
     display: block;
     scale: 0.1;
     position: fixed;
     transform-origin: 0 0;
     pointer-events: none;
-    // top: 260px;
     left: 5%;
   
     .box {
       width: 100vw;
       height: 100vh;
-      border: #ef225a solid 10px;
+      border: $highlight solid 10px;
       position: absolute;
     }
   

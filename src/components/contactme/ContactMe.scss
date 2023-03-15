@@ -1,4 +1,5 @@
-@import '../../Global.scss';
+@import './../../utils/scss/animations.scss';
+@import './../../utils/scss/colors.scss';
 
 // Default & Mobile
 @media (min-width: 0px) {
@@ -10,7 +11,7 @@
     z-index: 999;
     background-color: transparent;
     border: none;
-    color: #d7d7d7;
+    color: $light_grey;
     font-weight: 400;
     font-size: 1.1em;
     display: flex;
@@ -20,7 +21,7 @@
     segoe ui, arial, sans-serif;
 
     svg {
-      stroke: #d7d7d7;
+      stroke: $light_grey;
       position: relative;
       top: -0.1em;
       height: 25px;
@@ -33,11 +34,11 @@
     }
 
     &:hover {
-    color: #fff;
+    color: $white;
     cursor: pointer;
 
       svg {
-        stroke: #fff;
+        stroke: $white;
       }
 
       .line1, .line2 {
@@ -82,7 +83,7 @@
   }
 
   .modal {
-    background-color: rgba(3, 0, 52, 0.6);
+    background-color: $dark_base_transparent;
     backdrop-filter: blur(8px);
     height: 100vh;
     width: 100vw;
@@ -96,14 +97,14 @@
     transition: visibility 1s;
 
     h2 {
-      color: #ef225a;
+      color: $highlight;
       font-size: 3em;
       position: relative;
       margin: 0;
     }
 
     p {
-      color: #fff;
+      color: $white;
       font-size: 1em;
       font-style: oblique;
       font-weight: 400;
@@ -117,7 +118,7 @@
 
       p { 
         font-size: 0.8em;
-        color: #fff;
+        color: $white;
         opacity: 0.5;
         margin: 0;
       }
@@ -132,7 +133,7 @@
     a {
       position: relative;
       display: block;
-      color: #fff;
+      color: $white;
       padding: 10px 0;
       font-size: 1.5em;
       font-weight: 500;

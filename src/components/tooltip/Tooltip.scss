@@ -1,7 +1,7 @@
-/* Custom properties */
+@import './../../utils/scss/colors.scss';
+
+
 :root {
-  --tooltip-text-color: white;
-  --tooltip-background-color: #070139;
   --tooltip-arrow-size: 10px;
 }
 
@@ -31,9 +31,9 @@
   &::after {
     --tooltip-translate-y: var(--tooltip-arrow-size); 
     content: attr(data-tooltip);
-    background-color: var(--tooltip-background-color);
+    background-color: $darkest_base;
     border-radius: 5px;
-    color: var(--tooltip-text-color);
+    color: $white;
     font-size: 0.8em;
     line-height: 1.5em;
     padding: 16px;
@@ -46,7 +46,7 @@
   &::before {
     content: '';
     border: var(--tooltip-arrow-size) solid transparent;
-    border-bottom-color: var(--tooltip-background-color);
+    border-bottom-color: $darkest_base;
     --tooltip-translate-y: calc(-1 * var(--tooltip-arrow-size) + 1px);
     transform-origin: bottom center;
   }
