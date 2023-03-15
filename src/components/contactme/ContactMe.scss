@@ -19,6 +19,7 @@
     transition: color 0.4s ease;
     font-family: PPNeueMachina-InktrapMedium, montserrat, -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
     segoe ui, arial, sans-serif;
+    animation: lateFadeIn 1s ease-out;
 
     svg {
       stroke: $light_grey;
