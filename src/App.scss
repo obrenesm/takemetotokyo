@@ -1,4 +1,5 @@
 @import './utils/scss/animations.scss';
+@import './utils/scss/colors.scss';
 
 
 @font-face {
@@ -39,7 +40,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background: #23168c;
+    background: $base;
   }
 
   .mob {
@@ -47,7 +48,7 @@
   }
 
   p, a, h1, h2, h3, h4, h5, h6 {
-    color: #fff;
+    color: $white;
   }
 
   body {
@@ -137,14 +138,14 @@
         font-family: PPNeueMachina-InktrapUltraBold, montserrat, -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
         segoe ui, arial, sans-serif;;
         font-weight: 900;
-        color: #ef225a;
+        color: $highlight;
         animation: intro 1s ease-out 1;
       }
     }
   }
 
   p {
-    color: #fff;
+    color: $white;
     font-size: 0.9em;
     line-height: 1.2em;
     text-align: justify;
