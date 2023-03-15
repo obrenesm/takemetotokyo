@@ -50,7 +50,7 @@ button:hover ~ .cursor-circle,
 .modal:has(a:hover) ~ .cursor-circle, 
 section:has(.modal-cta:hover) ~ .cursor-circle,
 section:has(a:hover) ~ .cursor-circle,
-section:has(.Tooltip-Wrapper:hover) ~ .cursor-circle {
+section:has(.tooltip:hover) ~ .cursor-circle {
   width: 30px;
   height: 30px;
   transition: width 0.4s ease, height 0.4s ease;

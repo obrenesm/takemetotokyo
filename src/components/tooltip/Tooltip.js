@@ -5,7 +5,7 @@ export const Tooltip = (props) => {
 
   return (
     <span
-      className="Tooltip-Wrapper"
+      className="tooltip"
       data-tooltip={props.content}
     >
       {props.children}<sup>?</sup>&nbsp;
