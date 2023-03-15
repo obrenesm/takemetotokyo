@@ -189,13 +189,19 @@
 }
 
 
-@media (min-width: 400px) {
+@media (min-width: 380px) {
   #contact-btn {
     font-size: 1.2em;
 
     svg {
       height: 30px;
       width: 30px;
+    }
+  }
+
+  .modal {
+    .credits-disclaimer {
+      bottom: 2.5em;
     }
   }
 }
