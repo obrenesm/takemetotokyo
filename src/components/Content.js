@@ -8,13 +8,15 @@ import { Tooltip } from './tooltip/Tooltip'
 // import { TooltipIcon } from '/assets/icon-tooltip-info.png'
 
 
-export function Content({currentScene, ...props}) {
+export function Content({currentScene}) {
     // const [currentScene, setCurrentScene] = useContext(Context)
     const [toggleCont, setToggleCont] = useContext(ContactContext)
 
     const toggleContactState = () => {
       setToggleCont(current => !current);
     };
+
+    console.log('toggleCont', toggleCont);
 
   return (
     <>
