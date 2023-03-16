@@ -34,23 +34,35 @@
       animation: moveIn 1000ms ease-in forwards;
     }
 
-    &:hover {
-    color: $white;
-    cursor: pointer;
+    @media (hover: hover) {
 
-      svg {
-        stroke: $white;
-      }
-
-      .line1, .line2 {
-        stroke-dashoffset: -10;
-        stroke-dasharray: 50 1000;
+      &:hover {
+        color: $white;
+        cursor: pointer;
+    
+        svg {
+          stroke: $white;
+        }
+  
+        .line1, .line2 {
+          stroke-dashoffset: -10;
+          stroke-dasharray: 50 1000;
+        }
       }
     }
 
-    .line1, .line2 {
+    .line {
+      transition: 0.7s;
+    }
+
+    .line1 {
       transition: 0.7s;
       stroke-dasharray: 75 1000;
+    }
+
+    .line2 {
+      transition: 0.7s;
+      stroke-dasharray: 45 1000;
     }
 
     .text-container {
