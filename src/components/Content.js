@@ -16,8 +16,6 @@ export function Content({currentScene}) {
       setToggleCont(current => !current);
     };
 
-    console.log('toggleCont', toggleCont);
-
   return (
     <>
         <section id="intro" className={currentScene === 0 && !toggleCont ? "active" : "inactive"}>

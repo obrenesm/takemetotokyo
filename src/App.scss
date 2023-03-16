@@ -70,7 +70,7 @@
 
       &.bottom.left {
         left: 60px;
-        bottom: 50px;
+        bottom: 15px;
       }
 
       &.top.right {
@@ -82,7 +82,7 @@
       &.bottom.right {
         left: 60px;
         right: unset;
-        bottom: 50px;
+        bottom: 15px;
       }
 
       &.center {
@@ -119,6 +119,14 @@
         transform: translate(-50%, -55%) scale(1);
       }
     }
+  }
+
+  .top {
+    top: 50px;
+  }
+
+  .bottom {
+    bottom: 15px;
   }
 
   .content {
@@ -158,14 +166,6 @@
   .full {
     width: 90%;
   }
-
-  .top {
-    top: 50px;
-  }
-
-  .bottom {
-    bottom: 15px;
-  }
 }
 
 // Mobile
@@ -184,6 +184,14 @@
 
       &.top.right {
         top: 70px;
+      }
+
+      &.bottom.left {
+        bottom: 50px;
+      }
+
+      &.bottom.right {
+        bottom: 50px;
       }
     }
   }
