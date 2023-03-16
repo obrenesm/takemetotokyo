@@ -22,7 +22,7 @@ export function Content({currentScene, ...props}) {
             <div className='content full center headline'>
               <h1>Take me to <span>Tokyo</span></h1>
             </div>
-            <ScrollDown/>
+            { currentScene === 0 ? <ScrollDown/> : ''}
         </section>
         <section id="cr" className={currentScene === 1 && !toggleCont ? "active" : "inactive"}>
             <div className='content third left top'>
