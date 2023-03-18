@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import { ScrollDown } from './scrolldown/scrollDown'
 import { ContactContext } from './ContextProvider'
 import { Tooltip } from './tooltip/Tooltip'
+import { isTouchEnabled } from './../utils/utils'
 // import Tooltip from '@mui/material/Tooltip'
 
 // import { TooltipIcon } from '/assets/icon-tooltip-info.png'
@@ -22,7 +23,7 @@ export function Content({currentScene}) {
             <div className='content full center headline'>
               <h1>Take me to <span>Tokyo</span></h1>
             </div>
-            { currentScene === 0 ? <ScrollDown/> : ''}
+            { currentScene === 0 && isTouchEnabled() ? <ScrollDown/> : ''}
         </section>
         <section id="cr" className={currentScene === 1 && !toggleCont ? "active" : "inactive"}>
             <div className='content third left top'>
