@@ -61,6 +61,33 @@ export const planetRotations = {
   }
 }
 
+export const planePositions = {
+  rotIntro: {
+    x: Math.PI / 35,
+    y: Math.PI / 1.5,
+    z: 0,
+    duration: 2,
+    pos: 0,
+    end: 0.4
+  },
+  rotCR: {
+    x: Math.PI / 20,
+    y: Math.PI / 2.24,
+    z: 0,
+    duration: 2,
+    pos: 0.4,
+    end: 0.8
+  },
+  rotJpn: {
+    x: Math.PI / 5.8,
+    y: -Math.PI / 1.28,
+    z: 20,
+    duration: 2,
+    pos: 0.8,
+    end: 1
+  }
+}
+
 
 export const scenes = [
     { 
