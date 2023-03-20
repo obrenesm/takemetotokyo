@@ -35,7 +35,7 @@ export function Main() {
 
   return (
     <div id="main" style={{ width: '100vw', height: '100vh' }} 
-      onMouseMove={isTouchEnabled() && window.innerWidth < 1500 ? undefined : (e) => followCursorEvent(mouseRef)(e)}
+      onMouseMove={isTouchEnabled() ? undefined : (e) => followCursorEvent(mouseRef)(e)}
       onTouchStart={!toggleCont ? (e) => onTouchStart(e, setTouchStart, setTouchEnd) : ''}
       onTouchMove={ !toggleCont ? (e) => onTouchMove(e, setTouchEnd) : ''}
       onTouchEnd={!toggleCont ? (e) => { 
@@ -46,7 +46,7 @@ export function Main() {
           <ContactContext.Provider value={[toggleCont, setToggleCont]}>
             <Nav/>
             <Content currentScene={sceneState.currentScene} />
-            {isTouchEnabled() && window.innerWidth < 1500 ? undefined : <Cursor currentScene={sceneState.currentScene} ref={mouseRef} />}
+            {isTouchEnabled() ? undefined : <Cursor currentScene={sceneState.currentScene} ref={mouseRef} />}
             <Canvas camera={{ fov: 75, near: 0.1, far: 100, position: [-5, -4, 13] }}
             onClick={isTouchEnabled() ? undefined : (e) => dispatch({ type: getActionByCursor(sceneState.currentScene, camDeviation)})}
             >
