@@ -1,10 +1,3 @@
-//import { createRoot } from 'react-dom/client';
-// import * as THREE from 'three'
-// import { useFrame, useThree } from '@react-three/fiber'
-// import gsap from 'gsap'
-
-
-
 import { Canvas } from '@react-three/fiber';
 import React, { useRef, useState, useReducer } from 'react';
 import { Scenario } from '../components/3d/Scenario';
@@ -37,7 +30,7 @@ export function Main() {
     <div id="main" style={{ width: '100vw', height: '100vh' }} 
       onMouseMove={isTouchEnabled() ? undefined : (e) => followCursorEvent(mouseRef)(e)}
       onTouchStart={!toggleCont ? (e) => onTouchStart(e, setTouchStart, setTouchEnd) : ''}
-      onTouchMove={ !toggleCont ? (e) => onTouchMove(e, setTouchEnd) : ''}
+      onTouchMove={!toggleCont ? (e) => onTouchMove(e, setTouchEnd) : ''}
       onTouchEnd={!toggleCont ? (e) => { 
         dispatch({ type: onTouchEnd(sceneState.currentScene, touchStart, touchEnd)})} : ''}
       >

@@ -1,44 +1,30 @@
 @import './../../utils/scss/animations.scss';
 @import './../../utils/scss/colors.scss';
 
-// @media (hover:hover) {
+.scroll {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  animation: lateFadeIn 1.2s ease-out;
 
-//   .scroll {
-//     display: none;
-    
-//     .arrow {
-//       display: none;
-//     }
-//   } 
-// }
+  h6 {
+    margin: 15px 0;
+    height: 20px;
+    font-size: 1em;
+    font-weight: 400;
+    color: $white;
+  }
 
-// @media (hover: none) {
-
-  .scroll {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-    z-index: 1;
-    animation: lateFadeIn 1.2s ease-out;
-
-    h6 {
-      margin: 15px 0;
-      height: 20px;
-      font-size: 1em;
-      font-weight: 400;
-      color: $white;
-    }
-
-    .arrow {
-      position: relative;
-      margin: 0 auto;
-      height: 15px;
-      width: 15px;
-      border-right: solid 1.5px $white;
-      border-bottom: solid 1.5px $white;
-      rotate: 45deg;
-      animation: scrollAnimation 1s ease-out infinite;
-    }
-  } 
-// }
+  .arrow {
+    position: relative;
+    margin: 0 auto;
+    height: 15px;
+    width: 15px;
+    border-right: solid 1.5px $white;
+    border-bottom: solid 1.5px $white;
+    rotate: 45deg;
+    animation: scrollAnimation 1s ease-out infinite;
+  }
+}
