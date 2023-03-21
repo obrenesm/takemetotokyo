@@ -7,7 +7,6 @@ import gsap from 'gsap'
 import { camPositions, planetRotations } from './../../data/scenesData'
 import { animate3D } from './../../utils/utils'
 
-
 export function Scenario({currentScene, ...props}) {
   const planet = useRef(null)
   const plane = useRef(null)

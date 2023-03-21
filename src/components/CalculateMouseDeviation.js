@@ -35,13 +35,11 @@ export function CalculateMousePosition({currentScene, children}){
         duration: 1
       }
       
-      //return (
       setCamDeviation([camHorizontalOffset, camVerticalOffset])
       
       gsap.to(
         cam.position,
         posUpdated)
-      //)
     }
   }
 
