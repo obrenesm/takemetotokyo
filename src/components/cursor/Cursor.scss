@@ -1,3 +1,7 @@
+@import './../../utils/scss/colors.scss';
+
+// CURSOR
+
 body {
   cursor: none;
 }
@@ -6,7 +10,7 @@ body {
   position: absolute;
   width: 80px;
   height: 80px;
-  background-color: #ef225a;
+  background-color: $highlight_mix_on_base;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -18,32 +22,39 @@ body {
   transform: translate3d(-100px, 0px, 0px);
 
   span {
-    color: #000;
+    color: $black;
     align-self: center;
     text-align: center;
     font-size: 0.8em;
   }
-}
+} 
 
 .modal:hover ~ .cursor-circle {
   width: 60px;
   height: 60px;
   transition: width 0.4s ease, height 0.4s ease;
+  background-color: $highlight_mix_on_dark_base;
 
   span {
     display: none;
   }
 }
 
+
+// .modal-open #contact-btn:hover ~ .cursor-circle {
+//   background-color: #da19b0;
+// }
+
 button:hover ~ .cursor-circle,
 .modal:has(.modal-cta:hover) ~ .cursor-circle,
 .modal:has(a:hover) ~ .cursor-circle, 
 section:has(.modal-cta:hover) ~ .cursor-circle,
 section:has(a:hover) ~ .cursor-circle,
-section:has(.Tooltip-Wrapper:hover) ~ .cursor-circle {
+section:has(.tooltip:hover) ~ .cursor-circle {
   width: 30px;
   height: 30px;
   transition: width 0.4s ease, height 0.4s ease;
+  background-color: $highlight_mix_on_base;
 
   span {
     display: none;
@@ -62,15 +73,17 @@ section:has(.Tooltip-Wrapper:hover) ~ .cursor-circle {
   cursor: pointer;
 }
 
-section .content:has(a:hover) {
-  color: pink;
-}
+//TODO check out if there is pink being generated
+
+// section .content:has(a:hover) {
+//   color: pink;
+// }
 
 .modal-cta {
   pointer-events: all;
   background: 
-    linear-gradient(to right, #d7d7d7, #d7d7d7),
-    linear-gradient(to right, #fff , #fff);
+    linear-gradient(to right, $light_grey, $light_grey),
+    linear-gradient(to right, $white , $white);
   background-size: 100% 0.07em, 0 0.07em;
   background-position: 100% 100%, 0 100%;
   background-repeat: no-repeat;

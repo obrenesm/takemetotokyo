@@ -1,4 +1,5 @@
-@import '../../Global.scss';
+@import './../../utils/scss/animations.scss';
+@import './../../utils/scss/colors.scss';
 
 // Default & Mobile
 @media (min-width: 0px) {
@@ -8,9 +9,9 @@
     right: calc(10% - 15px);
     top: 20px;
     z-index: 999;
-    background-color: transparent;
+    background: transparent;
     border: none;
-    color: #d7d7d7;
+    color: $light_grey;
     font-weight: 400;
     font-size: 1.1em;
     display: flex;
@@ -18,9 +19,10 @@
     transition: color 0.4s ease;
     font-family: PPNeueMachina-InktrapMedium, montserrat, -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
     segoe ui, arial, sans-serif;
+    animation: lateFadeIn 1.2s ease-out;
 
     svg {
-      stroke: #d7d7d7;
+      stroke: $light_grey;
       position: relative;
       top: -0.1em;
       height: 25px;
@@ -32,23 +34,34 @@
       animation: moveIn 1000ms ease-in forwards;
     }
 
-    &:hover {
-    color: #fff;
-    cursor: pointer;
-
-      svg {
-        stroke: #fff;
-      }
-
-      .line1, .line2 {
-        stroke-dashoffset: -10;
-        stroke-dasharray: 50 1000;
+    @media (hover: hover) {
+      &:hover {
+        color: $white;
+        cursor: pointer;
+    
+        svg {
+          stroke: $white;
+        }
+  
+        .line1, .line2 {
+          stroke-dashoffset: -10;
+          stroke-dasharray: 50 1000;
+        }
       }
     }
 
-    .line1, .line2 {
+    .line {
+      transition: 0.7s;
+    }
+
+    .line1 {
       transition: 0.7s;
       stroke-dasharray: 75 1000;
+    }
+
+    .line2 {
+      transition: 0.7s;
+      stroke-dasharray: 45 1000;
     }
 
     .text-container {
@@ -82,7 +95,7 @@
   }
 
   .modal {
-    background-color: rgba(3, 0, 52, 0.6);
+    background-color: $dark_base_transparent;
     backdrop-filter: blur(8px);
     height: 100vh;
     width: 100vw;
@@ -95,16 +108,20 @@
     animation: fadeOut 1500ms forwards;
     transition: visibility 1s;
 
+    ::selection {
+      background-color: $highlight; 
+    }
+
     h2 {
-      color: #ef225a;
-      font-size: 3em;
+      color: $highlight;
+      font-size: 2.5em;
       position: relative;
       margin: 0;
     }
 
     p {
-      color: #fff;
-      font-size: 1em;
+      color: $white;
+      font-size: 0.9em;
       font-style: oblique;
       font-weight: 400;
       margin-bottom: 3em;
@@ -112,13 +129,14 @@
 
     .credits-disclaimer {
       position: absolute;
-      bottom: 1em;
+      bottom: 85px;
       margin: 0 10vw;
 
       p { 
-        font-size: 0.8em;
-        color: #fff;
+        font-size: 0.75em;
+        color: $white;
         opacity: 0.5;
+        margin: 0;
       }
 
       a {
@@ -131,33 +149,38 @@
     a {
       position: relative;
       display: block;
-      color: #fff;
+      color: $white;
       padding: 10px 0;
-      font-size: 1.5em;
+      font-size: 1.2em;
       font-weight: 500;
       text-decoration: none;
       transform: translate(0px, 0px);
       transition: transform 0.4s ease-in-out;
+      width: fit-content;
     }
 
-    a:hover {
-      position: relative;
-      transform: translate(5px, 0px);
-      transition: transform 0.4s ease-in-out;
+    @media (hover: hover) {
+      a:hover {
+        position: relative;
+        transform: translate(5px, 0px);
+        transition: transform 0.4s ease-in-out;
+      }
     }
 
     .extLinks {
-      margin-top: 50px;
+      margin-top: 45px;
       
       a {
-        font-size: 1em;
+        font-size: 0.8em;
         margin-right: 20px;
-        display: inline-block;
+        display: block;
 
-        &:hover {
-          position: relative;
-          transform: translate(0px, -2px);
-          transition: transform 0.4s ease-in-out;
+        @media (hover: hover) {
+          &:hover {
+            position: relative;
+            transform: translate(0px, -2px);
+            transition: transform 0.4s ease-in-out;
+          }
         }
       }
     }
@@ -172,6 +195,7 @@
         place-self: center;
         animation: fadeIn 1000ms ease-in forwards;
         margin: 0 10vw;
+        user-select: text;
 
         p {
           text-align: left;
@@ -181,18 +205,54 @@
 
     .modal-container {
       animation: fadeOut 500ms forwards;
+      transform: translateY(-10%);
     }
   }
 }
 
 
-@media (min-width: 400px) {
+@media (min-width: 380px) {
   #contact-btn {
     font-size: 1.2em;
 
     svg {
       height: 30px;
       width: 30px;
+    }
+  }
+
+  .modal {
+
+    h2 {
+      font-size: 3em;
+    }
+
+    p {
+      font-size: 1em;
+    }
+
+    a {
+      font-size: 1.5em;
+    }
+
+    .modal-container {
+      transform: translateY(-15%);
+    }
+
+    .extLinks {
+      margin-top: 60px;
+      
+      a {
+        font-size: 1em;
+      }
+    }
+
+    .credits-disclaimer {
+      bottom: 90px;
+
+      p { 
+        font-size: 0.8em;
+      }
     }
   }
 }
@@ -203,8 +263,19 @@
   }
 
   .modal {
+
+    .modal-container {
+      transform: translateY(0);
+    }
     .credits-disclaimer {
       bottom: 2em;
+    }
+
+    .extLinks {
+      
+      a {
+        display: inline-block;
+      }
     }
   }
 }

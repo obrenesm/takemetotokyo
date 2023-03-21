@@ -1,5 +1,7 @@
 
-// RESUME
+// CREDITS
+
+@import './../../utils/scss/colors.scss';
 
 // XS
 @media (min-width: 0px) {
@@ -8,23 +10,22 @@
       pointer-events: all;
 
       #root {
-      background-color: #0F0757;
+      background-color: $dark_base;
       }
 
       cursor: url('../../assets/pointer.svg'), auto;
       user-select: text;
       
       ::-moz-selection { 
-        background: #ef225a;
+        background: $highlight;
       }
       
       ::selection {
-        background: #ef225a;
+        background: $highlight;
       }
 
       a:hover {
         transform: translate(0, 10px);
-        // color: red;
       }
 
       .grid {
@@ -83,7 +84,7 @@
 }
 
 // Mobile
-@media (min-width: 400px) {
+@media (min-width: 380px) {
   body {
     &.credits {
       .center,

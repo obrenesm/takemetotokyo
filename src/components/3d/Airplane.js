@@ -6,28 +6,39 @@ source: https://sketchfab.com/3d-models/lowpoly-airplane-c688b00388204564b96840e
 title: Lowpoly Airplane
 */
 
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
 import { a } from '@react-spring/three'
 import gsap from 'gsap'
-
-//gsap.registerPlugin(ScrollTrigger);
-
 
 export function Airplane({props, position}) {
   const { nodes, materials } = useGLTF('/airplane.gltf')
   const group = useRef(null)
   const propeller = useRef(null)
 
-  let tl = gsap.timeline( {repeat:-1, repeatDelay: 2} );
+  useEffect(() => {
+    if (!!group){
+      gsap.to(propeller.current.rotation, { duration: 0.5, 
+        y: 3.1, repeat: -1, ease: "none"
+      })
 
-  //useFrame(() => (group.current.position.z += (Math.sin(Date.now() * 0.00005) * 0.008)))
-  useFrame(() => (group.current.rotation.z += (Math.sin(Date.now() * 0.0005) * 0.001)))
-  useFrame(() => (propeller.current.rotation.y += 0.1))
-  // useFrame(() => ( 
+      let tl = gsap.timeline( {repeat:-1, repeatDelay: 0} );
       
-  // ))
+      tl
+      .to(group.current.rotation, { duration: 3, 
+                                    z: 0.25,
+                                    ease: "sine.out"
+                                  })
+      .to(group.current.rotation, { duration: 3, 
+                                    z: -0.25,
+                                    ease: "sine.inOut"
+                                  })
+      .to(group.current.rotation, { duration: 1.5, 
+                                    z: 0,
+                                    ease: "sine.in"
+                                  })
+    }
+  },[])
 
   return (
     <a.group scale={0.2} position={position} rotation={[Math.PI / 2, Math.PI / 1.7, 0]} ref={group} {...props} dispose={null}>

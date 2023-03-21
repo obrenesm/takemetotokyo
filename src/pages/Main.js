@@ -1,10 +1,3 @@
-//import { createRoot } from 'react-dom/client';
-// import * as THREE from 'three'
-// import { useFrame, useThree } from '@react-three/fiber'
-// import gsap from 'gsap'
-
-
-
 import { Canvas } from '@react-three/fiber';
 import React, { useRef, useState, useReducer } from 'react';
 import { Scenario } from '../components/3d/Scenario';
@@ -17,11 +10,11 @@ import { Suspense } from 'react';
 import { CamDeviationContext, ContactContext, Context } from '../components/ContextProvider';
 import { Cursor, followCursorEvent } from '../components/cursor/Cursor';
 import { initialSceneState, sceneReducer } from '../reducers/scene.reducer';
-import { getActionByCursor } from '../utils/scene-actions'
+import { getActionByCursor } from '../utils/sceneActions'
 import { CalculateMousePosition } from '../components/CalculateMouseDeviation'
 
 import { isTouchEnabled } from '../utils/utils'
-import { onTouchStart, onTouchMove, onTouchEnd } from '../utils/scene-touch-actions'
+import { onTouchStart, onTouchMove, onTouchEnd } from '../utils/sceneTouchActions'
 
 
 export function Main() {
@@ -36,10 +29,10 @@ export function Main() {
   return (
     <div id="main" style={{ width: '100vw', height: '100vh' }} 
       onMouseMove={isTouchEnabled() ? undefined : (e) => followCursorEvent(mouseRef)(e)}
-      onTouchStart={(e) => onTouchStart(e, setTouchStart, setTouchEnd)}
-      onTouchMove={(e) => onTouchMove(e, setTouchEnd)}
-      onTouchEnd={(e) => {
-        dispatch({ type: onTouchEnd(sceneState.currentScene, touchStart, touchEnd)})}}
+      onTouchStart={!toggleCont ? (e) => onTouchStart(e, setTouchStart, setTouchEnd) : ''}
+      onTouchMove={!toggleCont ? (e) => onTouchMove(e, setTouchEnd) : ''}
+      onTouchEnd={!toggleCont ? (e) => { 
+        dispatch({ type: onTouchEnd(sceneState.currentScene, touchStart, touchEnd)})} : ''}
       >
       <Context.Provider value={[currentScene, setCurrentScene]}>
         <CamDeviationContext.Provider value={[camDeviation, setCamDeviation]}>

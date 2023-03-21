@@ -1,6 +1,4 @@
-import React, { useContext, useState } from 'react'
-import { Context } from './ContextProvider'
-import { ScrollDown } from './scrolldown/scrollDown'
+import React, { useContext } from 'react'
 import { ContactMe } from './contactme/ContactMe'
 import { ContactContext } from './ContextProvider'
 

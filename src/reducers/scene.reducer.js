@@ -1,4 +1,4 @@
-import { SCENE_ACTIONS } from '../utils/scene-actions';
+import { SCENE_ACTIONS } from '../utils/sceneActions';
 export const initialSceneState = { currentScene: 0 };
 
 export function sceneReducer(state, action){

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import { Context } from '../ContextProvider'
-import { ScrollDown } from '../scrolldown/scrollDown'
+// import { Context } from '../ContextProvider'
+// import { ScrollDown } from '../scrolldown/scrollDown'
 import { ContactContext } from '../ContextProvider'
 import './ContactMe.scss'
 

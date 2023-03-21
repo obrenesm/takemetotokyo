@@ -1,3 +1,25 @@
+@import './utils/scss/animations.scss';
+@import './utils/scss/colors.scss';
+
+
+@font-face {
+  font-family: 'PPNeueMachina-InktrapUltraBold';
+  src:  url('./assets/fonts/PPNeueMachina-InktrapUltrabold.woff2') format('woff2'),
+        url('./assets/fonts/PPNeueMachina-InktrapUltrabold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'PPNeueMachina-InktrapLight';
+  src:  url('./assets/fonts/PPNeueMachina-InktrapLight.woff2') format('woff2'),
+        url('./assets/fonts/PPNeueMachina-InktrapLight.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'PPNeueMachina-InktrapMedium';
+  src:  url('./assets/fonts/PPNeueMachina-InktrapMedium.woff2') format('woff2'),
+        url('./assets/fonts/PPNeueMachina-InktrapMedium.woff') format('woff');
+}
+
 // Default & Mobile XS
 @media (min-width: 0px) {
 
@@ -18,7 +40,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background: #23168c;
+    background: $base;
   }
 
   .mob {
@@ -26,7 +48,7 @@
   }
 
   p, a, h1, h2, h3, h4, h5, h6 {
-    color: #fff;
+    color: $white;
   }
 
   body {
@@ -48,7 +70,7 @@
 
       &.bottom.left {
         left: 60px;
-        bottom: 50px;
+        bottom: 15px;
       }
 
       &.top.right {
@@ -60,7 +82,7 @@
       &.bottom.right {
         left: 60px;
         right: unset;
-        bottom: 50px;
+        bottom: 15px;
       }
 
       &.center {
@@ -82,6 +104,7 @@
       &.bottom.left {
         left: 10%;
       }
+      
       &.top.right,
       &.bottom.right {
         left: 10%;
@@ -98,6 +121,14 @@
     }
   }
 
+  .top {
+    top: 50px;
+  }
+
+  .bottom {
+    bottom: 15px;
+  }
+
   .content {
     z-index: 2;
     pointer-events: none;
@@ -111,15 +142,18 @@
 
       h1 {
         text-align: center;
-        font-size: 5em;
+        font-size: 4em;
+        font-family: PPNeueMachina-InktrapUltraBold, montserrat, -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
+        segoe ui, arial, sans-serif;;
         font-weight: 900;
-        color: #ef225a;
+        color: $highlight;
+        animation: intro 1s ease-out 1;
       }
     }
   }
 
   p {
-    color: #fff;
+    color: $white;
     font-size: 0.9em;
     line-height: 1.2em;
     text-align: justify;
@@ -132,18 +166,14 @@
   .full {
     width: 90%;
   }
-
-  .top {
-    top: 50px;
-  }
-
-  .bottom {
-    bottom: 15px;
-  }
 }
 
 // Mobile
-@media (min-width: 400px) {
+@media (min-width: 380px) {
+
+  h1 {
+    font-size: 5em;
+  }
 
   p {
     font-size: 1.1em;
@@ -158,6 +188,14 @@
 
       &.top.right {
         top: 70px;
+      }
+
+      &.bottom.left {
+        bottom: 50px;
+      }
+
+      &.bottom.right {
+        bottom: 50px;
       }
     }
   }
@@ -199,6 +237,11 @@
       &.bottom.right {
         left: unset;
         right: 0px;
+      }
+
+      &.top.left,
+      &.top.right {
+        top: 50px;
       }
     }
   }

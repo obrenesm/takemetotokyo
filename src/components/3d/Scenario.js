@@ -1,67 +1,74 @@
-import React, { useEffect, useRef, useState, useContext } from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
 //import * as THREE from 'three'
-import { useGLTF, useScroll } from '@react-three/drei'
+// import { useGLTF, useScroll } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
-import { camPositions, planetRotations } from './../../data/scenesData'
+import { camPositions, planetRotations, planePositions } from './../../data/scenesData'
 import { Planet } from './Planet'
 import { Airplane } from './Airplane'
 import { Pin } from './Pin'
 import gsap from 'gsap'
 
-import { Context } from '../ContextProvider'
+// import { Context } from '../ContextProvider'
 import { CamDeviationContext } from '../ContextProvider'
+import { animate3D } from './../../utils/utils'
 
 
 export function Scenario({currentScene, ...props}) {
   const planet = useRef(null)
+  const plane = useRef(null)
   const cam = useThree(state => state.camera)
 
-  // const [currentScene, setCurrentScene] = useContext(Context)
-  const [camDeviation, setCamDeviation] = useContext(CamDeviationContext)
+  function animateCelebration() {
+    let tl = gsap.timeline();
 
-
-  function animate3D(model, motion, obj, scene){
-    const currentValues = obj[Object.keys(obj)[scene]]
-    let pos = (({x, y, z, duration}) => ({x, y, z, duration}))(currentValues)  
-    const selected = (motion === 'rotation') ? model.rotation : model.position
-
-    if (motion === 'position' && scene !== 0) {
-      Object.assign(pos, {x: /*camDeviation[0] +*/ pos['x'], y: /*camDeviation[1] + */pos['y']})
-    }
-
-    return gsap.to(
-      selected,
-      pos)
+      tl
+      .to(plane.current.position, { duration: 1.2, 
+                                    z: 18
+                                  }, 2.5)
+      .to(plane.current.position, { duration: 1.7, 
+                                    z: 14
+                                  })
+      .to(plane.current.rotation, { duration: 2, 
+                                    x: -6.3
+                                  }, 2.6)
   }
   
   useFrame((state, delta) => {
-    // const cam = state.camera
-
-    // TODO:
-    // figure out how to access cam variable from the useEffect, 
-    // that way it's not set it and animated every frame
-
     cam.lookAt(0, 0, 0)
-
-    // TODO:
-    // Why 'message' & 'requestAnimationFrame' took more once the animate3D was moved into useEffect?
-    // is it related at all? prev it was 150/250 now ~500 to 1000
-
   })
 
   useEffect(() => {
-    //const cam = RootState.camera
-    //cam.lookAt(0, 0, 0)
-
     if (!!planet){
       animate3D(planet.current, 'rotation', planetRotations, currentScene)
       animate3D(cam, 'position', camPositions, currentScene)
+
+      // if (currentScene === 2) {
+      //   let tl = gsap.timeline({} );
+
+      // tl
+      // .to(plane.current.position, { duration: 1.2, 
+      //                               z: 18, 
+      //                             }, )
+      // .to(plane.current.position, { duration: 1.7, 
+      //                               z: 14, 
+      //                             })
+      // .to(plane.current.rotation, { duration: 2, 
+      //                               x: -6.3, 
+      //                             }, .2)
+      // }
+
+      if (currentScene === 2) {
+        //TODO spin on the first, then it just change Z position on the following, why? 
+        animateCelebration()
+      }
     }
   },[currentScene, cam])
 
   return (
     <>
-      <Airplane position={[-0.2, 0.6, 14]}/>
+      <group ref={plane} position={[-0.2, 0.6, 14]}>
+        <Airplane/>
+      </group>
       <group scale={1.6} ref={planet} rotation={[Math.PI / 35, Math.PI / 1.5, 0]}>
         <Planet/>
         <Pin pos={[-8.7, 1.6, 0.7]} rot={[0, 0, Math.PI / 2]} />
