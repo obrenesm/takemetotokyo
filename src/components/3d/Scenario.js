@@ -1,15 +1,10 @@
-import React, { useEffect, useRef, useContext } from 'react'
-//import * as THREE from 'three'
-// import { useGLTF, useScroll } from '@react-three/drei'
+import React, { useEffect, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { camPositions, planetRotations, planePositions } from './../../data/scenesData'
 import { Planet } from './Planet'
 import { Airplane } from './Airplane'
 import { Pin } from './Pin'
 import gsap from 'gsap'
-
-// import { Context } from '../ContextProvider'
-import { CamDeviationContext } from '../ContextProvider'
+import { camPositions, planetRotations } from './../../data/scenesData'
 import { animate3D } from './../../utils/utils'
 
 
@@ -17,51 +12,33 @@ export function Scenario({currentScene, ...props}) {
   const planet = useRef(null)
   const plane = useRef(null)
   const cam = useThree(state => state.camera)
-
-  function animateCelebration() {
-    let tl = gsap.timeline();
-
-      tl
-      .to(plane.current.position, { duration: 1.2, 
-                                    z: 18
-                                  }, 2.5)
-      .to(plane.current.position, { duration: 1.7, 
-                                    z: 14
-                                  })
-      .to(plane.current.rotation, { duration: 2, 
-                                    x: -6.3
-                                  }, 2.6)
-  }
   
   useFrame((state, delta) => {
     cam.lookAt(0, 0, 0)
   })
 
   useEffect(() => {
+    let planeCelebration = gsap.timeline({ repeat: -1, repeatDelay: 7});
+
     if (!!planet){
       animate3D(planet.current, 'rotation', planetRotations, currentScene)
       animate3D(cam, 'position', camPositions, currentScene)
 
-      // if (currentScene === 2) {
-      //   let tl = gsap.timeline({} );
-
-      // tl
-      // .to(plane.current.position, { duration: 1.2, 
-      //                               z: 18, 
-      //                             }, )
-      // .to(plane.current.position, { duration: 1.7, 
-      //                               z: 14, 
-      //                             })
-      // .to(plane.current.rotation, { duration: 2, 
-      //                               x: -6.3, 
-      //                             }, .2)
-      // }
-
       if (currentScene === 2) {
-        //TODO spin on the first, then it just change Z position on the following, why? 
-        animateCelebration()
+        planeCelebration
+        .to(plane.current.position, { duration: 1.2, 
+                                      z: 18
+                                    }, 2.5)
+        .to(plane.current.position, { duration: 1.5, 
+                                      z: 14
+                                    })
+        .to(plane.current.rotation, { duration: 1.7, 
+                                      x: -6.3
+                                    }, 2.6)
       }
     }
+
+    return () => planeCelebration.revert();
   },[currentScene, cam])
 
   return (
