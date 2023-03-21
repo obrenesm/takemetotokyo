@@ -19,20 +19,18 @@ export function Scenario({currentScene, ...props}) {
   const cam = useThree(state => state.camera)
 
   function animateCelebration() {
-    let tl = gsap.timeline({
-              // repeat:-1, repeatDelay: 7
-            });
+    let tl = gsap.timeline();
 
       tl
       .to(plane.current.position, { duration: 1.2, 
                                     z: 18
-                                  }, 2.8)
+                                  }, 2.5)
       .to(plane.current.position, { duration: 1.7, 
                                     z: 14
                                   })
       .to(plane.current.rotation, { duration: 2, 
                                     x: -6.3
-                                  }, 3)
+                                  }, 2.6)
   }
   
   useFrame((state, delta) => {
