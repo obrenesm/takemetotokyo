@@ -26,13 +26,13 @@ export function Scenario({currentScene, ...props}) {
       tl
       .to(plane.current.position, { duration: 1.2, 
                                     z: 18
-                                  }, 1.8)
+                                  }, 2.8)
       .to(plane.current.position, { duration: 1.7, 
                                     z: 14
                                   })
       .to(plane.current.rotation, { duration: 2, 
                                     x: -6.3
-                                  }, 2)
+                                  }, 3)
   }
   
   useFrame((state, delta) => {
@@ -60,7 +60,7 @@ export function Scenario({currentScene, ...props}) {
       // }
 
       if (currentScene === 2) {
-        //TODO spin on the first, then change just position on the following, why? 
+        //TODO spin on the first, then it just change Z position on the following, why? 
         animateCelebration()
       }
     }
