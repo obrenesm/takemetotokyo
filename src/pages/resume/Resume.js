@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './Resume.scss';
-import { CV } from './cv'
+import { CV } from './Cv'
 
 export function Resume(props) {
 

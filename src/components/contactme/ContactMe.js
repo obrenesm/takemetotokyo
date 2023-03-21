@@ -1,18 +1,13 @@
 import React, { useContext } from 'react'
-// import { Context } from '../ContextProvider'
-// import { ScrollDown } from '../scrolldown/scrollDown'
 import { ContactContext } from '../ContextProvider'
 import './ContactMe.scss'
 
-
 export function ContactMe(props) {
-
   const [toggleCont, setToggleCont] = useContext(ContactContext)
+  
   return (
     <>
-        <div className={`modal ${toggleCont ? 'modal-open' : ''}`} id='contact-modal' 
-        // open={toggleCont}
-        >
+        <div className={`modal ${toggleCont ? 'modal-open' : ''}`} id='contact-modal'>
           <div className='modal-container'>
             <section>
               <h2>Let's talk!</h2>

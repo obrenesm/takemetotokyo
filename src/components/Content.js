@@ -4,7 +4,6 @@ import { ContactContext } from './ContextProvider'
 import { Tooltip } from './tooltip/Tooltip'
 import { isTouchEnabled } from './../utils/utils'
 
-
 export function Content({currentScene}) {
     const [toggleCont, setToggleCont] = useContext(ContactContext)
 

@@ -1,10 +1,4 @@
-//import React, { useContext } from 'react'
 import { scenes } from '../data/scenesData';
-// import { ContactContext } from './ContextProvider'
-
-
-// const [toggleCont, setToggleCont] = useContext(ContactContext)
-
 
 export const SCENE_ACTIONS = {
   NEXT: 'Next',
@@ -15,9 +9,6 @@ export const SCENE_ACTIONS = {
 
 export function getActionByCursor(currentScene, camDeviation) {
   if (currentScene === 0) {
-    // if (toggleCont) {
-    //   return console.log('modal open');
-    // }
     return SCENE_ACTIONS.NEXT
     
   } else if (currentScene === scenes.length - 1) {
@@ -26,15 +17,3 @@ export function getActionByCursor(currentScene, camDeviation) {
     return camDeviation && camDeviation[0] < 0 ? SCENE_ACTIONS.BACK : SCENE_ACTIONS.NEXT;
   }
 }
-
-//TODO: touch scroll
-
-// export function getActionByTouch(currentScene, camDeviation) {
-//   if (currentScene === 0) {
-//     return SCENE_ACTIONS.NEXT
-//   } else if (currentScene === scenes.length - 1 && camDeviation && camDeviation[0] > 0) {
-//     return SCENE_ACTIONS.RETURN;
-//   } else {
-//     return camDeviation && camDeviation[0] < 0 ? SCENE_ACTIONS.BACK : SCENE_ACTIONS.NEXT;
-//   }
-// }
