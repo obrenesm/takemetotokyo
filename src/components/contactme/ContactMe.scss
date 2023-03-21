@@ -108,6 +108,10 @@
     animation: fadeOut 1500ms forwards;
     transition: visibility 1s;
 
+    ::selection {
+      background-color: $highlight; 
+    }
+
     h2 {
       color: $highlight;
       font-size: 2.5em;
@@ -152,6 +156,7 @@
       text-decoration: none;
       transform: translate(0px, 0px);
       transition: transform 0.4s ease-in-out;
+      width: fit-content;
     }
 
     @media (hover: hover) {
@@ -190,6 +195,7 @@
         place-self: center;
         animation: fadeIn 1000ms ease-in forwards;
         margin: 0 10vw;
+        user-select: text;
 
         p {
           text-align: left;
