@@ -25,10 +25,10 @@ export function Main() {
   return (
     <div id="main" style={{ width: '100vw', height: '100vh' }} 
       onMouseMove={isTouchEnabled() ? undefined : (e) => followCursorEvent(mouseRef)(e)}
-      onTouchStart={!toggleCont ? (e) => onTouchStart(e, setTouchStart, setTouchEnd) : ''}
-      onTouchMove={!toggleCont ? (e) => onTouchMove(e, setTouchEnd) : ''}
+      onTouchStart={!toggleCont ? (e) => onTouchStart(e, setTouchStart, setTouchEnd) : null}
+      onTouchMove={!toggleCont ? (e) => onTouchMove(e, setTouchEnd) : null}
       onTouchEnd={!toggleCont ? (e) => { 
-        dispatch({ type: onTouchEnd(sceneState.currentScene, touchStart, touchEnd)})} : ''}
+        dispatch({ type: onTouchEnd(sceneState.currentScene, touchStart, touchEnd)})} : null}
       >
       <Context.Provider value={[currentScene, setCurrentScene]}>
         <CamDeviationContext.Provider value={[camDeviation, setCamDeviation]}>
