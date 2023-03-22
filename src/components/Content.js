@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { ScrollDown } from './scrolldown/ScrollDown'
-import { ContactContext } from './ContextProvider'
+import { ContactContext } from '../providers/ContextProvider'
 import { Tooltip } from './tooltip/Tooltip'
 import { isTouchEnabled } from './../utils/utils'
 

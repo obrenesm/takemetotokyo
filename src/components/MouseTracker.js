@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react'
 import { useThree } from '@react-three/fiber'
 import gsap from 'gsap'
 
-import { CamDeviationContext } from './ContextProvider'
+import { CamDeviationContext } from '../providers/ContextProvider'
 
 let centerWidth = window.innerWidth/2
 let centerHeight = window.innerHeight/2
@@ -10,7 +10,7 @@ let centerHeight = window.innerHeight/2
 let camHorizontalOffset = 0
 let camVerticalOffset = 0
 
-export function CalculateMousePosition({currentScene, children}){  
+export function MouseTracker({currentScene, children}){  
   const cam = useThree(state => state.camera)
   const [camDeviation, setCamDeviation] = useContext(CamDeviationContext)
 

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { getActionByCursor  } from '../../utils/sceneActions'
-import { CamDeviationContext } from '../ContextProvider';
+import { CamDeviationContext } from '../../providers/ContextProvider';
 import './Cursor.scss';
 
 export const followCursorEvent = (cursorRef) => {
