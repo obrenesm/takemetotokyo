@@ -1,21 +1,17 @@
 import { Canvas } from '@react-three/fiber';
-import React, { useRef, useState, useReducer } from 'react';
+import React, { useRef, useState, useReducer, Suspense } from 'react';
 import { Scenario } from '../components/3d/Scenario';
 import { Content } from '../components/Content';
 import { Nav } from '../components/Nav';
-
-import '../App.scss';
-import { Suspense } from 'react';
-
+import { CalculateMousePosition } from '../components/CalculateMouseDeviation'
 import { CamDeviationContext, ContactContext, Context } from '../components/ContextProvider';
 import { Cursor, followCursorEvent } from '../components/cursor/Cursor';
 import { initialSceneState, sceneReducer } from '../reducers/scene.reducer';
 import { getActionByCursor } from '../utils/sceneActions'
-import { CalculateMousePosition } from '../components/CalculateMouseDeviation'
-
 import { isTouchEnabled } from '../utils/utils'
 import { onTouchStart, onTouchMove, onTouchEnd } from '../utils/sceneTouchActions'
 
+import '../App.scss';
 
 export function Main() {
   const [currentScene, setCurrentScene] = useState(0);
@@ -29,10 +25,10 @@ export function Main() {
   return (
     <div id="main" style={{ width: '100vw', height: '100vh' }} 
       onMouseMove={isTouchEnabled() ? undefined : (e) => followCursorEvent(mouseRef)(e)}
-      onTouchStart={!toggleCont ? (e) => onTouchStart(e, setTouchStart, setTouchEnd) : ''}
-      onTouchMove={!toggleCont ? (e) => onTouchMove(e, setTouchEnd) : ''}
+      onTouchStart={!toggleCont ? (e) => onTouchStart(e, setTouchStart, setTouchEnd) : null}
+      onTouchMove={!toggleCont ? (e) => onTouchMove(e, setTouchEnd) : null}
       onTouchEnd={!toggleCont ? (e) => { 
-        dispatch({ type: onTouchEnd(sceneState.currentScene, touchStart, touchEnd)})} : ''}
+        dispatch({ type: onTouchEnd(sceneState.currentScene, touchStart, touchEnd)})} : null}
       >
       <Context.Provider value={[currentScene, setCurrentScene]}>
         <CamDeviationContext.Provider value={[camDeviation, setCamDeviation]}>

@@ -4,7 +4,6 @@ import { ContactContext } from './ContextProvider'
 import { Tooltip } from './tooltip/Tooltip'
 import { isTouchEnabled } from './../utils/utils'
 
-
 export function Content({currentScene}) {
     const [toggleCont, setToggleCont] = useContext(ContactContext)
 
@@ -23,7 +22,7 @@ export function Content({currentScene}) {
         <section id="cr" className={currentScene === 1 && !toggleCont ? "active" : "inactive"}>
             <div className='content third left top'>
                 <p>
-                    Hi! I'm Oscar, a detail-oriented frontend developer from Costa Rica. I've been working for <Tooltip content="Previously known as Hangar, latter Hangar Worldwide, and recently fully integrated as part of Critical Mass" direction="down">Critical Mass</Tooltip>the past 7 years and it has been a great journey, learning more about my skills and honing my craft.
+                    Hi! I'm Oscar, a detail-oriented frontend developer from Costa Rica. I have been working for <Tooltip content="Previously known as Hangar, latter Hangar Worldwide, and recently fully integrated as part of Critical Mass" direction="down">Critical Mass</Tooltip>the past 7 years and it has been a great journey, learning more about my skills and honing my craft.
                 </p>
             </div>
             <div className='content third right bottom'>

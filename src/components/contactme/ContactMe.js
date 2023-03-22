@@ -1,24 +1,19 @@
 import React, { useContext } from 'react'
-// import { Context } from '../ContextProvider'
-// import { ScrollDown } from '../scrolldown/scrollDown'
 import { ContactContext } from '../ContextProvider'
 import './ContactMe.scss'
 
-
 export function ContactMe(props) {
-
   const [toggleCont, setToggleCont] = useContext(ContactContext)
+  
   return (
     <>
-        <div className={`modal ${toggleCont ? 'modal-open' : ''}`} id='contact-modal' 
-        // open={toggleCont}
-        >
+        <div className={`modal ${toggleCont ? 'modal-open' : ''}`} id='contact-modal'>
           <div className='modal-container'>
             <section>
               <h2>Let's talk!</h2>
-              <p>I would love to hear from you, even if your aren't exactly on Tokyo</p>
+              <p>I would love to hear from you</p>
               <a href="mailto:contact@oscarbrenes.in" className='mail'>contact@oscarbrenes.in</a>
-              <a href="tel:+50688117533" className='tel'>+506 88 11 75 33</a>
+              <a href="tel:+50688117533" className='tel'>+506 8811 7533</a>
             </section>
             <section className='extLinks'>
               <a href="/resume" target="_blank" className='external'>Resume</a>

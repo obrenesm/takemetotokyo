@@ -3,9 +3,6 @@ import { ContactMe } from './contactme/ContactMe'
 import { ContactContext } from './ContextProvider'
 
 export function Nav(props) {
-    //const [currentScene, setCurrentScene] = useContext(Context)
-
-    //const [contactState, setContactState] = useState(false)
     const [toggleCont, setToggleCont] = useContext(ContactContext)
 
     const toggleContactState = () => {
