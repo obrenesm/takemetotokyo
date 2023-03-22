@@ -3,8 +3,8 @@ import React, { useRef, useState, useReducer, Suspense } from 'react';
 import { Scenario } from '../components/3d/Scenario';
 import { Content } from '../components/Content';
 import { Nav } from '../components/Nav';
-import { CalculateMousePosition } from '../components/CalculateMouseDeviation'
-import { CamDeviationContext, ContactContext, Context } from '../components/ContextProvider';
+import { MouseTracker } from '../components/MouseTracker'
+import { CamDeviationContext, ContactContext, Context } from '../providers/ContextProvider';
 import { Cursor, followCursorEvent } from '../components/cursor/Cursor';
 import { initialSceneState, sceneReducer } from '../reducers/scene.reducer';
 import { getActionByCursor } from '../utils/sceneActions'
@@ -44,9 +44,9 @@ export function Home() {
               <spotLight position={[-200, -400, 100]} angle={1} intensity={0.2} />
               <pointLight position={[-235, 235, 0]} intensity={0.2} />
               <Suspense fallback={null}>
-                <CalculateMousePosition currentScene={sceneState.currentScene}>
+                <MouseTracker currentScene={sceneState.currentScene}>
                   <Scenario currentScene={sceneState.currentScene} />
-                </CalculateMousePosition>
+                </MouseTracker>
               </Suspense>
             </Canvas>
           </ContactContext.Provider>
