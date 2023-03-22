@@ -13,7 +13,7 @@ import { onTouchStart, onTouchMove, onTouchEnd } from '../utils/sceneTouchAction
 
 import '../App.scss';
 
-export function Main() {
+export function Home() {
   const [currentScene, setCurrentScene] = useState(0);
   const [toggleCont, setToggleCont] = useState(false);
   const [camDeviation, setCamDeviation] = useState([0, 0]);
