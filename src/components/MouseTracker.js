@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react'
 import { useThree } from '@react-three/fiber'
 import gsap from 'gsap'
 
-import { CamDeviationContext } from '../providers/ContextProvider'
+import { CamDeviationContext } from '../providers/contextProvider'
 
 let centerWidth = window.innerWidth/2
 let centerHeight = window.innerHeight/2

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { ContactMe } from './contactme/ContactMe'
-import { ContactContext } from '../providers/ContextProvider'
+import { ContactContext } from '../providers/contextProvider'
 
 export function Nav(props) {
     const [toggleCont, setToggleCont] = useContext(ContactContext)

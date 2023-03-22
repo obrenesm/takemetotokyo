@@ -4,8 +4,8 @@ import { Scenario } from '../components/3d/Scenario';
 import { Content } from '../components/Content';
 import { Nav } from '../components/Nav';
 import { MouseTracker } from '../components/MouseTracker'
-import { CamDeviationContext, ContactContext, Context } from '../providers/ContextProvider';
 import { Cursor, followCursorEvent } from '../components/cursor/Cursor';
+import { CamDeviationContext, ContactContext, Context } from '../providers/contextProvider';
 import { initialSceneState, sceneReducer } from '../reducers/scene.reducer';
 import { getActionByCursor } from '../utils/sceneActions'
 import { isTouchEnabled } from '../utils/utils'

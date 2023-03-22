@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { ScrollDown } from './scrolldown/ScrollDown'
-import { ContactContext } from '../providers/ContextProvider'
 import { Tooltip } from './tooltip/Tooltip'
+import { ContactContext } from '../providers/contextProvider'
 import { isTouchEnabled } from './../utils/utils'
 
 export function Content({currentScene}) {
