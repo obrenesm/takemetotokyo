@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ContactContext } from '../../providers/ContextProvider'
+import { ContactContext } from '../../providers/contextProvider'
 import './ContactMe.scss'
 
 export function ContactMe(props) {
