@@ -9,9 +9,14 @@ export function CV() {
             <section>
                 <h3>Work Experience</h3>
                 <div>
+                    <h4>CTO</h4>
+                    <h5>Buzz</h5>
+                    <h6>2023-today</h6>
+                </div>
+                <div>
                     <h4>Frontend Developer</h4>
                     <h5><Tooltip content="Previously known as Hangar, latter Hangar Worldwide, and recently fully integrated as part of Critical Mass" direction="down">Critical Mass</Tooltip>for BMW USA</h5>
-                    <h6>2021-today</h6>
+                    <h6>2021-2023</h6>
                 </div>
                 <div>
                     <h4>Content Developer</h4>
@@ -73,24 +78,9 @@ export function CV() {
                     <h6>2015</h6>
                 </div>
                 <div>
-                    <h4>MOOC of Enviromental Physiology</h4>
-                    <h5>University of Melbourne</h5>
-                    <h6>2014</h6>
-                </div>
-                <div>
-                    <h4>MOOC of Excercise Physiology</h4>
-                    <h5>Stanford University</h5>
-                    <h6>2013</h6>
-                </div>
-                <div>
-                    <h4>MOOC of Nutrition and Physical Activity</h4>
-                    <h5>University of Pittsburgh</h5>
-                    <h6>2013</h6>
-                </div>
-                <div>
                     <h4>Level 1 UCI Cycling Coaching</h4>
                     <h5>UCI</h5>
-                    <h6>2003</h6>
+                    <h6>2012</h6>
                 </div>
             </section>
         </div>
