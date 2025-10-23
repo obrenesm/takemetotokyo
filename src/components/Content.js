@@ -15,7 +15,7 @@ export function Content({currentScene}) {
     <>
         <section id="intro" className={currentScene === 0 && !toggleCont ? "active" : "inactive"}>
             <div className='content full center headline'>
-              <h1>Take me to <span>Tokyo</span></h1>
+              <h1>Taken — <span>by Tokyo</span></h1>
             </div>
             { currentScene === 0 && isTouchEnabled() ? <ScrollDown/> : ''}
         </section>
@@ -26,7 +26,7 @@ export function Content({currentScene}) {
                 </p>
             </div>
             <div className='content third right bottom'>
-                <p>Over the years, I've worn many hats — from being part of a small, creative design team to joining the tech crew behind the BMW USA website, and later leading an entire department. Now, I'm ready for my next big chapter: Japan.</p>
+                <p>My journey has taken me from a being part of an small design team to the tech squad behind the BMW USA website, and eventually to leading an entire department. Now, it's time for my next big chapter: Japan.</p>
             </div>
         </section>
         <section id="jpn" className={currentScene === 2 && !toggleCont ? "active" : "inactive"}>
@@ -34,7 +34,7 @@ export function Content({currentScene}) {
                 <p>I first visited Japan six years ago and instantly fell in love with its culture. Last year, I came back — this time as a language student — and it confirmed what I already knew: I want to build a long-term life here.</p>
             </div>
             <div className='content third right bottom'>
-                <p>Whether you’ve got a project idea, a job opportunity, or just want to say hi, feel free to <span onClick={toggleContactState} className={'modal-cta'}>reach&nbsp;out.</span></p>
+                <p>Whether you've got a project idea, a job opportunity, or just want to say hi, feel free to <span onClick={toggleContactState} className={'modal-cta'}>reach&nbsp;out.</span></p>
             </div>
         </section>
     </>
