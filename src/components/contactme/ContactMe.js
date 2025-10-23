@@ -12,7 +12,7 @@ export function ContactMe(props) {
             <section>
               <h2>Let's talk!</h2>
               <a href="mailto:oscar@imavailable.fyi" className='mail'>oscar@imavailable.fyi</a>
-              <a href="tel:+81 080-9196-3097" className='tel'>+81 08091963097</a>
+              <a href="tel:+81 08091963097" className='tel'>+81 080 9196 3097</a>
             </section>
             <section className='extLinks'>
               <a href="/resume" target="_blank" className='external'>Resume</a>
