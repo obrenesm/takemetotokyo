@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "https://take-me.tokyo/static/css/main.97d2efe8.css",
+    "main.js": "https://take-me.tokyo/static/js/main.8f06b276.js",
+    "static/js/453.0f55725e.chunk.js": "https://take-me.tokyo/static/js/453.0f55725e.chunk.js",
+    "static/media/PPNeueMachina-InktrapUltrabold.woff": "https://take-me.tokyo/static/media/PPNeueMachina-InktrapUltrabold.4b9e1bb4f663cc55ed11.woff",
+    "static/media/PPNeueMachina-InktrapMedium.woff": "https://take-me.tokyo/static/media/PPNeueMachina-InktrapMedium.6c54006a2d0c8ad24716.woff",
+    "static/media/PPNeueMachina-InktrapLight.woff": "https://take-me.tokyo/static/media/PPNeueMachina-InktrapLight.7c51bac63f0d1970c0b9.woff",
+    "static/media/PPNeueMachina-InktrapUltrabold.woff2": "https://take-me.tokyo/static/media/PPNeueMachina-InktrapUltrabold.59f1f360c7347ad3c6ff.woff2",
+    "static/media/PPNeueMachina-InktrapMedium.woff2": "https://take-me.tokyo/static/media/PPNeueMachina-InktrapMedium.62e782fc25687851087f.woff2",
+    "static/media/PPNeueMachina-InktrapLight.woff2": "https://take-me.tokyo/static/media/PPNeueMachina-InktrapLight.c9c9d6b1ad57c7c051d0.woff2",
+    "index.html": "https://take-me.tokyo/index.html",
+    "static/media/pointer.svg": "https://take-me.tokyo/static/media/pointer.7e8c35831ae38dcd4881.svg",
+    "main.97d2efe8.css.map": "https://take-me.tokyo/static/css/main.97d2efe8.css.map",
+    "main.8f06b276.js.map": "https://take-me.tokyo/static/js/main.8f06b276.js.map",
+    "453.0f55725e.chunk.js.map": "https://take-me.tokyo/static/js/453.0f55725e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.97d2efe8.css",
+    "static/js/main.8f06b276.js"
+  ]
+}
