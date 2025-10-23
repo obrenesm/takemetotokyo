@@ -11,7 +11,7 @@ export function CV() {
                 <div>
                     <h4>CTO</h4>
                     <h5>Buzz</h5>
-                    <h6>2023-today</h6>
+                    <h6>2023-2025</h6>
                 </div>
                 <div>
                     <h4>Frontend Developer</h4>
@@ -40,6 +40,11 @@ export function CV() {
             </section>
             <section>
                 <h3>Education</h3>
+                <div>
+                    <h4>Japanese Language</h4>
+                    <h5>ARC Academy</h5>
+                    <h6>2024-today</h6>
+                </div>
                 <div>
                     <h4>Superior Degree in Sports Management</h4>
                     <h5>TEC</h5>

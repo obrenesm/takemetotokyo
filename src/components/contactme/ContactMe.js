@@ -11,8 +11,8 @@ export function ContactMe(props) {
           <div className='modal-container'>
             <section>
               <h2>Let's talk!</h2>
-              <a href="mailto:contact@oscarbrenes.in" className='mail'>contact@oscarbrenes.in</a>
-              <a href="tel:+50688117533" className='tel'>+506 8811 7533</a>
+              <a href="mailto:oscar@imavailable.fyi" className='mail'>oscar@imavailable.fyi</a>
+              <a href="tel:+81 080-9196-3097" className='tel'>+81 08091963097</a>
             </section>
             <section className='extLinks'>
               <a href="/resume" target="_blank" className='external'>Resume</a>
