@@ -15,7 +15,7 @@ export function Content({currentScene}) {
     <>
         <section id="intro" className={currentScene === 0 && !toggleCont ? "active" : "inactive"}>
             <div className='content full center headline'>
-              <h1>Taken — <span>by Tokyo</span></h1>
+              <h1>Take me — <span>Japan</span></h1>
             </div>
             { currentScene === 0 && isTouchEnabled() ? <ScrollDown/> : ''}
         </section>
