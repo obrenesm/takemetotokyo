@@ -22,7 +22,7 @@ export function Content({currentScene}) {
         <section id="cr" className={currentScene === 1 && !toggleCont ? "active" : "inactive"}>
             <div className='content third left top'>
                 <p>
-                    Hi! I'm Oscar, from Costa Rica. Until recently, I was the CTO at Buzz, and before that, I spent over seven years at <Tooltip content="Previously Hangar, latter Hangar Worldwide, and latter fully integrated as part of Critical Mass" direction="down">Critical Mass</Tooltip>
+                    Hi! I'm Oscar, from Costa Rica. Until recently, I was the CTO at Buzz, and before that, I spent over seven years at <Tooltip content="Previously know as Hangar, and latter fully integrated as part of Critical Mass" direction="down">Critical Mass</Tooltip>
                 </p>
             </div>
             <div className='content third right bottom'>
