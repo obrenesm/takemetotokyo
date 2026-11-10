@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './Resume.scss';
-import { CV } from './cv'
+// import { CV } from './cv'
 
 export function Resume(props) {
 
@@ -25,10 +25,10 @@ export function Resume(props) {
         <div id="resume">
             <div className='minimap'>
                 <div className='box' style={ {top: scrollEquivalent} }></div>
-                <CV/>
+                {/* <CV/> */}
             </div>
             <div className='principal'>
-               <CV/>
+               {/* <CV/> */}
             </div>
         </div>
     </>
