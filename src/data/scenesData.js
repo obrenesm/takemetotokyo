@@ -64,11 +64,13 @@ export const planeTurn = {
   lift: 0.4,           // how much the plane rises towards the camera before flipping
   loopRadius: 0.6,     // radius of the half loop (pitch, ends upside down)
   liftDuration: 0.4,
-  loopDelay: 0.1,      // the loop starts while the plane is still rising
+  loopDelay: 0,        // the loop starts right on the click, together with the lift
   loopDuration: 0.75,
   rollDuration: 0.5,   // half roll that puts the plane back right side up
   rollOverlap: 0.2,    // the next move starts this long before the previous one ends
-  arrivalDelay: 1.8    // second turn, when the camera and planet are done (they take 2s)
+  spinDelay: 0.35,     // the planet and camera wait this long, so the plane is already flipping
+                       // (nose almost pointing at the camera) when the planet starts spinning
+  arrivalDelay: 1.8    // second turn, this long after the planet starts spinning (it takes 2s)
 }
 
 export const scenes = [

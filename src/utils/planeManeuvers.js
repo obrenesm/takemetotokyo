@@ -51,7 +51,7 @@ function addTurnBack(timeline, refs, at, onComplete) {
 // and comes down at its usual spot, facing forward like in the CR scene.
 export function createTurnAroundTimeline(refs) {
   const { plane } = refs
-  const { lift, liftDuration, loopDelay, arrivalDelay } = planeTurn
+  const { lift, liftDuration, loopDelay, spinDelay, arrivalDelay } = planeTurn
 
   // A previous maneuver may have been cut short: start from the rest angles
   gsap.killTweensOf(poseTargets(refs))
@@ -68,7 +68,7 @@ export function createTurnAroundTimeline(refs) {
   addTurnAround(timeline, refs, loopDelay)
 
   // The last tween to finish folds the accumulated angles (0 -> -2PI) back to 0
-  addTurnBack(timeline, refs, arrivalDelay, () => resetAngles(refs))
+  addTurnBack(timeline, refs, spinDelay + arrivalDelay, () => resetAngles(refs))
 
   return timeline
 }
