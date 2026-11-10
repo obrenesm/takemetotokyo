@@ -49,6 +49,8 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^5.0.0"
+    "@types/node": "^26.6.6",
+    "gh-pages": "^5.0.0",
+    "typescript": "^7.0.2"
   }
 }
