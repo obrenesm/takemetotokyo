@@ -1,0 +1,17 @@
+---
+description: React component, routing, state, and SCSS conventions for application source.
+globs:
+  - "src/**/*.js"
+  - "src/**/*.jsx"
+  - "src/**/*.scss"
+alwaysApply: false
+---
+
+# React UI
+
+- Follow the existing functional-component and React Hooks patterns. Keep state near its owner; reuse the current Context and reducer patterns for state shared across components.
+- Preserve the current React Router 6 route definitions and existing route behavior.
+- Keep desktop, mobile, pointer, and touch behavior in mind when changing UI or input handling.
+- Reuse existing SCSS files, variables, and component styles. Avoid unrelated global-style changes.
+- Keep event listeners and other external effects paired with cleanup in the effect that creates them.
+- Add or update focused tests for observable behavior when appropriate; the project uses React Testing Library and Jest.

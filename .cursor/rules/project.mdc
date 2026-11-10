@@ -1,0 +1,18 @@
+---
+description: Project-wide guidance for the Take Me to Tokyo React application.
+alwaysApply: true
+---
+
+# Project
+
+- This is a Create React App project using React 18, JavaScript, React Router 6, SCSS, React Three Fiber, Drei, and GSAP.
+- Preserve the existing app structure and conventions. Routes are declared in `src/App.js`; shared state and scene transitions are under `src/providers/`, `src/reducers/`, and `src/utils/`.
+- The home experience has three interactive scenes and supports pointer and touch input. Preserve behavior across all scenes and input modes when changing shared interactions.
+- Keep changes focused. Do not reformat unrelated code or add dependencies unless the task requires them.
+- Do not put credentials or environment-specific secrets in source, rules, or logs. Avoid modifying `.env` unless the task explicitly requires a configuration change.
+
+## Validation
+
+- Run `CI=true npm run build` for production-build validation; CI treats ESLint warnings as errors.
+- Run `CI=true npm test -- --watchAll=false` when changing behavior covered by tests.
+- Report build or test failures rather than hiding them or disabling checks.

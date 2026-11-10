@@ -1,0 +1,17 @@
+---
+description: Build, public assets, and hosting configuration for Vercel and Create React App.
+globs:
+  - "package.json"
+  - "package-lock.json"
+  - "public/**/*"
+  - ".env"
+alwaysApply: false
+---
+
+# Build and hosting
+
+- This project is built with Create React App. Keep `package.json` and `package-lock.json` synchronized when changing dependencies.
+- Create React App's `PUBLIC_URL` environment variable overrides `homepage`; keep them aligned when the public site domain changes, and verify generated `build/index.html` asset URLs.
+- Files in `public/` are addressed by their public URL. Check asset paths when changing the hosting base URL.
+- Preserve client-side routes (`/`, `/resume`, and `/credits`) when changing hosting configuration; direct navigation to each route must continue to work.
+- Never add environment-specific secrets to tracked configuration or expose them in build output.

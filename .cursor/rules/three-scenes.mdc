@@ -1,0 +1,19 @@
+---
+description: Guidance for React Three Fiber scenes, 3D assets, scene transitions, and GSAP animation.
+globs:
+  - "src/components/3d/**/*"
+  - "src/data/scenesData.js"
+  - "src/utils/sceneActions.js"
+  - "src/utils/sceneTouchActions.js"
+alwaysApply: false
+---
+
+# Three.js scenes and animation
+
+- Follow the existing React Three Fiber and Drei patterns. Access Three.js objects through refs and Fiber hooks rather than manipulating the DOM.
+- Preserve the three-scene order and the matching camera and planet values in `src/data/scenesData.js`.
+- Scene direction is shared by pointer and touch navigation. Keep back/next behavior consistent on both inputs.
+- Treat GSAP timelines as lifecycle-bound resources: stop or clean up timelines when their scene changes or their component unmounts, and avoid competing tweens on the same transform.
+- When changing an animated model's transform, account for its parent group and the model's own initial rotation; verify the final position and facing direction, not just that the animation compiles.
+- Keep public 3D assets referenced consistently with the existing `/airplane.gltf` and `/planet.gltf` paths.
+- Do not change generated model geometry or asset licensing headers as part of unrelated animation work.
