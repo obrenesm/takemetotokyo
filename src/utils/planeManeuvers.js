@@ -21,8 +21,11 @@ const resetAngles = ({ plane, loop, roll }) => {
   roll.rotation.z = 0
 }
 
-// Leaving: half loop (pitch up and over, ends upside down) followed by a half roll (right side up
-// again). The plane ends up facing the opposite way. (An Immelmann turn)
+// Leaving: half loop (pitch up and over, ends upside down) blended into a half roll (right side up
+// again): the roll starts while the plane is still pulling up and both end together, so it reads as
+// a single move. The plane ends up facing the opposite way. (An Immelmann turn)
+// The roll pivot is inside the loop one, so the plane always rolls around its own nose and the end
+// pose is the same whatever the overlap
 function addTurnAround(timeline, refs, at) {
   const { loop, roll } = refs
   const { loopDuration, rollDuration, rollOverlap } = planeTurn
@@ -33,9 +36,9 @@ function addTurnAround(timeline, refs, at) {
 }
 
 // Arriving: the same turn the other way round, so it ends facing forward as it started: half roll
-// first (upside down) and then pull through the second half of the loop while coming down.
-// The roll goes first so the wings never swing low once the plane is back at cruise altitude.
-// (A split-S)
+// (upside down) blended into the second half of the loop while coming down. Both start together
+// and the shorter roll is done before the plane is back down, so the wings never dip below their
+// cruise height. (A split-S)
 function addTurnBack(timeline, refs, at, onComplete) {
   const { plane, loop, roll } = refs
   const { loopDuration, rollDuration, rollOverlap } = planeTurn

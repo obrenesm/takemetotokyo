@@ -67,7 +67,9 @@ export const planeTurn = {
   loopDelay: 0,        // the loop starts right on the click, together with the lift
   loopDuration: 0.75,
   rollDuration: 0.5,   // half roll that puts the plane back right side up
-  rollOverlap: 0.2,    // the next move starts this long before the previous one ends
+  rollOverlap: 0.5,    // how long the loop and the roll run together, so they blend into one move.
+                       // Same as rollDuration: the whole roll happens during the loop (it ends with
+                       // the loop on the way out and starts with it on the way back)
   spinDelay: 0.35,     // the planet and camera wait this long, so the plane is already flipping
                        // (nose almost pointing at the camera) when the planet starts spinning
   arrivalDelay: 1.8    // second turn, this long after the planet starts spinning (it takes 2s)
