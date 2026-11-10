@@ -12,7 +12,7 @@ let camVerticalOffset = 0
 
 export function MouseTracker({currentScene, children}){  
   const cam = useThree(state => state.camera)
-  const [camDeviation, setCamDeviation] = useContext(CamDeviationContext)
+  const [, setCamDeviation] = useContext(CamDeviationContext)
 
   function onResize() { 
     centerWidth = window.innerWidth/2

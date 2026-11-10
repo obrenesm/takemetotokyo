@@ -3,7 +3,7 @@ import { ContactContext } from '../../providers/contextProvider'
 import './ContactMe.scss'
 
 export function ContactMe(props) {
-  const [toggleCont, setToggleCont] = useContext(ContactContext)
+  const [toggleCont] = useContext(ContactContext)
   
   return (
     <>

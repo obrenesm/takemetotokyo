@@ -5,7 +5,7 @@ import './Cursor.scss';
 
 export const followCursorEvent = (cursorRef) => {
   return (e) => {
-    if (typeof cursorRef !== undefined && cursorRef.current) {
+    if (cursorRef?.current) {
       cursorRef.current.style.transform = `translate3d(${e.pageX}px, ${e.pageY}px, 0)`;
     }
   }
