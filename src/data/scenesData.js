@@ -63,15 +63,16 @@ export const planeRestPosition = [-0.2, 0.6, 14]
 export const planeTurn = {
   lift: 0.4,           // how much the plane rises towards the camera before flipping
   loopRadius: 0.6,     // radius of the half loop (pitch, ends upside down)
-  liftDuration: 0.4,
+  liftDuration: 0.55,
   loopDelay: 0,        // the loop starts right on the click, together with the lift
-  loopDuration: 0.75,
-  rollDuration: 0.5,   // half roll that puts the plane back right side up
-  rollOverlap: 0.5,    // how long the loop and the roll run together, so they blend into one move.
+  loopDuration: 1.05,
+  rollDuration: 0.7,   // half roll that puts the plane back right side up
+  rollOverlap: 0.7,    // how long the loop and the roll run together, so they blend into one move.
                        // Same as rollDuration: the whole roll happens during the loop (it ends with
                        // the loop on the way out and starts with it on the way back)
-  spinDelay: 0.35,     // the planet and camera wait this long, so the plane is already flipping
-                       // (nose almost pointing at the camera) when the planet starts spinning
+  spinDelay: 0.65,     // the planet and camera wait this long, so they start spinning when the
+                       // plane's nose already points back towards CR on screen (~15° off at 0.65s,
+                       // 10° at 0.7s with the durations above: retune it if they change)
   arrivalDelay: 1.8    // second turn, this long after the planet starts spinning (it takes 2s)
 }
 
