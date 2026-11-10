@@ -10,14 +10,14 @@ export function useCalcObjIndex(obj){
     return Object.values(obj).findIndex(isIn)
 }
 
-export function animate3D(model, motion, obj, scene){
+export function animate3D(model, motion, obj, scene, delay = 0){
   const currentValues = obj[Object.keys(obj)[scene]]
-  let pos = (({x, y, z, duration}) => ({x, y, z, duration}))(currentValues)  
+  let pos = (({x, y, z, duration}) => ({x, y, z, duration}))(currentValues)
   const selected = (motion === 'rotation') ? model.rotation : model.position
 
   return gsap.to(
     selected,
-    pos)
+    { ...pos, delay })
 }
 
 export function UpdateScene(expected, current) {
