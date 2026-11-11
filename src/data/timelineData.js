@@ -27,5 +27,5 @@ export const timelineItems = [
   { id: 'mtbAssociation', category: 'volunteering', start: '2010', end: '2012' },
   { id: 'covao', category: 'studies', start: '2008-01', end: '2010-12' },
   { id: 'cartago', category: 'cycling', start: '2005', end: '2009' },
-  { id: 'firstBike', category: 'cycling', start: '2000' },
+  { id: 'firstBike', category: 'cycling', start: '1999' },
 ]

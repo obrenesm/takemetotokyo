@@ -27,7 +27,7 @@ const filter = (name) => within(screen.getByRole('group', { name: /show/i })).ge
 test('shows every kind of activity by default', () => {
   renderTimeline()
 
-  expect(cardTitle(/from new hire to cto/i)).toBeInTheDocument() // work
+  expect(cardTitle(/stepping into the cto role/i)).toBeInTheDocument() // work
   expect(cardTitle(/turning a cycling team into a foundation/i)).toBeInTheDocument() // volunteering
   expect(cardTitle(/back to school, in japanese/i)).toBeInTheDocument() // studies
   expect(cardTitle(/racing for cartago/i)).toBeInTheDocument() // cycling
@@ -43,7 +43,7 @@ test('picking a category shows only that category', async () => {
 
   expect(cardTitle(/back to school, in japanese/i)).toBeInTheDocument()
   expect(cardTitle(/where i learned to build for the web/i)).toBeInTheDocument()
-  expect(cardTitle(/from new hire to cto/i)).not.toBeInTheDocument()
+  expect(cardTitle(/stepping into the cto role/i)).not.toBeInTheDocument()
   expect(cardTitle(/racing for cartago/i)).not.toBeInTheDocument()
   expect(filter(/studies/i)).toHaveAttribute('aria-pressed', 'true')
   expect(filter(/all/i)).toHaveAttribute('aria-pressed', 'false')
@@ -57,7 +57,7 @@ test('categories add up, and All shows everything again', async () => {
   await userEvent.click(filter(/studies/i))
   await userEvent.click(filter(/work/i))
 
-  expect(cardTitle(/from new hire to cto/i)).toBeInTheDocument()
+  expect(cardTitle(/stepping into the cto role/i)).toBeInTheDocument()
   expect(cardTitle(/back to school, in japanese/i)).toBeInTheDocument()
   expect(cardTitle(/racing for cartago/i)).not.toBeInTheDocument()
   expect(location.search).toBe('?show=work%2Cstudies')
@@ -71,7 +71,7 @@ test('categories add up, and All shows everything again', async () => {
 test('a shared link opens with its filter', () => {
   renderTimeline('/journey?show=volunteering')
 
-  expect(cardTitle(/coaching the next generation/i)).toBeInTheDocument()
+  expect(cardTitle(/empowering youth through sport/i)).toBeInTheDocument()
   expect(cardTitle(/back to school, in japanese/i)).not.toBeInTheDocument()
   expect(filter(/volunteering/i)).toHaveAttribute('aria-pressed', 'true')
 })
@@ -79,7 +79,7 @@ test('a shared link opens with its filter', () => {
 test('details open and close', async () => {
   renderTimeline()
 
-  const toggle = screen.getByRole('button', { name: /more: from new hire to cto/i })
+  const toggle = screen.getByRole('button', { name: /more: stepping into the cto role/i })
   const details = document.getElementById(toggle.getAttribute('aria-controls'))
   expect(toggle).toHaveAttribute('aria-expanded', 'false')
   expect(details).toHaveAttribute('aria-hidden', 'true')
@@ -88,7 +88,7 @@ test('details open and close', async () => {
   await userEvent.click(toggle)
 
   expect(toggle).toHaveAttribute('aria-expanded', 'true')
-  expect(toggle).toHaveAccessibleName(/less: from new hire to cto/i)
+  expect(toggle).toHaveAccessibleName(/less: stepping into the cto role/i)
   expect(details).not.toHaveAttribute('aria-hidden')
   expect(within(details).getByText(/two-year roadmap/i)).toBeInTheDocument()
 })

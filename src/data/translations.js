@@ -130,7 +130,7 @@ export const translations = {
       now: {
         label: 'Now',
         title: 'Next stop: Japan',
-        text: "CTO chapter closed and Japanese course done. Now I'm looking for a place in Japan where design, technology and people meet.",
+        text: "I recently left my position as CTO to focus on establishing a long-term future in Japan. While I'm still learning the language, I'm already seeking opportunities that let me bridge design, tech, and community-driven projects, bonus points if it involves my passion for cycling!",
         cta: "Let's talk!",
       },
       footer: {
@@ -142,7 +142,7 @@ export const translations = {
           title: 'Seeing Japan at bike speed',
           org: 'Tokyo → Nagasaki → Nagoya',
           role: 'Bike tour',
-          summary: 'Before heading back to Costa Rica, I decided to see part of Japan by bike: from Tokyo all the way to Nagasaki, and back to Nagoya.',
+          summary: 'Once I finished my Japanese studies, before heading back to Costa Rica, I decided to see part of Japan by bike: from Tokyo all the way to Nagasaki, and back to Nagoya.',
           tags: ['2,874 km', '22,799 m of climbing', '161 h in the saddle'],
           map: {
             label: 'Route map: from Tokyo to Nagasaki and back to Nagoya',
@@ -157,14 +157,14 @@ export const translations = {
           title: 'Back to school, in Japanese',
           org: 'ARC Academy',
           role: 'Japanese language student',
-          summary: 'A year and a half studying Japanese in Japan. Passed the JLPT N4 and made it to N3-level classes. Keigo and I are still negotiating.',
+          summary: 'A year and a half studying Japanese in Tokyo. Passed the JLPT N4 and made it to N3-level classes. Keigo and I are still negotiating.',
           tags: ['Japanese', 'JLPT N4'],
         },
         buzz: {
-          title: 'From new hire to CTO in three months',
+          title: 'Stepping into the CTO role',
           org: 'Buzz',
           role: 'Senior frontend developer\u00a0→ CTO',
-          summary: 'I joined to lead frontend projects, and three months later I was building the tech department from scratch: hiring, budget, processes and KPIs, with a remote team of developers and designers.',
+          summary: 'Stepping up from Frontend Lead to CTO within three months was an incredible vote of confidence. I took on the challenge of building our internal tech department from the ground up, from recruiting a talented team to setting up budgets, workflows, and KPIs, while keeping and improving the department relations with key clients.',
           path: ['Senior frontend developer', 'CTO'],
           details: [
             'Set up the department from zero: hiring, budget, workflows and performance indicators.',
@@ -181,10 +181,10 @@ export const translations = {
           org: 'Udacity',
         },
         criticalMass: {
-          title: 'Seven and a half years of leveling up',
+          title: 'Seven and a half years of growth',
           org: 'Critical Mass',
           role: 'Production designer\u00a0→ Content developer\u00a0→ Frontend developer',
-          summary: 'I started doing production design for GoDaddy and ended up building the technology behind the BMW USA website. Along the way I became second in command of the content team. Fun fact: it was called Hangar back then.',
+          summary: 'Evolving through design, frontend engineering, and having some leadership provided a complete perspective of the digital process, from early visual execution to technical delivery and team management.',
           path: ['Production designer for GoDaddy', 'Content developer for BMW USA', 'Frontend developer for BMW USA'],
           details: [
             'Second in command of the content department: coordinated the work and represented the team with other areas.',
@@ -194,10 +194,10 @@ export const translations = {
           tags: ['Frontend', 'AEM', 'Content', 'Training'],
         },
         tec: {
-          title: 'Making the coaching official',
+          title: 'Professionalizing the initiative',
           org: 'Costa Rica Institute of Technology (TEC)',
           role: 'Sports management technician',
-          summary: 'While running Clean Cycling, I went back to class to learn the management side of sport.',
+          summary: 'While leading Clean Cycling, I studied Sports Management trying to equip our volunteer initiative with the operational and strategic framework it needed to grow sustainably.',
           tags: ['Sports management'],
         },
         la404: {
@@ -217,10 +217,10 @@ export const translations = {
           tags: ['Coaching', 'Social impact', 'Clean sport', 'Program design'],
         },
         losSantos: {
-          title: 'Coaching the next generation',
+          title: 'Empowering youth through sport',
           org: 'Los Santos C&R',
           role: 'Sports director & coach',
-          summary: 'My first team as a coach: young riders, developed as athletes and as people. National titles followed, and so did the idea of becoming a foundation.',
+          summary: 'Invited to establish a youth cycling initiative in a mountain region, I mentored young riders as both athletes and individuals. Bringing home national titles was meaningful, but the holistic impact on their lives was what made it deeply fulfilling, and ultimately led to creating a foundation.',
           details: [
             'Ran a cycling team focused on developing young talent, on and off the bike.',
             'Prepared riders for competition and followed their progress.',
@@ -245,20 +245,20 @@ export const translations = {
           title: 'Learning on real projects',
           org: 'Freelance',
           role: 'Web & graphic designer',
-          summary: 'Websites and graphic design for my own clients while I was still studying. Real clients and real deadlines turned out to be great teachers.',
+          summary: 'While still studying, I began taking on independent graphic design projects, building a portfolio that spanned small businesses and high-profile clients like Deloitte and the National Olympic Committee. Managing real clients and live deadlines early on proved to be my greatest classroom.',
           tags: ['Web design', 'Graphic design'],
         },
         acica: {
-          title: 'Last seasons as a racer',
+          title: 'The Road Years',
           org: 'ACICA',
           role: 'Road cyclist',
-          summary: 'My final competitive seasons, on the road.',
+          summary: 'I spent my final three seasons focused on road racing.',
         },
         mtbAssociation: {
-          title: 'Backstage at the national MTB cup',
+          title: 'National MTB Cup: Track Design & Operations',
           org: 'Asociación Nacional de MTB',
           role: 'Event operations',
-          summary: "Schedules, registrations and staff for Costa Rica's National MTB Cup, plus designing the XCO and XCC race courses. Lots of mud, lots of logistics.",
+          summary: "Designed and physically built the XCO and XCC technical courses for Costa Rica's National MTB Cup. Alongside hands-on track construction, I lent a hand with event logistics, staff management, and race administration.",
           tags: ['Events', 'Logistics', 'Course design'],
         },
         covao: {
@@ -276,7 +276,7 @@ export const translations = {
         },
         firstBike: {
           title: 'Hooked on bikes',
-          summary: 'Started riding road and mountain bikes. Spoiler: it led to racing, coaching and a foundation.',
+          summary: 'From very early I started riding and casually racing mountain bikes. Spoiler: it led to racing, coaching and a foundation.',
         },
       },
     },
@@ -397,7 +397,7 @@ export const translations = {
       now: {
         label: '現在',
         title: '次の行き先：日本',
-        text: 'CTOとしての役目を終え、日本語学校も修了しました。今は日本で、デザインとテクノロジー、そして人が交わる場所を探しています。',
+        text: '最近CTOの職を離れ、日本で長く暮らしていく基盤づくりに集中しています。まだ日本語を勉強中ですが、デザイン、テクノロジー、そしてコミュニティから生まれるプロジェクトをつなぐ機会を、すでに探し始めています。自転車への情熱も活かせたら、なお嬉しいです！',
         cta: 'お気軽にご連絡ください',
       },
       footer: {
@@ -409,7 +409,7 @@ export const translations = {
           title: '自転車のスピードで見た日本',
           org: '東京 → 長崎 → 名古屋',
           role: '自転車旅',
-          summary: 'コスタリカに戻る前に、自転車で日本の一部を巡ることにしました。東京から長崎まで走り、名古屋まで戻ってきました。',
+          summary: '日本語の勉強を終えたあと、コスタリカに戻る前に、自転車で日本の一部を巡ることにしました。東京から長崎まで走り、名古屋まで戻ってきました。',
           tags: ['2,874 km', '獲得標高 22,799 m', '走行時間 161時間'],
           map: {
             label: 'ルートマップ：東京から長崎へ、そして名古屋まで',
@@ -424,14 +424,14 @@ export const translations = {
           title: '日本語で、もう一度学生に',
           org: 'ARC Academy',
           role: '日本語学校の学生',
-          summary: '日本で1年半、日本語を勉強しました。JLPT N4に合格し、N3レベルのクラスまで進みました。敬語とはまだ交渉中です。',
+          summary: '東京で1年半、日本語を勉強しました。JLPT N4に合格し、N3レベルのクラスまで進みました。敬語とはまだ交渉中です。',
           tags: ['日本語', 'JLPT N4'],
         },
         buzz: {
-          title: '入社3か月でCTOに',
+          title: 'CTOという役割へ',
           org: 'Buzz',
           role: 'シニアフロントエンド開発者\u00a0→ CTO',
-          summary: 'フロントエンドのプロジェクトを率いるために入社し、3か月後にはテクノロジー部門をゼロから立ち上げることに。採用、予算、プロセス、KPIまで、リモートの開発・デザインチームとともに作り上げました。',
+          summary: '入社から3か月でフロントエンドリードからCTOに抜擢されたことは、大きな信頼の証でした。社内のテクノロジー部門をゼロから築くという挑戦に取り組み、優秀なチームの採用から予算、業務フロー、KPIの整備までを手がけながら、主要クライアントとの関係を維持・強化しました。',
           path: ['シニアフロントエンド開発者', 'CTO'],
           details: [
             '採用、予算、業務プロセス、評価指標まで、部門をゼロから構築。',
@@ -448,10 +448,10 @@ export const translations = {
           org: 'Udacity',
         },
         criticalMass: {
-          title: '7年半、一歩ずつレベルアップ',
+          title: '7年半の成長',
           org: 'Critical Mass',
           role: 'プロダクションデザイナー\u00a0→ コンテンツ開発者\u00a0→ フロントエンド開発者',
-          summary: 'GoDaddyのプロダクションデザインから始まり、最後はBMW USAのウェブサイトを支える技術を担当。その間に、コンテンツチームのナンバー2にもなりました。ちなみに当時の社名はHangarでした。',
+          summary: 'デザイン、フロントエンド開発、そしてリーダーシップを経験したことで、初期のビジュアル制作から技術的な実装、チームマネジメントまで、デジタル制作のプロセス全体を見渡せるようになりました。',
           path: ['プロダクションデザイナー（GoDaddy）', 'コンテンツ開発者（BMW USA）', 'フロントエンド開発者（BMW USA）'],
           details: [
             'コンテンツ部門のナンバー2として業務を調整し、他部署に対してチームを代表。',
@@ -461,10 +461,10 @@ export const translations = {
           tags: ['フロントエンド', 'AEM', 'コンテンツ', '研修'],
         },
         tec: {
-          title: 'コーチングを、学問としても',
+          title: '取り組みを、プロの仕組みに',
           org: 'コスタリカ工科大学（TEC）',
           role: 'スポーツマネジメント専門課程',
-          summary: 'Clean Cyclingを運営しながら、スポーツのマネジメントを学ぶためにもう一度教室へ。',
+          summary: 'Clean Cyclingを率いながらスポーツマネジメントを学び、ボランティアの取り組みが持続的に成長するための、運営面と戦略面の土台づくりを目指しました。',
           tags: ['スポーツマネジメント'],
         },
         la404: {
@@ -484,10 +484,10 @@ export const translations = {
           tags: ['コーチング', '社会貢献', 'クリーンスポーツ', 'プログラム設計'],
         },
         losSantos: {
-          title: '次の世代を育てる',
+          title: 'スポーツで若者に力を',
           org: 'Los Santos C&R',
           role: '監督・コーチ',
-          summary: 'コーチとして初めて率いたチーム。若い選手たちを、アスリートとしても人としても育てることを大切にしました。全国タイトルを重ね、やがて財団という次のステップにつながりました。',
+          summary: '山間部の地域で若者向けの自転車プロジェクトを立ち上げてほしいと声をかけられ、若い選手たちをアスリートとしても一人の人間としても指導しました。全国タイトルの獲得にも大きな意味がありましたが、何より心に残ったのは、彼らの人生全体に与えられた影響です。その経験が、やがて財団の設立へとつながりました。',
           details: [
             '競技の内外で若い才能を育てる自転車チームを指揮。',
             '選手のレース準備と、競技面での成長をサポート。',
@@ -512,20 +512,20 @@ export const translations = {
           title: '実際のプロジェクトで学ぶ',
           org: 'フリーランス',
           role: 'ウェブ・グラフィックデザイナー',
-          summary: '学生時代から、自分のクライアント向けにウェブサイトやグラフィックを制作していました。本物のクライアントと締め切りは、最高の先生でした。',
+          summary: '学生のうちからフリーランスでグラフィックデザインの仕事を受け始め、小さなビジネスから、Deloitteや国内オリンピック委員会といった大きなクライアントまで、幅広いポートフォリオを築きました。早くから本物のクライアントと締め切りに向き合った経験が、最高の学びの場になりました。',
           tags: ['ウェブデザイン', 'グラフィックデザイン'],
         },
         acica: {
-          title: '選手としての最後のシーズン',
+          title: 'ロードレースの日々',
           org: 'ACICA',
           role: 'ロードレース選手',
-          summary: '競技者としての最後のシーズンを、ロードで走りました。',
+          summary: '選手としての最後の3シーズンは、ロードレースに打ち込みました。',
         },
         mtbAssociation: {
-          title: '全国MTBカップの舞台裏',
+          title: '全国MTBカップ：コース設計と大会運営',
           org: 'Asociación Nacional de MTB',
           role: '大会運営',
-          summary: 'コスタリカ全国MTBカップで、スケジュール、エントリー、スタッフの調整を担当し、XCOとXCCのコース設計も手がけました。泥だらけで、段取りだらけの日々。',
+          summary: 'コスタリカ全国MTBカップで、XCOとXCCのテクニカルコースを設計し、自らの手で造成しました。コースづくりに加えて、大会のロジスティクス、スタッフの管理、レース運営もサポートしました。',
           tags: ['イベント運営', 'ロジスティクス', 'コース設計'],
         },
         covao: {
@@ -543,7 +543,7 @@ export const translations = {
         },
         firstBike: {
           title: '自転車にハマる',
-          summary: 'ロードバイクとマウンテンバイクに乗り始めました。ネタバレすると、これがのちにレース、コーチング、そして財団へとつながっていきます。',
+          summary: 'かなり早い時期からマウンテンバイクに乗り始め、気軽にレースにも出るようになりました。ネタバレすると、これがのちにレース、コーチング、そして財団へとつながっていきます。',
         },
       },
     },
