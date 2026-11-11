@@ -1,16 +1,18 @@
 import React, { useContext } from 'react'
 import { ContactContext } from '../../providers/contextProvider'
+import { useLanguage } from '../../providers/languageProvider'
 import './ContactMe.scss'
 
 export function ContactMe(props) {
   const [toggleCont] = useContext(ContactContext)
+  const { t } = useLanguage()
   
   return (
     <>
         <div className={`modal ${toggleCont ? 'modal-open' : ''}`} id='contact-modal'>
           <div className='modal-container'>
             <section>
-              <h2>Let's talk!</h2>
+              <h2>{t('contact.title')}</h2>
               <a href="mailto:oscar@take-me.jp" className='mail'>oscar@take-me.jp</a>
               {/* <a href="tel:+81 08091963097" className='tel'>+81 080 9196 3097</a> */}
             </section>
@@ -20,7 +22,11 @@ export function ContactMe(props) {
             </section>
           </div>
           <div className='credits-disclaimer'>
-              <p>I used and modified assets under a creative commons license. If you want to check the authors, or just see what I modified <a href="/credits" target="_blank" className='external'>click here</a></p>
+              <p>
+                {t('contact.creditsDisclaimer', {
+                  link: <a href="/credits" target="_blank" className='external'>{t('contact.creditsLink')}</a>
+                })}
+              </p>
           </div>
         </div>
     </>

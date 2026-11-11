@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
-import { getActionByCursor  } from '../../utils/sceneActions'
+import { getActionByCursor, SCENE_ACTIONS } from '../../utils/sceneActions'
 import { CamDeviationContext } from '../../providers/contextProvider';
+import { useLanguage } from '../../providers/languageProvider';
 import './Cursor.scss';
 
 export const followCursorEvent = (cursorRef) => {
@@ -13,9 +14,13 @@ export const followCursorEvent = (cursorRef) => {
 
 export const Cursor = React.forwardRef(({ currentScene }, ref) => {
   const [camDeviation] = useContext(CamDeviationContext);
+  const { t } = useLanguage();
+  const action = getActionByCursor(currentScene, camDeviation);
+  const labels = { [SCENE_ACTIONS.NEXT]: t('cursor.next'), [SCENE_ACTIONS.BACK]: t('cursor.back') };
+
   return (
       <div className='cursor-circle' ref={ref}>
-        <span>{getActionByCursor(currentScene, camDeviation)}</span>
+        <span>{labels[action] ?? action}</span>
       </div>
   )
 });
