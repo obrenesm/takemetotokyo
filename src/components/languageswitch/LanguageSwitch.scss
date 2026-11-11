@@ -23,7 +23,9 @@
     border: none;
     border-radius: 4px;
     color: $light_grey;
-    font-size: 1.1em;
+    // Smaller than the contact button's text (1.1em) so it doesn't compete with it: the kanji of
+    // "日本語" look bigger than Latin letters of the same size
+    font-size: 0.875em;
     line-height: 1;
     font-family: PPNeueMachina-InktrapMedium, montserrat, -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
     segoe ui, arial, sans-serif;
@@ -74,7 +76,8 @@
 
 @media (min-width: 380px) {
   .language-switch {
-    font-size: 1.2em;
+    // The contact button's text grows to 1.2em
+    font-size: 0.95em;
     // The contact icon grows to 30px
     top: calc(20px + 1px + 30px / 2 - 34px / 2);
   }
@@ -83,6 +86,8 @@
 // Desktop: bottom left, a corner no scene text uses
 @media (min-width: 768px) {
   .language-switch {
+    // Alone in its corner, it keeps the contact button's size
+    font-size: 1.2em;
     top: auto;
     bottom: 20px;
     left: 22px;
