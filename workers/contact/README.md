@@ -2,7 +2,9 @@
 
 A Cloudflare Worker that receives the site's contact form (`src/components/contactme/ContactForm.js`):
 it checks the fields, asks Cloudflare whether the Turnstile token is good, and e-mails the message
-through Cloudflare Email Routing, with the visitor in `Reply-To` so answering is just replying.
+through Resend, from `contact@mail.take-me.jp`, with the visitor in `Reply-To` so answering is just
+replying. The e-mail's design is Resend's "Contact form message" template (alias
+`contact-form-message`, its id is `RESEND_TEMPLATE_ID` in `wrangler.toml`): edit it in Resend, not here.
 
 The site is static (GitHub Pages) and a Turnstile token only protects anything once a server has
 verified it, hence this Worker.
@@ -13,33 +15,39 @@ verified it, hence this Worker.
    the dashboard, check that its hostnames include every domain the site is served from: the
    Worker only accepts tokens whose hostname is in `TURNSTILE_HOSTNAMES` (`wrangler.toml`) and
    whose action is `contact`.
-2. **Email Routing.** Turn it on for `take-me.jp` and add the address where messages should arrive
-   as a destination address (Cloudflare e-mails a link to verify it).
-3. **The Worker**, from this folder, with Wrangler 4 installed (`wrangler login` first). Each
-   `secret put` asks for the value, so it never goes in a command or a file:
+2. **Resend domain.** `mail.take-me.jp` is created in Resend. Its DNS records go in **Vercel**, whose
+   nameservers take-me.jp uses (not the registrar's DNS panel): open the domain in Resend and use
+   **Auto configure**, then add DMARC if it's missing (`_dmarc.mail` TXT `v=DMARC1; p=none;`).
+   Resend verifies it within minutes to hours; until then it rejects mail from that domain.
+3. **Resend key.** Resend → API Keys → create one with **sending access** limited to
+   `mail.take-me.jp`. The Worker never gets a full-access key.
+4. **The Worker**, from this folder. Wrangler is a dev dependency here (`npm install` once, then
+   `npx wrangler login`). Each `secret put` asks for the value, so it never goes in a command or a
+   file:
 
    ```bash
-   wrangler secret put TURNSTILE_SECRET_KEY
-   wrangler secret put MAIL_TO
-   wrangler deploy
+   npx wrangler secret put TURNSTILE_SECRET_KEY
+   npx wrangler secret put RESEND_API_KEY
+   npx wrangler secret put MAIL_TO
+   npm run deploy
    ```
 
    The last command prints the Worker's URL, `https://take-me-contact.<subdomain>.workers.dev`.
-4. **The site.** Put that URL in `REACT_APP_CONTACT_ENDPOINT`, in Vercel (Settings → Environment
+5. **The site.** Put that URL in `REACT_APP_CONTACT_ENDPOINT`, in Vercel (Settings → Environment
    Variables, Production) or in `.env.production`, and deploy. Until it's set, the dialog shows the
    e-mail and LinkedIn instead of the form.
-5. **Check it.** Send a message from the live site: it should arrive, and posting the same token
-   again should get `403 verification` (tokens are single use).
+6. **Check it.** Send a message from the live site: it should reach `delivered` in Resend (Emails)
+   and your inbox, and posting the same token again should get `403 verification`.
 
-If the domain's mail can't go through Email Routing, only `sendMail` in `src/index.js` changes: any
-e-mail API called with `fetch` (Resend, Postmark…) does the same job.
+Each submission is sent with an idempotency key made from its (single use) Turnstile token, so a
+retry never sends it twice. Network errors, `429` and `5xx` are retried twice; other `4xx` are not.
 
 ## Trying it locally
 
 - `npm start` in the site uses Cloudflare's test site key (`.env.development`), which always passes.
 - `node workers/contact/dev-server.js` serves this same code on http://localhost:8787 with the
   matching test secret: Cloudflare really verifies the token, and the e-mail is printed in the
-  terminal instead of sent. Test keys answer for `example.com` with no action, so the dev server
+  terminal instead of sent (the request it would send to Resend). Test keys answer for `example.com` with no action, so the dev server
   turns on `TURNSTILE_TEST_MODE`; the deployed Worker never accepts them. In Claude Code's preview it's the `contact-api` configuration.
 - `npm test` in this folder runs the tests (Node's own test runner, nothing to install).
 
@@ -52,7 +60,7 @@ e-mail API called with `fetch` (Resend, Postmark…) does the same job.
 | -------------- | ------ | ---------------------------------------------------------------- |
 | `invalid`      | 400    | some fields are wrong, `fields` says which: `{ email: 'invalid' }` |
 | `verification` | 403    | Turnstile didn't pass, or not for this action and hostname         |
-| `send`         | 502    | Email Routing refused or failed                                   |
+| `send`         | 502    | Resend refused it or kept failing (see the Worker's logs)         |
 | `config`       | 500    | a setting or secret is missing (see the Worker's logs)            |
 
 The field rules (required, lengths, e-mail format) are the same as in `src/utils/contactForm.js`:

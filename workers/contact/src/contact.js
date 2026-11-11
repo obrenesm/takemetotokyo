@@ -1,7 +1,8 @@
-// The contact form's endpoint: checks the fields and the Turnstile token, then e-mails the message.
-// The field rules are the site's (src/utils/contactForm.js), keep both in step.
+// The contact form's endpoint: checks the fields and the Turnstile token, then e-mails the message
+// through Resend. The field rules are the site's (src/utils/contactForm.js), keep both in step.
 // Runs as a Cloudflare Worker (src/index.js) and on Node for the tests and local development
 // (dev-server.js), so it only uses what both have: fetch, Request, Response, FormData, crypto.
+// Resend is called through its REST API: an SDK would be the Worker's only dependency.
 
 export const LIMITS = { name: 100, email: 254, message: 5000 }
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/
@@ -14,7 +15,7 @@ const SITEVERIFY_TIMEOUT = 5000
 export const TURNSTILE_ACTION = 'contact'
 // The field the site sends the token in, Turnstile's usual name
 export const TOKEN_FIELD = 'cf-turnstile-response'
-const SETTINGS = ['TURNSTILE_SECRET_KEY', 'TURNSTILE_HOSTNAMES', 'MAIL_FROM', 'MAIL_TO']
+const SETTINGS = ['TURNSTILE_SECRET_KEY', 'TURNSTILE_HOSTNAMES', 'RESEND_API_KEY', 'RESEND_TEMPLATE_ID', 'MAIL_TO']
 
 const list = (value) => (value || '').split(',').map((item) => item.trim()).filter(Boolean)
 
@@ -80,72 +81,80 @@ export async function verifyTurnstile(token, { secret, ip, hostnames, testMode =
   }
 }
 
-// THE E-MAIL: plain text in UTF-8, the visitor in Reply-To so answering is just replying
+// THE E-MAIL: Resend's "Contact form message" template (its HTML lives in Resend, RESEND_TEMPLATE_ID),
+// from contact@mail.take-me.jp, with the visitor in Reply-To so answering is just replying
 
-const isPlainAscii = (text) => /^[\x20-\x7e]*$/.test(text)
+const RESEND_URL = 'https://api.resend.com/emails'
+const RESEND_TIMEOUT = 10000
+const RESEND_RETRIES = 2
 
-function base64(text) {
-  const bytes = new TextEncoder().encode(text)
-  let binary = ''
-  for (let i = 0; i < bytes.length; i += 0x8000) {
-    binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000))
+// The template drops values in as they are, and they come from strangers: escaped, nobody can
+// slip links or markup into the e-mail. Line breaks become <br> (Resend writes the text part
+// from the HTML, decoding the entities again)
+const escapeHtml = (text) =>
+  text.replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char])
+
+export function buildEmail({ name, email, message, language }, { to, templateId }) {
+  return {
+    to: [to],
+    reply_to: email,
+    // Plain text, not HTML: the raw name (it went through oneLine, so no line breaks)
+    subject: `New message from ${name}`,
+    template: {
+      id: templateId,
+      variables: {
+        VISITOR_NAME: escapeHtml(name),
+        VISITOR_EMAIL: escapeHtml(email),
+        MESSAGE: escapeHtml(message).replace(/\n/g, '<br>'),
+        SITE_LANGUAGE: language,
+      },
+    },
   }
-  return btoa(binary)
 }
 
-// Non-ASCII header text as RFC 2047 words (=?UTF-8?B?...?=): at most 75 characters each, and a
-// character's bytes never split between two words
-function encodeHeaderText(text) {
-  if (isPlainAscii(text)) return text
+// One key per form submission: the Turnstile token is single use, so its hash names the
+// submission. A retry with the same key never sends a second e-mail
+export async function idempotencyKey(token) {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(token))
+  const hex = [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
+  return `contact-form/${hex}`
+}
 
-  const encoder = new TextEncoder()
-  const words = []
-  let word = ''
-  for (const char of text) {
-    if (word && encoder.encode(word + char).length > 45) {
-      words.push(word)
-      word = ''
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+// Sends through Resend's API and resolves to the e-mail's id. Network errors, 429 and 5xx are
+// retried (waiting what retry-after says, at most 5 s); any other 4xx is a mistake to fix, not
+// to repeat, so it throws right away
+export async function sendWithResend(email, { apiKey, idempotencyKey: key, fetch: fetchImpl = fetch, retries = RESEND_RETRIES, delay = wait }) {
+  for (let attempt = 0; ; attempt += 1) {
+    let response
+    try {
+      response = await fetchImpl(RESEND_URL, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+          'Idempotency-Key': key,
+        },
+        body: JSON.stringify(email),
+        signal: AbortSignal.timeout(RESEND_TIMEOUT),
+      })
+    } catch (error) {
+      if (attempt >= retries) throw error
+      await delay(500 * 2 ** attempt)
+      continue
     }
-    word += char
+
+    const body = await response.json().catch(() => ({}))
+    if (response.ok && body.id) return body.id
+
+    const retryable = response.status === 429 || response.status >= 500
+    if (!retryable || attempt >= retries) {
+      throw new Error(`Resend answered ${response.status}: ${body.name || ''} ${body.message || ''}`.trim())
+    }
+    const retryAfter = Number(response.headers.get('retry-after'))
+    await delay(Number.isFinite(retryAfter) && retryAfter > 0 ? Math.min(retryAfter, 5) * 1000 : 500 * 2 ** attempt)
   }
-  if (word) words.push(word)
-
-  return words.map((part) => `=?UTF-8?B?${base64(part)}?=`).join('\r\n ')
-}
-
-function formatAddress(name, address) {
-  const display = isPlainAscii(name) ? `"${name.replace(/["\\]/g, '\\$&')}"` : encodeHeaderText(name)
-  return `${display} <${address}>`
-}
-
-export function buildEmail({ name, email, message, language }, { from, to, date = new Date(), id = crypto.randomUUID() }) {
-  const body = [
-    `Name: ${name}`,
-    `Email: ${email}`,
-    `Site language: ${language}`,
-    '',
-    message,
-    '',
-    '--',
-    `Sent with the contact form on take-me.jp. Reply to this e-mail to write back to ${name}.`,
-  ].join('\n')
-
-  const headers = [
-    `From: ${formatAddress('take-me.jp', from)}`,
-    `To: <${to}>`,
-    `Reply-To: ${formatAddress(name, email)}`,
-    `Subject: ${encodeHeaderText(`New message from ${name}`)}`,
-    `Date: ${date.toUTCString().replace(/GMT$/, '+0000')}`,
-    `Message-ID: <${id}@${from.split('@')[1]}>`,
-    'MIME-Version: 1.0',
-    'Content-Type: text/plain; charset=UTF-8',
-    'Content-Transfer-Encoding: base64',
-  ]
-
-  // Base64 lines of 76 characters at most
-  const encodedBody = base64(body.replace(/\n/g, '\r\n')).replace(/.{76}(?=.)/g, '$&\r\n')
-
-  return { from, to, raw: `${headers.join('\r\n')}\r\n\r\n${encodedBody}\r\n` }
 }
 
 // THE REQUEST
@@ -171,8 +180,8 @@ function corsHeaders(origin, allowed) {
 // Answers { ok: true } or { ok: false, error }, plus `fields` ({ name: 'required', ... }) when the
 // error is 'invalid'. The site shows its own text for 'invalid' and 'verification', and a generic
 // "couldn't be sent" for the rest.
-//   sendMail({ from, to, raw })  delivers the e-mail (Email Routing on Cloudflare, a log on Node)
-//   fetch                         for the Turnstile check (tests pass a fake one)
+//   sendMail(email, key)  delivers the e-mail, Resend by default (dev-server.js prints it instead)
+//   fetch                 for the Turnstile check and Resend (tests pass a fake one)
 export async function handleContact(request, env, { sendMail, fetch: fetchImpl } = {}) {
   const allowed = list(env.ALLOWED_ORIGINS)
   const origin = request.headers.get('Origin')
@@ -218,8 +227,15 @@ export async function handleContact(request, env, { sendMail, fetch: fetchImpl }
   })
   if (!verified) return json({ ok: false, error: 'verification' }, 403, cors)
 
+  const email = buildEmail(values, { to: env.MAIL_TO, templateId: env.RESEND_TEMPLATE_ID })
+  const key = await idempotencyKey(input[TOKEN_FIELD])
+  const deliver =
+    sendMail || ((message, idempotency) =>
+      sendWithResend(message, { apiKey: env.RESEND_API_KEY, idempotencyKey: idempotency, fetch: fetchImpl }))
+
   try {
-    await sendMail(buildEmail(values, { from: env.MAIL_FROM, to: env.MAIL_TO }))
+    const id = await deliver(email, key)
+    console.log(`Contact e-mail sent: ${id}`)
   } catch (error) {
     console.error('The contact e-mail could not be sent:', error)
     return json({ ok: false, error: 'send' }, 502, cors)

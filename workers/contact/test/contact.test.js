@@ -1,13 +1,14 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { buildEmail, handleContact, validate } from '../src/contact.js'
+import { buildEmail, handleContact, idempotencyKey, sendWithResend, validate } from '../src/contact.js'
 
 const SITE = 'https://take-me.jp'
 const env = {
   ALLOWED_ORIGINS: `${SITE}, http://localhost:3001`,
   TURNSTILE_SECRET_KEY: 'secret-key',
   TURNSTILE_HOSTNAMES: 'take-me.jp, www.take-me.jp',
-  MAIL_FROM: 'contact@take-me.jp',
+  RESEND_API_KEY: 're_test_key',
+  RESEND_TEMPLATE_ID: 'template-id',
   MAIL_TO: 'inbox@example.com',
 }
 const message = {
@@ -41,15 +42,14 @@ function setup({ outcome = { success: true, action: 'contact', hostname: 'take-m
         checks.push({ url, form: Object.fromEntries(init.body) })
         return new Response(JSON.stringify(outcome))
       },
-      sendMail: async (mail) => {
+      sendMail: async (mail, key) => {
         if (mailError) throw mailError
-        mails.push(mail)
+        mails.push({ ...mail, key })
+        return 'email-id'
       },
     },
   }
 }
-
-const decodeBody = (raw) => Buffer.from(raw.split('\r\n\r\n')[1].replace(/\r\n/g, ''), 'base64').toString('utf8')
 
 test('validate trims the fields and reports each problem', () => {
   assert.deepEqual(validate({ name: '  Ana ', email: ' ana@example.com ', message: ' Hi ' }).values, {
@@ -153,18 +153,102 @@ test('a Turnstile check that hangs or breaks fails closed', async () => {
   assert.equal(mails.length, 0)
 })
 
-test('e-mails the message, with the visitor as Reply-To', async () => {
+test('e-mails the message with the template, the visitor as Reply-To', async () => {
   const { deps, mails } = setup()
-  const response = await handleContact(post(message), env, deps)
+  const originalLog = console.log
+  console.log = () => {}
+  try {
+    const response = await handleContact(post(message), env, deps)
+    assert.equal(response.status, 200)
+    assert.deepEqual(await response.json(), { ok: true })
+  } finally {
+    console.log = originalLog
+  }
 
-  assert.equal(response.status, 200)
-  assert.deepEqual(await response.json(), { ok: true })
   assert.equal(mails.length, 1)
-  assert.equal(mails[0].from, 'contact@take-me.jp')
-  assert.equal(mails[0].to, 'inbox@example.com')
-  assert.match(mails[0].raw, /^Reply-To: "Ana" <ana@example\.com>\r$/m)
-  assert.match(mails[0].raw, /^Subject: New message from Ana\r$/m)
-  assert.match(decodeBody(mails[0].raw), /Hi Oscar!/)
+  const { key, ...mail } = mails[0]
+  assert.deepEqual(mail, {
+    to: ['inbox@example.com'],
+    reply_to: 'ana@example.com',
+    subject: 'New message from Ana',
+    template: {
+      id: 'template-id',
+      variables: { VISITOR_NAME: 'Ana', VISITOR_EMAIL: 'ana@example.com', MESSAGE: 'Hi Oscar!', SITE_LANGUAGE: 'en' },
+    },
+  })
+  assert.equal(key, await idempotencyKey('turnstile-token'))
+})
+
+test('escapes what visitors type, so nothing turns into markup in the e-mail', () => {
+  const email = buildEmail(
+    { name: 'Ana <b>', email: 'ana@example.com', message: 'Hi & <a href="x">click</a>\n\nはじめまして', language: 'ja' },
+    { to: 'inbox@example.com', templateId: 'template-id' }
+  )
+  assert.equal(email.template.variables.VISITOR_NAME, 'Ana &lt;b&gt;')
+  assert.equal(email.template.variables.MESSAGE, 'Hi &amp; &lt;a href=&quot;x&quot;&gt;click&lt;/a&gt;<br><br>はじめまして')
+  // The subject is plain text: as typed
+  assert.equal(email.subject, 'New message from Ana <b>')
+})
+
+test('one idempotency key per submission', async () => {
+  const key = await idempotencyKey('token-a')
+  assert.match(key, /^contact-form\/[0-9a-f]{64}$/)
+  assert.equal(await idempotencyKey('token-a'), key)
+  assert.notEqual(await idempotencyKey('token-b'), key)
+})
+
+// A fake Resend that answers with the given responses, one per call
+function fakeResend(...answers) {
+  const calls = []
+  return {
+    calls,
+    fetch: async (url, init) => {
+      calls.push({ url, init })
+      const answer = answers[calls.length - 1]
+      if (answer instanceof Error) throw answer
+      return new Response(JSON.stringify(answer.body), { status: answer.status, headers: answer.headers })
+    },
+  }
+}
+const noWait = async () => {}
+
+test('sends to Resend with the key and the idempotency key', async () => {
+  const resend = fakeResend({ status: 200, body: { id: 'email-1' } })
+  const id = await sendWithResend({ to: ['a@b.co'] }, { apiKey: 're_key', idempotencyKey: 'k1', fetch: resend.fetch, delay: noWait })
+
+  assert.equal(id, 'email-1')
+  assert.equal(resend.calls[0].url, 'https://api.resend.com/emails')
+  assert.equal(resend.calls[0].init.headers.Authorization, 'Bearer re_key')
+  assert.equal(resend.calls[0].init.headers['Idempotency-Key'], 'k1')
+  assert.deepEqual(JSON.parse(resend.calls[0].init.body), { to: ['a@b.co'] })
+})
+
+test('retries network errors, 429 and 5xx with the same idempotency key', async () => {
+  const waits = []
+  const resend = fakeResend(
+    new TypeError('network'),
+    { status: 429, body: { name: 'rate_limit_exceeded' }, headers: { 'retry-after': '2' } },
+    { status: 200, body: { id: 'email-2' } }
+  )
+  const id = await sendWithResend({}, { apiKey: 'k', idempotencyKey: 'same', fetch: resend.fetch, delay: async (ms) => waits.push(ms) })
+
+  assert.equal(id, 'email-2')
+  assert.equal(resend.calls.length, 3)
+  assert.ok(resend.calls.every((call) => call.init.headers['Idempotency-Key'] === 'same'))
+  assert.deepEqual(waits, [500, 2000])
+})
+
+test('does not retry other 4xx, and gives up after the retries', async () => {
+  const invalid = fakeResend({ status: 422, body: { name: 'validation_error', message: 'Missing variable' } })
+  await assert.rejects(
+    sendWithResend({}, { apiKey: 'k', idempotencyKey: 'x', fetch: invalid.fetch, delay: noWait }),
+    /422: validation_error Missing variable/
+  )
+  assert.equal(invalid.calls.length, 1)
+
+  const down = fakeResend({ status: 503, body: {} }, { status: 503, body: {} }, { status: 503, body: {} })
+  await assert.rejects(sendWithResend({}, { apiKey: 'k', idempotencyKey: 'x', fetch: down.fetch, delay: noWait }), /503/)
+  assert.equal(down.calls.length, 3)
 })
 
 test('reports when the e-mail could not be sent', async () => {
@@ -190,28 +274,4 @@ test('refuses to run without its settings', async () => {
   } finally {
     console.error = originalError
   }
-})
-
-test('encodes Japanese names and messages for the e-mail', () => {
-  const name = 'ブレネス・オスカル・アンドレス・ブレネス・モンヘ・テスト'
-  const { raw } = buildEmail(
-    { name, email: 'oscar@example.jp', message: 'はじめまして。\nよろしくお願いします。', language: 'ja' },
-    { from: 'contact@take-me.jp', to: 'inbox@example.com', date: new Date(Date.UTC(2026, 10, 11, 9, 30)), id: 'abc' }
-  )
-  const [head] = raw.split('\r\n\r\n')
-
-  // Every header line is ASCII and RFC 2047 words stay within 75 characters
-  assert.match(head, /^[\x20-\x7e\r\n]*$/)
-  for (const word of head.match(/=\?UTF-8\?B\?[^?]*\?=/g)) assert.ok(word.length <= 75, word)
-
-  const decodeWords = (line) =>
-    line.replace(/\r\n /g, '').replace(/=\?UTF-8\?B\?([^?]*)\?=/g, (_, data) => Buffer.from(data, 'base64').toString('binary'))
-  const subject = head.split('\r\n').findIndex((line) => line.startsWith('Subject:'))
-  const subjectLines = head.split('\r\n').slice(subject).filter((line, index) => index === 0 || line.startsWith(' '))
-  assert.equal(Buffer.from(decodeWords(subjectLines.join('\r\n')), 'binary').toString('utf8'), `Subject: New message from ${name}`)
-
-  assert.match(head, /^Date: Wed, 11 Nov 2026 09:30:00 \+0000$/m)
-  assert.match(head, /^Message-ID: <abc@take-me\.jp>$/m)
-  assert.equal(decodeBody(raw).split('\r\n').slice(-5, -3).join('\n'), 'はじめまして。\nよろしくお願いします。')
-  for (const line of raw.split('\r\n\r\n')[1].split('\r\n')) assert.ok(line.length <= 76)
 })
