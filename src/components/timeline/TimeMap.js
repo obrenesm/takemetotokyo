@@ -51,11 +51,21 @@ export function TimeMap({ items, selected, current, hover, onHover, onSelect }) 
     const vertical = (from, to) => ({ top: ((end - to) / span) * 100, height: ((to - from) / span) * 100 })
 
     // A bar that never shares its lane can show its roles instead: one block per role, 2px of
-    // background between them (1px less at each end; a short role is still a sliver)
+    // background between them (1px less on each side of a change of role; a short role is still
+    // a sliver). The bar's own ends already have their gap, below.
     const roles = pieces.length === 1 && item.path?.length > 1
       ? item.path.map((date, index, path) => {
-        const { top, height } = vertical(toYearFraction(date), index < path.length - 1 ? toYearFraction(path[index + 1]) : end)
-        return { top: `calc(${top}% + 1px)`, height: `max(2px, calc(${height}% - 2px))`, left: '0%', width: '100%', className: 'tl-map__piece is-role' }
+        const newest = index === path.length - 1
+        const { top, height } = vertical(toYearFraction(date), newest ? end : toYearFraction(path[index + 1]))
+        const insetTop = newest ? 0 : 1
+        const inset = insetTop + (index > 0 ? 1 : 0)
+        return {
+          top: `calc(${top}% + ${insetTop}px)`,
+          height: `max(2px, calc(${height}% - ${inset}px))`,
+          left: '0%',
+          width: '100%',
+          className: 'tl-map__piece is-role',
+        }
       })
       : null
 
@@ -72,8 +82,12 @@ export function TimeMap({ items, selected, current, hover, onHover, onSelect }) 
       }
     })
 
+    // 1px less at each end: two bars that follow each other (2014 then 2015, say) keep 2px of
+    // background between them, like two roles in a bar
+    const barStyle = { top: `calc(${y(end)}% + 1px)`, height: `calc(${y(start) - y(end)}% - 2px)` }
+
     return (
-      <div key={item.id} {...markProps(item)} style={{ top: `${y(end)}%`, height: `${y(start) - y(end)}%` }}>
+      <div key={item.id} {...markProps(item)} style={barStyle}>
         {blocks.map(({ className, ...style }, index) => <span key={index} className={className} style={style} />)}
       </div>
     )
