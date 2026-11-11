@@ -4,11 +4,13 @@
 // Dates are 'YYYY-MM', or just 'YYYY' when only the year is known. An item without `end`
 // is a single moment (a course, a certificate). `path` lists when each role in
 // timeline.items.<id>.path started, in the same order. `minor` items get a compact row.
+// `map` shows a route map (components/timeline/RouteMap.js), labeled by timeline.items.<id>.map.
 
 // The order of the filters and of the lanes in the overview chart
 export const CATEGORIES = ['work', 'volunteering', 'studies', 'cycling']
 
 export const timelineItems = [
+  { id: 'japanRide', category: 'cycling', start: '2026-05', end: '2026-06', map: 'japanRide' },
   { id: 'arc', category: 'studies', start: '2024-10', end: '2026-03' },
   { id: 'buzz', category: 'work', start: '2023-08', end: '2026-02', path: ['2023-08', '2023-11'] },
   { id: 'udacity', category: 'studies', start: '2017', minor: true },

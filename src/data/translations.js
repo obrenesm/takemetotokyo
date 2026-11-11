@@ -101,6 +101,21 @@ export const translations = {
         back: 'Back to home',
       },
       items: {
+        japanRide: {
+          title: 'Seeing Japan at bike speed',
+          org: 'Tokyo → Nagasaki → Nagoya',
+          role: 'Bike tour',
+          summary: 'Before heading back to Costa Rica, I decided to see part of Japan by bike: from Tokyo all the way to Nagasaki, and back to Nagoya.',
+          tags: ['2,874 km', '22,799 m of climbing', '161 h in the saddle'],
+          map: {
+            label: 'Route map: from Tokyo to Nagasaki and back to Nagoya',
+            start: 'Start',
+            finish: 'Finish',
+            startPlace: 'Tokyo',
+            turnPlace: 'Nagasaki',
+            finishPlace: 'Nagoya',
+          },
+        },
         arc: {
           title: 'Back to school, in Japanese',
           org: 'ARC Academy',
@@ -321,6 +336,21 @@ export const translations = {
         back: 'ホームに戻る',
       },
       items: {
+        japanRide: {
+          title: '自転車のスピードで見た日本',
+          org: '東京 → 長崎 → 名古屋',
+          role: '自転車旅',
+          summary: 'コスタリカに戻る前に、自転車で日本の一部を巡ることにしました。東京から長崎まで走り、名古屋まで戻ってきました。',
+          tags: ['2,874 km', '獲得標高 22,799 m', '走行時間 161時間'],
+          map: {
+            label: 'ルートマップ：東京から長崎へ、そして名古屋まで',
+            start: 'スタート',
+            finish: 'ゴール',
+            startPlace: '東京',
+            turnPlace: '長崎',
+            finishPlace: '名古屋',
+          },
+        },
         arc: {
           title: '日本語で、もう一度学生に',
           org: 'ARC Academy',

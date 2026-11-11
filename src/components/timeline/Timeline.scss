@@ -555,6 +555,252 @@ $fold: 0.45s;
 }
 
 
+// ROUTE MAP -----------------------------------------------------------------------------------
+// A dotted coast on a dark panel, the route in the category color drawing itself once.
+
+$route-panel: rgba(4, 1, 40, 0.55);
+$route-ease: cubic-bezier(0.45, 0, 0.25, 1); // same curve as the rider's keySplines
+
+.tl-route {
+  position: relative;
+  margin: 16px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--tl-border);
+  border-radius: 12px;
+  background:
+    radial-gradient(90% 120% at 62% 38%, rgba(var(--cat-rgb), 0.12), rgba(var(--cat-rgb), 0) 62%),
+    $route-panel;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  pattern circle {
+    fill: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.tl-route__canvas {
+  position: relative;
+}
+
+.tl-route__land {
+  fill: rgba(255, 255, 255, 0.04);
+}
+
+// Phones: fewer, bigger dots, the fine ones would blur into a gray
+.tl-route__dots--coarse {
+  display: none;
+}
+
+@media (max-width: 599px) {
+  .tl-route__dots {
+    display: none;
+  }
+
+  .tl-route__dots--coarse {
+    display: inline;
+  }
+}
+
+.tl-route__trail,
+.tl-route__line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tl-route__trail {
+  stroke: rgba(var(--cat-rgb), 0.3);
+  stroke-width: 3;
+}
+
+.tl-route__line {
+  stroke: var(--cat);
+  stroke-width: 3.6;
+  // pathLength="1": the dash is the whole route, the offset hides it until it's drawn
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  filter: drop-shadow(0 0 5px rgba(var(--cat-rgb), 0.85));
+  transition: stroke-dashoffset var(--tl-route-draw) $route-ease;
+}
+
+.tl-route.is-drawn .tl-route__line {
+  stroke-dashoffset: 0;
+}
+
+@media (max-width: 599px) {
+  .tl-route__trail {
+    stroke-width: 6;
+  }
+
+  .tl-route__line {
+    stroke-width: 6.5;
+  }
+}
+
+// The dot riding the route while it draws
+.tl-route__rider {
+  fill: $white;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px var(--cat));
+}
+
+.tl-route.is-animated .tl-route__rider {
+  animation: tl-rider var(--tl-route-draw) linear forwards;
+}
+
+@keyframes tl-rider {
+  0% { opacity: 0; }
+  4%, 94% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+// Start, turn and finish, placed by percentage over the SVG
+.tl-route__place {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.tl-route__pin {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: $white;
+  box-shadow: 0 0 0 3px $route-panel;
+}
+
+.tl-route__place--turn .tl-route__pin,
+.tl-route__key--turn .tl-route__pin {
+  top: -4px;
+  left: -4px;
+  width: 8px;
+  height: 8px;
+  background: var(--cat);
+}
+
+// A tiny checkered flag
+.tl-route__place--finish .tl-route__pin,
+.tl-route__key--finish .tl-route__pin {
+  top: -6px;
+  left: -6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: conic-gradient($white 25%, $darkest_base 0 50%, $white 0 75%, $darkest_base 0) 0 0 / 6px 6px;
+  box-shadow: 0 0 0 1px $white, 0 0 0 4px $route-panel;
+}
+
+// The key below the map, phones only
+.tl-route__legend {
+  display: none;
+}
+
+.tl-route__key {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  @include brand-font(PPNeueMachina-InktrapMedium, 600);
+  font-size: 0.75rem;
+  line-height: 1;
+  color: $white;
+  white-space: nowrap;
+
+  .tl-route__pin {
+    position: relative;
+    top: auto;
+    left: auto;
+    flex: none;
+    box-shadow: none;
+  }
+
+  &.tl-route__key--finish .tl-route__pin {
+    box-shadow: 0 0 0 1px $white;
+  }
+
+  small {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tl-ink-3);
+  }
+}
+
+@media (max-width: 599px) {
+  .tl-route__name {
+    display: none;
+  }
+
+  .tl-route__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    padding: 11px 12px 12px;
+    border-top: 1px solid var(--tl-border);
+  }
+}
+
+.tl-route__name {
+  position: absolute;
+  @include brand-font(PPNeueMachina-InktrapMedium, 600);
+  font-size: 0.78rem;
+  line-height: 1.15;
+  color: $white;
+  white-space: nowrap;
+  text-shadow: 0 0 3px $darkest_base, 0 1px 8px $darkest_base;
+
+  small {
+    display: block;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tl-ink-2);
+  }
+}
+
+// Tokyo: above and to the left, away from the route heading west along the coast
+.tl-route__place--start .tl-route__name {
+  right: 10px;
+  bottom: 6px;
+  text-align: right;
+}
+
+// Nagasaki: above and to the right, between the way in and the way out
+.tl-route__place--turn .tl-route__name {
+  bottom: 3px;
+  left: 14px;
+}
+
+// Nagoya: above and to the right, over the mountains the route goes around
+.tl-route__place--finish .tl-route__name {
+  bottom: 9px;
+  left: 9px;
+}
+
+@media (min-width: 600px) {
+  .tl-route__name {
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-route__line {
+    transition: none;
+  }
+
+  .tl-route__rider {
+    display: none;
+  }
+}
+
+
 // OVERVIEW CHART -------------------------------------------------------------------------------
 
 .tl-map {

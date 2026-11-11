@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useLanguage } from '../../providers/languageProvider'
 import { formatPeriod } from '../../utils/timeline'
 import { CategoryIcon, ChevronIcon } from './TimelineIcons'
+import { RouteMap } from './RouteMap'
 import './Timeline.scss'
 
 // Hidden items stay in the page so they can fold away with a transition: inert keeps their
@@ -54,6 +55,8 @@ export function TimelineEntry({ item, hidden, linked, flash, onHover, entryRef }
             )}
 
             {text.summary && <p className="tl-card__summary">{text.summary}</p>}
+
+            {item.map && text.map && <RouteMap id={item.map} labels={text.map} />}
 
             {(text.tags || hasDetails) && (
               <div className="tl-card__foot">

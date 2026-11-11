@@ -31,6 +31,8 @@ test('shows every kind of activity by default', () => {
   expect(cardTitle(/turning a cycling team into a foundation/i)).toBeInTheDocument() // volunteering
   expect(cardTitle(/back to school, in japanese/i)).toBeInTheDocument() // studies
   expect(cardTitle(/racing for cartago/i)).toBeInTheDocument() // cycling
+  expect(cardTitle(/seeing japan at bike speed/i)).toBeInTheDocument() // cycling, newest
+  expect(screen.getByRole('img', { name: /route map: from tokyo to nagasaki/i })).toBeInTheDocument()
   expect(filter(/all/i)).toHaveAttribute('aria-pressed', 'true')
 })
 
@@ -45,7 +47,7 @@ test('picking a category shows only that category', async () => {
   expect(cardTitle(/racing for cartago/i)).not.toBeInTheDocument()
   expect(filter(/studies/i)).toHaveAttribute('aria-pressed', 'true')
   expect(filter(/all/i)).toHaveAttribute('aria-pressed', 'false')
-  expect(screen.getByRole('status')).toHaveTextContent('Showing 7 of 16')
+  expect(screen.getByRole('status')).toHaveTextContent('Showing 7 of 17')
   expect(location.search).toBe('?show=studies')
 })
 
