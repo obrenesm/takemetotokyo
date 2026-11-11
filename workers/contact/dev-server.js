@@ -9,6 +9,9 @@ const port = Number(process.env.PORT) || 8787
 
 const env = {
   TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY || '1x0000000000000000000000000000000AA',
+  // What Cloudflare's test keys answer (they have no action); never in production
+  TURNSTILE_HOSTNAMES: process.env.TURNSTILE_HOSTNAMES || 'example.com',
+  TURNSTILE_TEST_MODE: 'true',
   ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001',
   MAIL_FROM: 'contact@take-me.jp',
   MAIL_TO: 'inbox@example.com',

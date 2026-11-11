@@ -1,4 +1,4 @@
-# The contact form's endpoint (see README.md). Deploy from this folder with `npx wrangler deploy`.
+# The contact form's endpoint (see README.md). Deploy from this folder with `wrangler deploy`.
 name = "take-me-contact"
 main = "src/index.js"
 compatibility_date = "2025-10-01"
@@ -14,7 +14,10 @@ send_email = [
 ALLOWED_ORIGINS = "https://take-me.jp,https://www.take-me.jp"
 # Any address on the domain, it doesn't need a mailbox
 MAIL_FROM = "contact@take-me.jp"
+# Hostnames a Turnstile answer may come from (never localhost here: local development uses
+# Cloudflare's test keys, see dev-server.js)
+TURNSTILE_HOSTNAMES = "take-me.jp,www.take-me.jp"
 
-# Secrets, set once with `npx wrangler secret put <NAME>` (never in this file):
+# Secrets, set once with `wrangler secret put <NAME>`, which asks for the value (never in this file):
 #   TURNSTILE_SECRET_KEY   the secret key of the Turnstile widget
 #   MAIL_TO                where the messages arrive

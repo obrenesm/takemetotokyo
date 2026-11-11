@@ -9,22 +9,27 @@ verified it, hence this Worker.
 
 ## Going live
 
-1. **Turnstile.** Cloudflare dashboard → Turnstile → Add widget, hostname `take-me.jp`, mode
-   Managed. Keep the site key (public) and the secret key.
+1. **Turnstile.** The widget for `take-me.jp` exists and its site key is in `.env.production`. In
+   the dashboard, check that its hostnames include every domain the site is served from: the
+   Worker only accepts tokens whose hostname is in `TURNSTILE_HOSTNAMES` (`wrangler.toml`) and
+   whose action is `contact`.
 2. **Email Routing.** Turn it on for `take-me.jp` and add the address where messages should arrive
    as a destination address (Cloudflare e-mails a link to verify it).
-3. **The Worker**, from this folder:
+3. **The Worker**, from this folder, with Wrangler 4 installed (`wrangler login` first). Each
+   `secret put` asks for the value, so it never goes in a command or a file:
 
    ```bash
-   npx wrangler login
-   npx wrangler secret put TURNSTILE_SECRET_KEY
-   npx wrangler secret put MAIL_TO
-   npx wrangler deploy
+   wrangler secret put TURNSTILE_SECRET_KEY
+   wrangler secret put MAIL_TO
+   wrangler deploy
    ```
 
    The last command prints the Worker's URL, `https://take-me-contact.<subdomain>.workers.dev`.
-4. **The site.** Put the site key and that URL in `.env.production`, then deploy as usual
-   (`npm run deploy`). Until both are set, the dialog shows the e-mail and LinkedIn instead of the form.
+4. **The site.** Put that URL in `REACT_APP_CONTACT_ENDPOINT`, in Vercel (Settings → Environment
+   Variables, Production) or in `.env.production`, and deploy. Until it's set, the dialog shows the
+   e-mail and LinkedIn instead of the form.
+5. **Check it.** Send a message from the live site: it should arrive, and posting the same token
+   again should get `403 verification` (tokens are single use).
 
 If the domain's mail can't go through Email Routing, only `sendMail` in `src/index.js` changes: any
 e-mail API called with `fetch` (Resend, Postmark…) does the same job.
@@ -34,18 +39,19 @@ e-mail API called with `fetch` (Resend, Postmark…) does the same job.
 - `npm start` in the site uses Cloudflare's test site key (`.env.development`), which always passes.
 - `node workers/contact/dev-server.js` serves this same code on http://localhost:8787 with the
   matching test secret: Cloudflare really verifies the token, and the e-mail is printed in the
-  terminal instead of sent. In Claude Code's preview it's the `contact-api` configuration.
+  terminal instead of sent. Test keys answer for `example.com` with no action, so the dev server
+  turns on `TURNSTILE_TEST_MODE`; the deployed Worker never accepts them. In Claude Code's preview it's the `contact-api` configuration.
 - `npm test` in this folder runs the tests (Node's own test runner, nothing to install).
 
 ## The request
 
-`POST /` with JSON `{ name, email, message, language, token }`, from an origin listed in
+`POST /` with JSON `{ name, email, message, language, "cf-turnstile-response" }`, from an origin listed in
 `ALLOWED_ORIGINS` (`wrangler.toml`). The answer is `{ ok: true }` or `{ ok: false, error }`:
 
 | error          | status | what happened                                                    |
 | -------------- | ------ | ---------------------------------------------------------------- |
 | `invalid`      | 400    | some fields are wrong, `fields` says which: `{ email: 'invalid' }` |
-| `verification` | 403    | Turnstile didn't pass (the site renders a new widget)              |
+| `verification` | 403    | Turnstile didn't pass, or not for this action and hostname         |
 | `send`         | 502    | Email Routing refused or failed                                   |
 | `config`       | 500    | a setting or secret is missing (see the Worker's logs)            |
 

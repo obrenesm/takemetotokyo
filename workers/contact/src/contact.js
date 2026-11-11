@@ -9,7 +9,14 @@ const LANGUAGES = ['en', 'ja']
 const SITEVERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
 const MAX_BODY = 32 * 1024
 const MAX_TOKEN = 2048
-const SETTINGS = ['TURNSTILE_SECRET_KEY', 'MAIL_FROM', 'MAIL_TO']
+const SITEVERIFY_TIMEOUT = 5000
+// The action the site's widget renders with (src/components/contactme/Turnstile.js)
+export const TURNSTILE_ACTION = 'contact'
+// The field the site sends the token in, Turnstile's usual name
+export const TOKEN_FIELD = 'cf-turnstile-response'
+const SETTINGS = ['TURNSTILE_SECRET_KEY', 'TURNSTILE_HOSTNAMES', 'MAIL_FROM', 'MAIL_TO']
+
+const list = (value) => (value || '').split(',').map((item) => item.trim()).filter(Boolean)
 
 // Control characters out of one-line fields: a line break in the name could add e-mail headers
 const oneLine = (value) =>
@@ -43,8 +50,11 @@ export function validate(input) {
   return { values, errors }
 }
 
-// Asks Cloudflare whether the token is good. Each token can be checked only once
-export async function verifyTurnstile(token, { secret, ip, fetch: fetchImpl = fetch }) {
+// Asks Cloudflare whether the token is good. Each token can be checked only once. It passes only
+// with success, the site's action and a hostname from the allowlist (TURNSTILE_HOSTNAMES).
+// Cloudflare's test keys answer for example.com with no action: they're accepted only with
+// TURNSTILE_TEST_MODE=true, which only the local dev server sets.
+export async function verifyTurnstile(token, { secret, ip, hostnames, testMode = false, fetch: fetchImpl = fetch }) {
   if (typeof token !== 'string' || !token || token.length > MAX_TOKEN) return false
 
   const body = new FormData()
@@ -53,10 +63,19 @@ export async function verifyTurnstile(token, { secret, ip, fetch: fetchImpl = fe
   if (ip) body.append('remoteip', ip)
 
   try {
-    const response = await fetchImpl(SITEVERIFY_URL, { method: 'POST', body })
+    const response = await fetchImpl(SITEVERIFY_URL, {
+      method: 'POST',
+      body,
+      signal: AbortSignal.timeout(SITEVERIFY_TIMEOUT),
+    })
     const outcome = await response.json()
-    return outcome.success === true
+    if (outcome.success !== true || !hostnames.includes(outcome.hostname)) return false
+
+    const testing = outcome.metadata?.result_with_testing_key === true
+    if (testing) return testMode
+    return outcome.action === TURNSTILE_ACTION
   } catch (error) {
+    // Network error, timeout or an answer that isn't JSON
     return false
   }
 }
@@ -155,7 +174,7 @@ function corsHeaders(origin, allowed) {
 //   sendMail({ from, to, raw })  delivers the e-mail (Email Routing on Cloudflare, a log on Node)
 //   fetch                         for the Turnstile check (tests pass a fake one)
 export async function handleContact(request, env, { sendMail, fetch: fetchImpl } = {}) {
-  const allowed = (env.ALLOWED_ORIGINS || '').split(',').map((origin) => origin.trim()).filter(Boolean)
+  const allowed = list(env.ALLOWED_ORIGINS)
   const origin = request.headers.get('Origin')
   const cors = corsHeaders(origin, allowed)
 
@@ -190,9 +209,11 @@ export async function handleContact(request, env, { sendMail, fetch: fetchImpl }
   const { values, errors } = validate(input)
   if (Object.keys(errors).length) return json({ ok: false, error: 'invalid', fields: errors }, 400, cors)
 
-  const verified = await verifyTurnstile(input.token, {
+  const verified = await verifyTurnstile(input[TOKEN_FIELD], {
     secret: env.TURNSTILE_SECRET_KEY,
     ip: request.headers.get('CF-Connecting-IP'),
+    hostnames: list(env.TURNSTILE_HOSTNAMES),
+    testMode: env.TURNSTILE_TEST_MODE === 'true',
     fetch: fetchImpl,
   })
   if (!verified) return json({ ok: false, error: 'verification' }, 403, cors)

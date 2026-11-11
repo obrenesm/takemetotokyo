@@ -6,10 +6,17 @@ const SITE = 'https://take-me.jp'
 const env = {
   ALLOWED_ORIGINS: `${SITE}, http://localhost:3001`,
   TURNSTILE_SECRET_KEY: 'secret-key',
+  TURNSTILE_HOSTNAMES: 'take-me.jp, www.take-me.jp',
   MAIL_FROM: 'contact@take-me.jp',
   MAIL_TO: 'inbox@example.com',
 }
-const message = { name: 'Ana', email: 'ana@example.com', message: 'Hi Oscar!', language: 'en', token: 'turnstile-token' }
+const message = {
+  name: 'Ana',
+  email: 'ana@example.com',
+  message: 'Hi Oscar!',
+  language: 'en',
+  'cf-turnstile-response': 'turnstile-token',
+}
 
 function post(body, { origin = SITE, type = 'application/json' } = {}) {
   const headers = { 'Content-Type': type, 'CF-Connecting-IP': '203.0.113.7' }
@@ -21,8 +28,9 @@ function post(body, { origin = SITE, type = 'application/json' } = {}) {
   })
 }
 
-// A fake Turnstile check that records what it was asked, and a fake mailbox
-function setup({ verified = true, mailError = null } = {}) {
+// A fake Turnstile check that records what it was asked, and a fake mailbox. `outcome` is what
+// siteverify answers: by default a pass for the site's action and hostname
+function setup({ outcome = { success: true, action: 'contact', hostname: 'take-me.jp' }, mailError = null } = {}) {
   const checks = []
   const mails = []
   return {
@@ -31,7 +39,7 @@ function setup({ verified = true, mailError = null } = {}) {
     deps: {
       fetch: async (url, init) => {
         checks.push({ url, form: Object.fromEntries(init.body) })
-        return new Response(JSON.stringify({ success: verified }))
+        return new Response(JSON.stringify(outcome))
       },
       sendMail: async (mail) => {
         if (mailError) throw mailError
@@ -96,7 +104,7 @@ test('sends back the fields with problems, without spending the token', async ()
 })
 
 test('does not send when the Turnstile check fails', async () => {
-  const { deps, checks, mails } = setup({ verified: false })
+  const { deps, checks, mails } = setup({ outcome: { success: false, 'error-codes': ['invalid-input-response'] } })
   const response = await handleContact(post(message), env, deps)
 
   assert.equal(response.status, 403)
@@ -107,11 +115,42 @@ test('does not send when the Turnstile check fails', async () => {
 
 test('a missing token fails the check without asking Cloudflare', async () => {
   const { deps, checks } = setup()
-  const { token, ...withoutToken } = message
+  const { 'cf-turnstile-response': token, ...withoutToken } = message
   const response = await handleContact(post(withoutToken), env, deps)
 
   assert.equal(response.status, 403)
   assert.equal(checks.length, 0)
+})
+
+test('a passing token for another action or hostname is turned away', async () => {
+  for (const outcome of [
+    { success: true, action: 'login', hostname: 'take-me.jp' },
+    { success: true, action: 'contact', hostname: 'elsewhere.example' },
+    { success: true, hostname: 'take-me.jp' },
+  ]) {
+    const { deps, mails } = setup({ outcome })
+    const response = await handleContact(post(message), env, deps)
+    assert.equal(response.status, 403, JSON.stringify(outcome))
+    assert.equal(mails.length, 0)
+  }
+})
+
+test("Cloudflare's test keys only pass in test mode (the local dev server)", async () => {
+  const outcome = { success: true, hostname: 'example.com', metadata: { result_with_testing_key: true } }
+  const testEnv = { ...env, TURNSTILE_HOSTNAMES: 'example.com' }
+
+  assert.equal((await handleContact(post(message), testEnv, setup({ outcome }).deps)).status, 403)
+  assert.equal(
+    (await handleContact(post(message), { ...testEnv, TURNSTILE_TEST_MODE: 'true' }, setup({ outcome }).deps)).status,
+    200
+  )
+})
+
+test('a Turnstile check that hangs or breaks fails closed', async () => {
+  const { deps, mails } = setup()
+  deps.fetch = async () => new Response('<html>Bad gateway</html>', { status: 502 })
+  assert.equal((await handleContact(post(message), env, deps)).status, 403)
+  assert.equal(mails.length, 0)
 })
 
 test('e-mails the message, with the visitor as Reply-To', async () => {
