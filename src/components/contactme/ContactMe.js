@@ -17,7 +17,7 @@ export function ContactMe(props) {
               {/* <a href="tel:+81 08091963097" className='tel'>+81 080 9196 3097</a> */}
             </section>
             <section className='extLinks'>
-              {/* <a href="/resume" target="_blank" className='external'>Resume</a> */}
+              {/* <a href="/journey" target="_blank" className='external'>Resume</a> */}
               <a href="https://www.linkedin.com/in/obrenesm" rel="noopener noreferrer" target="_blank" className='external'>LinkedIn</a>
             </section>
           </div>

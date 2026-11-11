@@ -60,7 +60,7 @@ export const translations = {
         changes: 'Updated the shape for Costa Rica and Japan, replaced the water sphere, and changed the colors',
       },
     },
-    // The /resume page. Each item's dates and category are in data/timelineData.js
+    // The /journey page. Each item's dates and category are in data/timelineData.js
     timeline: {
       title: 'Timeline | Oscar Brenes',
       home: 'Home',

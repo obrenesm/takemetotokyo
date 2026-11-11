@@ -8,7 +8,7 @@ import { TimelineFilters } from '../../components/timeline/TimelineFilters'
 import { TimelineEntry, hiddenProps } from '../../components/timeline/TimelineEntry'
 import { TimeMap } from '../../components/timeline/TimeMap'
 import { ArrowLeftIcon, ArrowRightIcon, PlaneIcon } from '../../components/timeline/TimelineIcons'
-import './Resume.scss'
+import './Journey.scss'
 
 const EMAIL = 'oscar@take-me.jp'
 const LINKEDIN = 'https://www.linkedin.com/in/obrenesm'
@@ -26,7 +26,7 @@ const scrollBehavior = () =>
 
 // The timeline of everything I've done, with filters by kind (work, volunteering, studies, cycling).
 // The filter lives in the URL (?show=studies,work) so a filtered view can be shared.
-export function Resume() {
+export function Journey() {
   const { t } = useLanguage()
   const [searchParams, setSearchParams] = useSearchParams()
   const showParam = searchParams.get('show')
