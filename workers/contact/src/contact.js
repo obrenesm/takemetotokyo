@@ -16,6 +16,7 @@ export const TURNSTILE_ACTION = 'contact'
 // The field the site sends the token in, Turnstile's usual name
 export const TOKEN_FIELD = 'cf-turnstile-response'
 const SETTINGS = ['TURNSTILE_SECRET_KEY', 'TURNSTILE_HOSTNAMES', 'RESEND_API_KEY', 'RESEND_TEMPLATE_ID', 'MAIL_TO']
+const SECRET_KEYS = ['TURNSTILE_SECRET_KEY', 'RESEND_API_KEY']
 
 const list = (value) => (value || '').split(',').map((item) => item.trim()).filter(Boolean)
 
@@ -203,6 +204,14 @@ export async function handleContact(request, env, { sendMail, fetch: fetchImpl }
   const missing = SETTINGS.filter((name) => !env[name])
   if (missing.length) {
     console.error(`The contact endpoint is missing settings: ${missing.join(', ')}`)
+    return json({ ok: false, error: 'config' }, 500, cors)
+  }
+
+  // Keys are plain ASCII. A key copied with look-alike letters (Cyrillic Р for P, say) would be
+  // rejected anyway, and the runtime's warning about the header would print it in the logs
+  const garbled = SECRET_KEYS.filter((name) => !/^[\x21-\x7e]+$/.test(env[name]))
+  if (garbled.length) {
+    console.error(`These secrets have characters a key can't have, set them again: ${garbled.join(', ')}`)
     return json({ ok: false, error: 'config' }, 500, cors)
   }
 

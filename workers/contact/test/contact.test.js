@@ -275,3 +275,22 @@ test('refuses to run without its settings', async () => {
     console.error = originalError
   }
 })
+
+test('refuses a key with non-ASCII look-alikes, without logging it or asking anyone', async () => {
+  const { deps, checks, mails } = setup()
+  const logged = []
+  const originalError = console.error
+  console.error = (...args) => logged.push(args.join(' '))
+  try {
+    // A Cyrillic Р where a Latin P belongs
+    const response = await handleContact(post(message), { ...env, RESEND_API_KEY: 're_test_Рkey' }, deps)
+    assert.equal(response.status, 500)
+    assert.deepEqual(await response.json(), { ok: false, error: 'config' })
+    assert.equal(checks.length, 0)
+    assert.equal(mails.length, 0)
+    assert.match(logged.join('\n'), /RESEND_API_KEY/)
+    assert.doesNotMatch(logged.join('\n'), /re_test/)
+  } finally {
+    console.error = originalError
+  }
+})
