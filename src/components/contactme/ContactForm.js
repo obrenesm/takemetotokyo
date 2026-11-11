@@ -112,7 +112,8 @@ export function ContactForm({ open, endpoint, siteKey }) {
     const message = normalizeContact(values)
     setSending(true)
     setAlert(null)
-    const result = await sendContactMessage(endpoint, { ...message, language, token })
+    // Turnstile's usual field name, the one the Worker reads
+    const result = await sendContactMessage(endpoint, { ...message, language, 'cf-turnstile-response': token })
     setSending(false)
 
     if (result.ok) {

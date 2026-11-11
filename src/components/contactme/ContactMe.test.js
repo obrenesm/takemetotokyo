@@ -174,7 +174,7 @@ test('sends the message with the Turnstile token and announces that it went thro
     email: 'ana@example.com',
     message: 'Hi Oscar!',
     language: 'en',
-    token: 'token-1',
+    'cf-turnstile-response': 'token-1',
   })
 })
 

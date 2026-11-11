@@ -1,5 +1,5 @@
 // The contact endpoint on this machine, for `npm start` in the site: the Worker's own code, but the
-// e-mail is printed here instead of sent. Turnstile is checked for real, with Cloudflare's test
+// request it would send to Resend is printed here instead. Turnstile is checked for real, with Cloudflare's test
 // secret that accepts the tokens of the test site key in .env.development.
 //   node workers/contact/dev-server.js       (port 8787, or PORT=...)
 import { createServer } from 'node:http'
@@ -9,15 +9,19 @@ const port = Number(process.env.PORT) || 8787
 
 const env = {
   TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY || '1x0000000000000000000000000000000AA',
+  // What Cloudflare's test keys answer (they have no action); never in production
+  TURNSTILE_HOSTNAMES: process.env.TURNSTILE_HOSTNAMES || 'example.com',
+  TURNSTILE_TEST_MODE: 'true',
   ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001',
-  MAIL_FROM: 'contact@take-me.jp',
+  // Nothing reaches Resend from here: sendMail below prints the request instead
+  RESEND_API_KEY: 'not-used-locally',
+  RESEND_TEMPLATE_ID: 'contact-form-message',
   MAIL_TO: 'inbox@example.com',
 }
 
-async function sendMail({ raw }) {
-  const [head, body] = raw.split('\r\n\r\n')
-  const text = Buffer.from(body.replace(/\r\n/g, ''), 'base64').toString('utf8')
-  console.log(`\n----- e-mail (not sent) -----\n${head}\n\n${text}\n-----------------------------\n`)
+async function sendMail(email, idempotencyKey) {
+  console.log(`\n----- Resend request (not sent) -----\nIdempotency-Key: ${idempotencyKey}\n${JSON.stringify(email, null, 2)}\n-------------------------------------\n`)
+  return 'local-test'
 }
 
 // Headers Node's Request won't take, or that don't mean anything past this hop
