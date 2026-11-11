@@ -5,13 +5,14 @@
 // Mobile: top left, on the same line as the contact button (top right)
 @media (min-width: 0px) {
 
-  #language-btn {
+  .language-switch {
     position: absolute;
     // Same center as the contact button (top 20px + 1px padding + half of its 25px icon) minus
     // half of this button's height
     top: calc(20px + 1px + 25px / 2 - 34px / 2);
     left: calc(10% - 8px);
-    // Above the 3D canvas, the scene texts and the contact modal (9), below the cursor (999)
+    // Above the 3D canvas and the scene texts, below the cursor (999). The contact dialog covers
+    // it (a modal dialog is drawn in the top layer, above any z-index) and has its own copy
     z-index: 10;
     display: flex;
     align-items: center;
@@ -58,11 +59,21 @@
       outline: 2px solid $highlight;
       outline-offset: 2px;
     }
+
+    // While the contact dialog is open, its own copy stands in for it
+    &.covered {
+      visibility: hidden;
+    }
+  }
+
+  // The copy in the dialog shows up at once, in place of the page's button
+  .contact-dialog .language-switch {
+    animation: none;
   }
 }
 
 @media (min-width: 380px) {
-  #language-btn {
+  .language-switch {
     font-size: 1.2em;
     // The contact icon grows to 30px
     top: calc(20px + 1px + 30px / 2 - 34px / 2);
@@ -71,7 +82,7 @@
 
 // Desktop: bottom left, a corner no scene text uses
 @media (min-width: 768px) {
-  #language-btn {
+  .language-switch {
     top: auto;
     bottom: 20px;
     left: 22px;
@@ -79,7 +90,7 @@
 }
 
 @media (min-width: 1200px) {
-  #language-btn {
+  .language-switch {
     left: 42px;
   }
 }

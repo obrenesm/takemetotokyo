@@ -18,7 +18,7 @@ body {
   mix-blend-mode: difference;
   translate: -50% -50%;
   pointer-events: none;
-  transition: width 0.4s ease, height 0.4s ease;
+  transition: width 0.4s ease, height 0.4s ease, opacity 0.2s ease;
   transform: translate3d(-100px, 0px, 0px);
 
   span {
@@ -27,27 +27,33 @@ body {
     text-align: center;
     font-size: 0.8em;
   }
-} 
+}
 
-.modal:hover ~ .cursor-circle {
+// Inside the contact dialog (see Cursor.js): smaller and without a label, in colors made for
+// blending with the dialog's tint (see colors.scss)
+.contact-dialog .cursor-circle {
   width: 60px;
   height: 60px;
-  transition: width 0.4s ease, height 0.4s ease;
-  background-color: $highlight_mix_on_dark_base;
+  background-color: $highlight_mix_in_dialog;
 
   span {
     display: none;
   }
 }
 
+.contact-dialog:has(a:hover, button:hover) .cursor-circle {
+  width: 30px;
+  height: 30px;
+  background-color: $highlight_mix_in_dialog_link;
+}
 
-// .modal-open #contact-btn:hover ~ .cursor-circle {
-//   background-color: #da19b0;
-// }
+// Text fields keep the system's text cursor, to see exactly where you click, and the circle
+// steps aside. So does it over the Turnstile widget (an iframe, the mouse moves there unseen)
+.contact-dialog:has(input:hover, textarea:hover, .contact-turnstile:hover) .cursor-circle {
+  opacity: 0;
+}
 
 button:hover ~ .cursor-circle,
-.modal:has(.modal-cta:hover) ~ .cursor-circle,
-.modal:has(a:hover) ~ .cursor-circle, 
 section:has(.modal-cta:hover) ~ .cursor-circle,
 section:has(a:hover) ~ .cursor-circle,
 section:has(.tooltip:hover) ~ .cursor-circle {
@@ -79,9 +85,18 @@ section:has(.tooltip:hover) ~ .cursor-circle {
 //   color: pink;
 // }
 
+// "Let's talk!" in the text: a button that reads like a link
 .modal-cta {
   pointer-events: all;
-  background: 
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-align: inherit;
+  background:
     linear-gradient(to right, $light_grey, $light_grey),
     linear-gradient(to right, $white , $white);
   background-size: 100% 0.07em, 0 0.07em;
@@ -93,4 +108,9 @@ section:has(.tooltip:hover) ~ .cursor-circle {
 .modal-cta:hover {
   transition: all 0.5s ease;
   background-size: 0 0.1em, 100% 0.1em;
+}
+
+.modal-cta:focus-visible {
+  outline: 2px solid $highlight;
+  outline-offset: 2px;
 }

@@ -43,6 +43,43 @@ export const translations = {
     },
     contact: {
       title: "Let's talk!",
+      // The button that closes the dialog (it's drawn as an X)
+      close: 'Close',
+      // Under the form, {email} and {linkedin} are links
+      elsewhere: 'You can also email me at {email} or find me on {linkedin}.',
+      // The small button next to the e-mail, and what it says for a moment after a click
+      copy: {
+        label: 'Copy email address',
+        copied: 'Copied!',
+        failed: "Couldn't copy",
+      },
+      form: {
+        // Above the fields (the same sentence as the end of /journey)
+        intro: "Have a project or opportunity in mind? I'd love to hear about it.",
+        name: 'Name',
+        email: 'Email',
+        message: 'Message',
+        submit: 'Send message',
+        sending: 'Sending…',
+        errors: {
+          nameRequired: 'Please tell me your name.',
+          emailRequired: 'Please enter your email so I can reply.',
+          emailInvalid: "That email doesn't look right. It should look like name@example.com.",
+          messageRequired: 'Please write a message.',
+          tooLong: 'Please keep it under {max} characters.',
+        },
+        // Shown above the button, {email} is a link
+        alerts: {
+          verifying: "The security check isn't done yet. Give it a moment (or tick its box) and send again.",
+          verification: "The security check didn't go through. It's running again, please send once more in a moment.",
+          unavailable: "The security check couldn't load, so the form can't be sent right now. Please email me at {email} instead.",
+          failed: "Sorry, your message couldn't be sent. Please try again in a moment, or email me at {email}.",
+        },
+        sent: {
+          title: 'Message sent!',
+          text: "Thanks, {name}! I'll get back to you at {email} soon.",
+        },
+      },
       creditsDisclaimer: 'I used and modified assets under a creative commons license. If you want to check the authors, or just see what I modified {link}',
       creditsLink: 'click here',
     },
@@ -280,6 +317,38 @@ export const translations = {
     contact: {
       // ​ (zero-width space) lets the title wrap between the two words on narrow screens
       title: 'お気軽に​ご連絡ください',
+      close: '閉じる',
+      elsewhere: '{email}へのメールや、{linkedin}からもご連絡いただけます。',
+      copy: {
+        label: 'メールアドレスをコピー',
+        copied: 'コピーしました',
+        failed: 'コピーできませんでした',
+      },
+      form: {
+        intro: 'プロジェクトやお仕事のお話があれば、ぜひお聞かせください。',
+        name: 'お名前',
+        email: 'メールアドレス',
+        message: 'メッセージ',
+        submit: '送信する',
+        sending: '送信中…',
+        errors: {
+          nameRequired: 'お名前を入力してください。',
+          emailRequired: '返信先のメールアドレスを入力してください。',
+          emailInvalid: 'メールアドレスの形式をご確認ください（例：name@example.com）。',
+          messageRequired: 'メッセージを入力してください。',
+          tooLong: '{max}文字以内で入力してください。',
+        },
+        alerts: {
+          verifying: 'セキュリティチェックがまだ完了していません。少し待つか、チェックボックスを押してから、もう一度送信してください。',
+          verification: 'セキュリティチェックを通過できませんでした。チェックをやり直していますので、少し待ってからもう一度送信してください。',
+          unavailable: 'セキュリティチェックを読み込めなかったため、現在フォームから送信できません。お手数ですが、{email}までメールでご連絡ください。',
+          failed: '申し訳ありません、メッセージを送信できませんでした。少し時間をおいてもう一度お試しいただくか、{email}までメールでご連絡ください。',
+        },
+        sent: {
+          title: '送信しました！',
+          text: '{name}さん、ありがとうございます！{email}宛てに、近いうちにお返事します。',
+        },
+      },
       creditsDisclaimer: 'このサイトでは、クリエイティブ・コモンズ・ライセンスの素材を使用・改変しています。作者や変更内容は{link}からご覧いただけます。',
       creditsLink: 'こちら',
     },

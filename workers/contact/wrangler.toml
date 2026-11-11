@@ -1,0 +1,20 @@
+# The contact form's endpoint (see README.md). Deploy from this folder with `npx wrangler deploy`.
+name = "take-me-contact"
+main = "src/index.js"
+compatibility_date = "2025-10-01"
+
+# The e-mail goes out through Cloudflare Email Routing: it has to be on for the domain in MAIL_FROM,
+# and MAIL_TO has to be one of its verified destination addresses
+send_email = [
+  { name = "MAILER" },
+]
+
+[vars]
+# The pages allowed to post (the site's origin)
+ALLOWED_ORIGINS = "https://take-me.jp,https://www.take-me.jp"
+# Any address on the domain, it doesn't need a mailbox
+MAIL_FROM = "contact@take-me.jp"
+
+# Secrets, set once with `npx wrangler secret put <NAME>` (never in this file):
+#   TURNSTILE_SECRET_KEY   the secret key of the Turnstile widget
+#   MAIL_TO                where the messages arrive
