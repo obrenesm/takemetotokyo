@@ -70,13 +70,20 @@ export async function verifyTurnstile(token, { secret, ip, hostnames, testMode =
       signal: AbortSignal.timeout(SITEVERIFY_TIMEOUT),
     })
     const outcome = await response.json()
-    if (outcome.success !== true || !hostnames.includes(outcome.hostname)) return false
-
     const testing = outcome.metadata?.result_with_testing_key === true
-    if (testing) return testMode
-    return outcome.action === TURNSTILE_ACTION
+    const reason =
+      outcome.success !== true ? `failed (${(outcome['error-codes'] || []).join(', ') || 'no error codes'})`
+      : !hostnames.includes(outcome.hostname) ? `hostname ${outcome.hostname} isn't allowed`
+      : testing ? (testMode ? null : 'test key outside test mode')
+      : outcome.action !== TURNSTILE_ACTION ? `action ${outcome.action} isn't ${TURNSTILE_ACTION}`
+      : null
+
+    // Why a token was turned away, for the Worker's logs (never the token or the secret)
+    if (reason) console.warn(`Turnstile rejected the token: ${reason}`)
+    return !reason
   } catch (error) {
     // Network error, timeout or an answer that isn't JSON
+    console.warn(`Turnstile check didn't complete: ${error.name}`)
     return false
   }
 }

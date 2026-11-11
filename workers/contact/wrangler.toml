@@ -3,6 +3,11 @@ name = "take-me-contact"
 main = "src/index.js"
 compatibility_date = "2025-10-01"
 
+# Keep the Worker's logs (Cloudflare dashboard → Workers → take-me-contact → Logs), so a rejected
+# message can be traced afterwards. They never include the message, the token or the secrets
+[observability]
+enabled = true
+
 [vars]
 # The pages allowed to post (the site's origin)
 ALLOWED_ORIGINS = "https://take-me.jp,https://www.take-me.jp"
