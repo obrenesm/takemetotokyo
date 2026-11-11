@@ -7,8 +7,9 @@
 
   #language-btn {
     position: absolute;
-    // Vertically centered with the contact button
-    top: 17px;
+    // Same center as the contact button (top 20px + 1px padding + half of its 25px icon) minus
+    // half of this button's height
+    top: calc(20px + 1px + 25px / 2 - 34px / 2);
     left: calc(10% - 8px);
     // Above the 3D canvas, the scene texts and the contact modal (9), below the cursor (999)
     z-index: 10;
@@ -36,6 +37,10 @@
     svg {
       flex: none;
       stroke: currentColor;
+      // The text sits above the center of its line box (PP Neue Machina's ascent is much larger
+      // than its descent): moves the globe up to the middle of the text, like the contact icon
+      position: relative;
+      top: -0.12em;
     }
 
     span {
@@ -59,6 +64,8 @@
 @media (min-width: 380px) {
   #language-btn {
     font-size: 1.2em;
+    // The contact icon grows to 30px
+    top: calc(20px + 1px + 30px / 2 - 34px / 2);
   }
 }
 
