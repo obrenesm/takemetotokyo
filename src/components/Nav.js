@@ -11,7 +11,7 @@ export function Nav(props) {
 
   return (
     <>
-        <LanguageSwitch/>
+        <LanguageSwitch covered={open}/>
         {/* It only opens the dialog: while it's open everything outside it is inert, so the
             dialog has its own Close button drawn in this same spot */}
         <button

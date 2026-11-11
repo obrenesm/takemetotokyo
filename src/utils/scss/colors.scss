@@ -6,6 +6,12 @@ $mid_grey: #ccc;
 $highlight: #ef225a;
 $highlight_mix_on_base: #ed19bf;
 $highlight_mix_on_dark_base: #da19a0;
+// Inside the contact dialog the cursor can only blend with the dialog's own tint
+// ($dark_base_transparent, 60% opaque), not with the page behind it: a modal dialog is drawn in a
+// layer of its own. Each mix minus 40% of $base gives the color the mix shows over that tint on the
+// page, so the cursor looks the same as it did over the old overlay
+$highlight_mix_in_dialog: #cc1068; // $highlight_mix_on_dark_base, the 60px circle
+$highlight_mix_in_dialog_link: #df1087; // $highlight_mix_on_base, over links and buttons
 $highlight_focus_dark_base: red;
 $base: #23168c;
 $dark_base: #0F0757;

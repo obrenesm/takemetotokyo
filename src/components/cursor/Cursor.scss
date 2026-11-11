@@ -29,11 +29,12 @@ body {
   }
 }
 
-// Inside the contact dialog (see Cursor.js): smaller and without a label
+// Inside the contact dialog (see Cursor.js): smaller and without a label, in colors made for
+// blending with the dialog's tint (see colors.scss)
 .contact-dialog .cursor-circle {
   width: 60px;
   height: 60px;
-  background-color: $highlight_mix_on_dark_base;
+  background-color: $highlight_mix_in_dialog;
 
   span {
     display: none;
@@ -43,7 +44,7 @@ body {
 .contact-dialog:has(a:hover, button:hover) .cursor-circle {
   width: 30px;
   height: 30px;
-  background-color: $highlight_mix_on_base;
+  background-color: $highlight_mix_in_dialog_link;
 }
 
 // Text fields keep the system's text cursor, to see exactly where you click, and the circle

@@ -193,7 +193,7 @@ export function ContactForm({ open, endpoint, siteKey }) {
 
       {!sent && (
         <form className='contact-form' noValidate onSubmit={handleSubmit}>
-          <p className='contact-form-note'>{t('contact.form.required')}</p>
+          <p className='contact-form-intro'>{t('contact.form.intro')}</p>
           {CONTACT_FIELDS.map(renderField)}
 
           {open && (

@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { Nav } from '../Nav'
 import { Content } from '../Content'
 import { ContactContext, useContactState } from '../../providers/contextProvider'
+import { LanguageProvider } from '../../providers/languageProvider'
 
 const ENDPOINT = 'https://contact.test/'
 
@@ -37,6 +38,9 @@ afterEach(() => {
   delete process.env.REACT_APP_TURNSTILE_SITE_KEY
   delete window.turnstile
   delete global.fetch
+  delete navigator.clipboard
+  delete document.execCommand
+  window.localStorage.clear()
 })
 
 // What Home sets up: the contact state, the nav with the dialog, and the scene texts
@@ -219,6 +223,69 @@ test('asks to wait while the security check is still running', async () => {
 
   expect(within(dialog).getByRole('alert')).toHaveTextContent("The security check isn't done yet.")
   expect(fetch).not.toHaveBeenCalled()
+})
+
+test('the button next to the e-mail copies it, and says so', async () => {
+  const writeText = jest.fn().mockResolvedValue()
+  Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true })
+  const dialog = await openContact()
+
+  userEvent.click(within(dialog).getByRole('button', { name: 'Copy email address' }))
+
+  const result = await within(dialog).findByText('Copied!')
+  expect(result).toHaveAttribute('aria-live', 'polite')
+  expect(writeText).toHaveBeenCalledWith('oscar@take-me.jp')
+})
+
+test('without clipboard permission it copies the old way, keeping the focus on the button', async () => {
+  const writeText = jest.fn().mockRejectedValue(new Error('Write permission denied'))
+  Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true })
+  let selected = null
+  document.execCommand = jest.fn(() => {
+    selected = document.activeElement.value
+    return true
+  })
+  const dialog = await openContact()
+  const button = within(dialog).getByRole('button', { name: 'Copy email address' })
+
+  userEvent.click(button)
+
+  expect(await within(dialog).findByText('Copied!')).toBeInTheDocument()
+  expect(document.execCommand).toHaveBeenCalledWith('copy')
+  expect(selected).toBe('oscar@take-me.jp')
+  expect(button).toHaveFocus()
+  // The hidden field is gone
+  expect(dialog.querySelector('textarea[readonly]')).not.toBeInTheDocument()
+})
+
+test('says so when the e-mail could not be copied', async () => {
+  // jsdom has neither the Clipboard API nor the copy command
+  const dialog = await openContact()
+
+  userEvent.click(within(dialog).getByRole('button', { name: 'Copy email address' }))
+
+  expect(await within(dialog).findByText("Couldn't copy")).toBeInTheDocument()
+})
+
+test('the language can be switched without leaving the dialog', async () => {
+  render(
+    <LanguageProvider>
+      <ContactHarness />
+    </LanguageProvider>
+  )
+  userEvent.click(contactButton())
+  const dialog = screen.getByRole('dialog', { name: "Let's talk!" })
+  await waitFor(() => expect(window.turnstile.render).toHaveBeenCalled())
+  userEvent.type(within(dialog).getByLabelText('Name'), 'Ana')
+
+  userEvent.click(within(dialog).getByRole('button', { name: '日本語で表示' }))
+
+  expect(dialog).toHaveAttribute('open')
+  expect(screen.getByRole('dialog', { name: /お気軽に/ })).toBe(dialog)
+  expect(within(dialog).getByRole('button', { name: 'View in English' })).toHaveFocus()
+  // What was typed stays, and Turnstile comes back in Japanese
+  expect(within(dialog).getByLabelText('お名前')).toHaveValue('Ana')
+  await waitFor(() => expect(window.turnstile.render).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ language: 'ja' })))
 })
 
 test('without an endpoint or a Turnstile key it shows the e-mail and LinkedIn instead', () => {

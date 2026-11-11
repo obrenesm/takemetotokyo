@@ -1,9 +1,11 @@
 import React, { useLayoutEffect, useRef } from 'react'
 import { useContact } from '../../providers/contextProvider'
 import { useLanguage } from '../../providers/languageProvider'
+import { LanguageSwitch } from '../languageswitch/LanguageSwitch'
 import { CONTACT_EMAIL, getContactConfig } from '../../utils/contactForm'
 import { ContactForm } from './ContactForm'
 import { ContactToggleContent } from './ContactToggle'
+import { CopyEmail } from './CopyEmail'
 import './ContactMe.scss'
 
 const LINKEDIN_URL = 'https://www.linkedin.com/in/obrenesm'
@@ -76,7 +78,13 @@ export function ContactMe() {
               <ContactForm open={open} endpoint={endpoint} siteKey={siteKey} />
               <p className='contact-elsewhere'>
                 {t('contact.elsewhere', {
-                  email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>,
+                  // Together, so the copy button never ends up alone at the start of a line
+                  email: (
+                    <span className='contact-email'>
+                      <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+                      <CopyEmail email={CONTACT_EMAIL} />
+                    </span>
+                  ),
                   linkedin,
                 })}
               </p>
@@ -97,6 +105,9 @@ export function ContactMe() {
           </p>
         </div>
       </div>
+
+      {/* Last in the tab order, after the content (on desktop it's in the bottom left corner) */}
+      <LanguageSwitch inDialog />
     </dialog>
   )
 }

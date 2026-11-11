@@ -47,8 +47,15 @@ export const translations = {
       close: 'Close',
       // Under the form, {email} and {linkedin} are links
       elsewhere: 'You can also email me at {email} or find me on {linkedin}.',
+      // The small button next to the e-mail, and what it says for a moment after a click
+      copy: {
+        label: 'Copy email address',
+        copied: 'Copied!',
+        failed: "Couldn't copy",
+      },
       form: {
-        required: 'All fields are required.',
+        // Above the fields (the same sentence as the end of /journey)
+        intro: "Have a project or opportunity in mind? I'd love to hear about it.",
         name: 'Name',
         email: 'Email',
         message: 'Message',
@@ -312,8 +319,13 @@ export const translations = {
       title: 'お気軽に​ご連絡ください',
       close: '閉じる',
       elsewhere: '{email}へのメールや、{linkedin}からもご連絡いただけます。',
+      copy: {
+        label: 'メールアドレスをコピー',
+        copied: 'コピーしました',
+        failed: 'コピーできませんでした',
+      },
       form: {
-        required: 'すべての項目にご記入ください。',
+        intro: 'プロジェクトやお仕事のお話があれば、ぜひお聞かせください。',
         name: 'お名前',
         email: 'メールアドレス',
         message: 'メッセージ',

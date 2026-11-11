@@ -160,7 +160,9 @@ $field-background: rgba($darkest_base, 0.6);
     margin: 0;
     padding: 0;
     border: none;
-    background: transparent;
+    // The tint is on the dialog and only the blur on ::backdrop: the cursor inside the dialog can
+    // only blend with the dialog, and its colors count on this tint (see colors.scss)
+    background-color: $dark_base_transparent;
     color: $white;
     // Dark form controls, scrollbars and autofill (instead of black text on light blue)
     color-scheme: dark;
@@ -169,7 +171,7 @@ $field-background: rgba($darkest_base, 0.6);
     user-select: text;
 
     &::backdrop {
-      background-color: $dark_base_transparent;
+      background-color: transparent;
       backdrop-filter: blur(8px);
     }
 
@@ -275,9 +277,8 @@ $field-background: rgba($darkest_base, 0.6);
     gap: 1.25rem;
   }
 
-  .contact-dialog .contact-form-note {
+  .contact-dialog .contact-form-intro {
     color: $light_grey;
-    font-size: 0.875rem;
   }
 
   .contact-field {
@@ -432,8 +433,87 @@ $field-background: rgba($darkest_base, 0.6);
     }
   }
 
+  // The e-mail and its copy button
+  .contact-email {
+    white-space: nowrap;
+  }
+
+  .contact-copy {
+    position: relative;
+  }
+
+  .contact-copy-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    // 24px is big enough to hit; the negative margins keep the line as tall as the text
+    width: 24px;
+    height: 24px;
+    margin: -4px 0 -4px 0.25em;
+    padding: 0;
+    vertical-align: middle;
+    color: $light_grey;
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+
+    svg {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        color: $white;
+        background-color: rgba($white, 0.12);
+      }
+    }
+
+    &.copied {
+      color: $white;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $highlight;
+      outline-offset: 1px;
+    }
+  }
+
+  // "Copied!" in a small bubble above the button, for a moment. Empty, it takes no room (it stays
+  // in the page, so screen readers announce what shows up in it)
+  .contact-copy-result {
+    @include brand-font(PPNeueMachina-InktrapMedium, 500);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: calc(50% + 0.125em);
+    transform: translateX(-50%);
+    padding: 0.35em 0.65em;
+    border-radius: 4px;
+    background-color: $white;
+    color: $darkest_base;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+
+    &:empty {
+      padding: 0;
+    }
+  }
+
+  // Centered under the content, in a column as wide as it
   .credits-disclaimer {
+    width: 100%;
+    max-width: 34rem;
+    margin-inline: auto;
     padding: 3em 0 calc(24px + env(safe-area-inset-bottom, 0px));
+    text-align: center;
 
     p {
       font-size: 0.75rem;
@@ -479,19 +559,25 @@ $field-background: rgba($darkest_base, 0.6);
 
   .credits-disclaimer {
     padding-bottom: 2em;
-    // Clears the language button in the bottom left corner (under the backdrop, but still visible)
-    margin-inline: max(0px, calc(170px - 10vw));
+    // Narrower when needed to clear the language button in the bottom left corner: at least
+    // max(10vw, 170px) from each side of the screen
+    max-width: min(34rem, calc(100% - 2 * max(0px, 170px - 10vw)));
   }
 }
 
 // ANIMATIONS
-// Opening: the backdrop blurs in, the content fades in and the Close button turns the arrow into the
-// X like the contact button does. Closing plays it backwards where the browser can keep the dialog
-// on top meanwhile (overlay transition, Chrome and Edge); elsewhere it just closes.
+// Opening: the page blurs and darkens, the content fades in and the Close button turns the arrow
+// into the X like the contact button does. Closing plays it backwards where the browser can keep the
+// dialog on top meanwhile (overlay transition, Chrome and Edge); elsewhere it just closes.
 
-@keyframes contactBackdropIn {
+@keyframes contactTintIn {
   from {
     background-color: transparent;
+  }
+}
+
+@keyframes contactBlurIn {
+  from {
     backdrop-filter: blur(0px);
   }
 }
@@ -518,22 +604,29 @@ $field-background: rgba($darkest_base, 0.6);
 
 @media (prefers-reduced-motion: no-preference) {
   .contact-dialog {
-    transition-property: display, overlay;
+    transition-property: background-color, display, overlay;
     transition-duration: 0.6s;
     transition-behavior: allow-discrete;
 
+    &[open] {
+      animation: contactTintIn 0.8s ease-out;
+    }
+
+    &:not([open]) {
+      background-color: transparent;
+    }
+
     &::backdrop {
-      transition-property: background-color, backdrop-filter, display, overlay;
+      transition-property: backdrop-filter, display, overlay;
       transition-duration: 0.6s;
       transition-behavior: allow-discrete;
     }
 
     &[open]::backdrop {
-      animation: contactBackdropIn 0.8s ease-out;
+      animation: contactBlurIn 0.8s ease-out;
     }
 
     &:not([open])::backdrop {
-      background-color: transparent;
       backdrop-filter: blur(0px);
     }
 
