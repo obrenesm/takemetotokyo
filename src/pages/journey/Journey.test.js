@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
-import { Resume } from './Resume'
+import { Journey } from './Journey'
 import { formatPeriod, layoutLanes, parseFilter, toggleCategory } from '../../utils/timeline'
 
 let location
@@ -10,11 +10,11 @@ function LocationSpy() {
   return null
 }
 
-function renderTimeline(url = '/resume') {
+function renderTimeline(url = '/journey') {
   return render(
     <MemoryRouter initialEntries={[url]}>
       <Routes>
-        <Route path="/resume" element={<><Resume /><LocationSpy /></>} />
+        <Route path="/journey" element={<><Journey /><LocationSpy /></>} />
       </Routes>
     </MemoryRouter>
   )
@@ -69,7 +69,7 @@ test('categories add up, and All shows everything again', async () => {
 })
 
 test('a shared link opens with its filter', () => {
-  renderTimeline('/resume?show=volunteering')
+  renderTimeline('/journey?show=volunteering')
 
   expect(cardTitle(/coaching the next generation/i)).toBeInTheDocument()
   expect(cardTitle(/back to school, in japanese/i)).not.toBeInTheDocument()

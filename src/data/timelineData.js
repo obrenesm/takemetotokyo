@@ -1,4 +1,4 @@
-// The facts behind the timeline page (/resume): what kind of activity, and when.
+// The facts behind the timeline page (/journey): what kind of activity, and when.
 // Every text (titles, roles, summaries…) lives in translations.js under timeline.items.<id>.
 //
 // Dates are 'YYYY-MM', or just 'YYYY' when only the year is known. An item without `end`
