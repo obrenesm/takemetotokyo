@@ -45,8 +45,9 @@ export const translations = {
       title: "Let's talk!",
       // The button that closes the dialog (it's drawn as an X)
       close: 'Close',
-      // Under the form, {email} and {linkedin} are links
-      elsewhere: 'You can also email me at {email} or find me on {linkedin}.',
+      // Under the form, {email}, {linkedin} and {journey} are links ({journey} says journeyLink)
+      elsewhere: 'You can also email me at {email} or find me on {linkedin}. If you want to know more about my background, you can see my {journey}.',
+      journeyLink: 'journey timeline',
       // The small button next to the e-mail, and what it says for a moment after a click
       copy: {
         label: 'Copy email address',
@@ -318,7 +319,8 @@ export const translations = {
       // ​ (zero-width space) lets the title wrap between the two words on narrow screens
       title: 'お気軽に​ご連絡ください',
       close: '閉じる',
-      elsewhere: '{email}へのメールや、{linkedin}からもご連絡いただけます。',
+      elsewhere: '{email}へのメールや、{linkedin}からもご連絡いただけます。これまでの歩みは{journey}でご覧いただけます。',
+      journeyLink: 'タイムライン',
       copy: {
         label: 'メールアドレスをコピー',
         copied: 'コピーしました',

@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { useContact } from '../../providers/contextProvider'
 import { useLanguage } from '../../providers/languageProvider'
 import { LanguageSwitch } from '../languageswitch/LanguageSwitch'
@@ -86,6 +87,7 @@ export function ContactMe() {
                     </span>
                   ),
                   linkedin,
+                  journey: <Link to='/journey'>{t('contact.journeyLink')}</Link>,
                 })}
               </p>
             </>
