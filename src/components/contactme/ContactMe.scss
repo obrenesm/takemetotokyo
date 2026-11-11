@@ -2,10 +2,23 @@
 @import './../../utils/scss/colors.scss';
 @import './../../utils/scss/typography.scss';
 
+// On the dialog's backdrop: 7:1 (5.4:1 even on plain $base)
+$error: #ff7a9a;
+// A hair darker than $highlight so white text on it passes 4.5:1 ($highlight gives 4.2:1)
+$button: #e31d54;
+$button-hover: #c41649;
+$field-border: rgba($white, 0.6);
+$field-background: rgba($darkest_base, 0.6);
+
+// THE CONTACT BUTTON AND THE DIALOG'S CLOSE BUTTON
+// The same look in the same spot: "Contact Me" next to an arrow that turns into an X. The contact
+// button can't close the dialog (everything outside a modal dialog is inert and drawn under it), so
+// the dialog has its own copy, .contact-close, that plays the same animation on top of it.
+
 // Default & Mobile
 @media (min-width: 0px) {
 
-  #contact-btn {
+  .contact-toggle {
     position: absolute;
     right: calc(10% - 15px);
     top: 20px;
@@ -18,9 +31,7 @@
     display: flex;
     align-items: center;
     transition: color 0.4s ease;
-    font-family: PPNeueMachina-InktrapMedium, montserrat, -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
-    segoe ui, arial, sans-serif;
-    animation: lateFadeIn 1.2s ease-out;
+    font-family: PPNeueMachina-InktrapMedium, $font-latin;
 
     svg {
       stroke: $light_grey;
@@ -30,24 +41,17 @@
       width: 25px;
     }
 
-    span {
-      padding-right: 10px;
-      animation: moveIn 1000ms ease-in forwards;
-    }
+    .text-container {
+      width: 120px;
+      height: 20px;
+      overflow: hidden;
+      // Only the width (open/close): the height and line-height change with the language
+      transition: width 500ms ease-in-out;
 
-    @media (hover: hover) {
-      &:hover {
-        color: $white;
-        cursor: pointer;
-    
-        svg {
-          stroke: $white;
-        }
-  
-        .line1, .line2 {
-          stroke-dashoffset: -10;
-          stroke-dasharray: 50 1000;
-        }
+      > span {
+        white-space: nowrap;
+        padding-right: 10px;
+        animation: moveIn 1000ms ease-in forwards;
       }
     }
 
@@ -56,35 +60,38 @@
     }
 
     .line1 {
-      transition: 0.7s;
       stroke-dasharray: 75 1000;
     }
 
     .line2 {
-      transition: 0.7s;
       stroke-dasharray: 45 1000;
     }
 
-    .text-container {
-      width: 120px;
-      height: 20px;
-      overflow: hidden;
-      // Only the width (open/close): the height and line-height change with the language
-      transition: width 500ms ease-in-out;
-
-      span {
-        white-space: nowrap;
-      }
-    }
-
-    &.open {
+    @media (hover: hover) {
       &:hover {
+        color: $white;
+        cursor: pointer;
+
+        svg {
+          stroke: $white;
+        }
+
         .line1, .line2 {
-          stroke-dashoffset: -160;
+          stroke-dashoffset: -10;
           stroke-dasharray: 50 1000;
         }
       }
-    
+    }
+
+    &:focus-visible {
+      outline: 2px solid $highlight;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    // The X
+    &.open,
+    &.contact-close {
       .line1, .line2 {
         stroke-dashoffset: -150;
         stroke-dasharray: 70 1000;
@@ -93,127 +100,30 @@
       .text-container {
         width: 0px;
       }
-    }
-  }
 
-  .modal {
-    background-color: $dark_base_transparent;
-    backdrop-filter: blur(8px);
-    height: 100vh;
-    width: 100vw;
-    position: absolute;
-    z-index: 9;
-    display: grid;
-    place-items: center;
-    opacity: 0;
-    visibility: hidden;
-    animation: fadeOut 1500ms forwards;
-    transition: visibility 1s;
-
-    ::selection {
-      background-color: $highlight; 
-    }
-
-    h2 {
-      color: $highlight;
-      font-size: 2.5em;
-      position: relative;
-    }
-
-    p {
-      color: $white;
-      font-size: 0.9em;
-      font-style: oblique;
-      font-weight: 400;
-      margin-bottom: 3em;
-    }
-
-    .credits-disclaimer {
-      position: absolute;
-      bottom: 85px;
-      margin: 0 10vw;
-
-      p { 
-        font-size: 0.75em;
-        color: $white;
-        opacity: 0.5;
-        margin: 0;
-      }
-
-      a {
-        display: inline;
-        font-size: 1em;
-        text-decoration: underline;
-      }
-    }
-
-    a {
-      position: relative;
-      display: block;
-      color: $white;
-      padding: 10px 0;
-      font-size: 1.2em;
-      font-weight: 500;
-      text-decoration: none;
-      transform: translate(0px, 0px);
-      transition: transform 0.4s ease-in-out;
-      width: fit-content;
-    }
-
-    @media (hover: hover) {
-      a:hover {
-        position: relative;
-        transform: translate(5px, 0px);
-        transition: transform 0.4s ease-in-out;
-      }
-    }
-
-    .extLinks {
-      margin-top: 45px;
-      
-      a {
-        font-size: 0.8em;
-        margin-right: 20px;
-        display: block;
-
-        @media (hover: hover) {
-          &:hover {
-            position: relative;
-            transform: translate(0px, -2px);
-            transition: transform 0.4s ease-in-out;
+      @media (hover: hover) {
+        &:hover {
+          .line1, .line2 {
+            stroke-dashoffset: -160;
+            stroke-dasharray: 50 1000;
           }
         }
       }
     }
+  }
 
-    &.modal-open {
-      animation: fadeIn 500ms 300ms forwards;
-      animation: blurIn 800ms forwards;
-      opacity: 1;
-      visibility: visible;
+  #contact-btn {
+    animation: lateFadeIn 1.2s ease-out;
 
-      .modal-container {
-        place-self: center;
-        animation: fadeIn 1000ms ease-in forwards;
-        margin: 0 10vw;
-        user-select: text;
-
-        p {
-          text-align: left;
-        }
-      }
-    }
-
-    .modal-container {
-      animation: fadeOut 500ms forwards;
-      transform: translateY(-10%);
+    // While the dialog is open its Close button stands in for it
+    &.open {
+      visibility: hidden;
     }
   }
 }
 
-
 @media (min-width: 380px) {
-  #contact-btn {
+  .contact-toggle {
     font-size: 1.2em;
 
     svg {
@@ -221,76 +131,462 @@
       width: 30px;
     }
   }
-
-  .modal {
-
-    h2 {
-      font-size: 3em;
-    }
-
-    p {
-      font-size: 1em;
-    }
-
-    a {
-      font-size: 1.5em;
-    }
-
-    .modal-container {
-      transform: translateY(-15%);
-    }
-
-    .extLinks {
-      margin-top: 60px;
-      
-      a {
-        font-size: 1em;
-      }
-    }
-
-    .credits-disclaimer {
-      bottom: 90px;
-
-      p { 
-        font-size: 0.8em;
-      }
-    }
-  }
 }
 
 @media (min-width: 768px) {
-  #contact-btn {
+  .contact-toggle {
     right: 12px;
-  }
-
-  .modal {
-
-    .modal-container {
-      transform: translateY(0);
-    }
-    .credits-disclaimer {
-      bottom: 2em;
-      // Clears the language button in the bottom left corner when the text wraps (tablet)
-      margin: 0 max(10vw, 170px);
-    }
-
-    .extLinks {
-
-      a {
-        display: inline-block;
-      }
-    }
   }
 }
 
 @media (min-width: 1200px) {
-  #contact-btn {
+  .contact-toggle {
     right: 32px;
   }
 }
 
+// THE DIALOG
+
+@media (min-width: 0px) {
+
+  .contact-dialog {
+    // Full screen, like the overlay it replaces (the browser's default is a small box with a border)
+    position: fixed;
+    inset: 0;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: $white;
+    // Dark form controls, scrollbars and autofill (instead of black text on light blue)
+    color-scheme: dark;
+    // The content scrolls inside .contact-scroll: the Close button and the cursor stay put
+    overflow: hidden;
+    user-select: text;
+
+    &::backdrop {
+      background-color: $dark_base_transparent;
+      backdrop-filter: blur(8px);
+    }
+
+    ::selection {
+      background-color: $highlight;
+    }
+
+    // Without the custom cursor (touch screens) the system one comes back
+    &:not(:has(.cursor-circle)) {
+      cursor: auto;
+    }
+
+    // While it fades out after closing, clicks go through to the page
+    &:not([open]) {
+      pointer-events: none;
+    }
+  }
+
+  .contact-scroll {
+    position: absolute;
+    // Below the Close button, so nothing scrolls under it...
+    inset: 56px 0 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 10vw 0;
+    // ...and what scrolls up fades out instead of being cut
+    mask-image: linear-gradient(to bottom, transparent, #000 24px);
+  }
+
+  .contact-content {
+    // Centered when it fits, from the top (scrolling) when it doesn't
+    margin-block: auto;
+    width: 100%;
+    max-width: 34rem;
+  }
+
+  .contact-dialog {
+    h2 {
+      color: $highlight;
+      font-size: 2.5em;
+      margin: 0 0 0.6em;
+
+      // It only gets the focus so screen readers start reading there, it isn't a control
+      &:focus {
+        outline: none;
+      }
+    }
+
+    // The global p styles are made for the scene texts (justified, up to 1.4em)
+    p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    a {
+      color: $white;
+    }
+
+    a:focus-visible {
+      outline: 2px solid $highlight;
+      outline-offset: 2px;
+    }
+  }
+
+  // Without the form (no endpoint or Turnstile key in the build): e-mail and LinkedIn, big
+  .contact-links {
+    a {
+      position: relative;
+      display: block;
+      width: fit-content;
+      padding: 10px 0;
+      font-size: 1.2em;
+      font-weight: 500;
+      text-decoration: none;
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .external {
+      margin-top: 45px;
+      font-size: 0.8em;
+    }
+
+    @media (hover: hover) {
+      .mail:hover {
+        transform: translate(5px, 0px);
+      }
+
+      .external:hover {
+        transform: translate(0px, -2px);
+      }
+    }
+  }
+
+  // THE FORM
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .contact-dialog .contact-form-note {
+    color: $light_grey;
+    font-size: 0.875rem;
+  }
+
+  .contact-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    label {
+      @include brand-font(PPNeueMachina-InktrapMedium, 500);
+      font-size: 1rem;
+      color: $white;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      margin: 0;
+      padding: 0.65em 0.8em;
+      // Latin letters in the brand font and Japanese in a Japanese one, whatever the site's language
+      font-family: PPNeueMachina-InktrapLight, $font-ja;
+      // 16px: iOS doesn't zoom in when the field gets the focus
+      font-size: 1rem;
+      line-height: 1.4;
+      color: $white;
+      background-color: $field-background;
+      border: 1px solid $field-border;
+      border-radius: 4px;
+      cursor: text;
+      transition: border-color 0.2s ease;
+
+      &:hover {
+        border-color: $white;
+      }
+
+      &:focus {
+        outline: 2px solid $highlight;
+        outline-offset: 2px;
+        border-color: $white;
+      }
+
+      &[aria-invalid='true'] {
+        border-color: $error;
+      }
+    }
+
+    textarea {
+      min-height: 9em;
+      resize: vertical;
+    }
+  }
+
+  .contact-dialog .contact-error {
+    color: $error;
+    font-size: 0.875rem;
+  }
+
+  // Normal size is 65px tall: the space is kept while the script loads
+  .contact-turnstile {
+    min-height: 65px;
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contact-dialog .contact-alert p {
+    margin-bottom: 1rem;
+    padding: 0.75em 1em;
+    border-left: 3px solid $error;
+    background-color: rgba($error, 0.12);
+    font-size: 0.9375rem;
+
+    a {
+      text-decoration: underline;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  .contact-submit {
+    @include brand-font(PPNeueMachina-InktrapMedium, 500);
+    font-size: 1rem;
+    color: $white;
+    background-color: $button;
+    border: none;
+    border-radius: 4px;
+    padding: 0.85em 1.6em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: $button-hover;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid $white;
+      outline-offset: 3px;
+    }
+
+    &[aria-disabled='true'] {
+      cursor: progress;
+    }
+  }
+
+  // Sent
+
+  .contact-sent-title {
+    @include brand-font(PPNeueMachina-InktrapMedium, 500);
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: 0 0 0.5rem;
+    font-size: 1.5rem;
+    color: $white;
+
+    &:focus {
+      outline: none;
+    }
+
+    svg {
+      flex: none;
+      fill: none;
+      stroke: $highlight;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  }
+
+  .contact-dialog .contact-sent-text p {
+    font-size: 1.1rem;
+    color: $light_grey;
+  }
+
+  .contact-sent-email {
+    color: $white;
+    overflow-wrap: anywhere;
+  }
+
+  .contact-dialog .contact-elsewhere {
+    margin-top: 2.5rem;
+    font-size: 0.9375rem;
+    color: $light_grey;
+
+    a {
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  .credits-disclaimer {
+    padding: 3em 0 calc(24px + env(safe-area-inset-bottom, 0px));
+
+    p {
+      font-size: 0.75rem;
+      font-style: oblique;
+      opacity: 0.5;
+    }
+
+    a {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media (min-width: 380px) {
+  .contact-dialog h2 {
+    font-size: 3em;
+  }
+
+  .contact-links {
+    a {
+      font-size: 1.5em;
+    }
+
+    .external {
+      margin-top: 60px;
+      font-size: 1em;
+    }
+  }
+
+  .contact-dialog .credits-disclaimer p {
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .contact-content {
+    margin-inline: auto;
+  }
+
+  .contact-links .external {
+    display: inline-block;
+  }
+
+  .credits-disclaimer {
+    padding-bottom: 2em;
+    // Clears the language button in the bottom left corner (under the backdrop, but still visible)
+    margin-inline: max(0px, calc(170px - 10vw));
+  }
+}
+
+// ANIMATIONS
+// Opening: the backdrop blurs in, the content fades in and the Close button turns the arrow into the
+// X like the contact button does. Closing plays it backwards where the browser can keep the dialog
+// on top meanwhile (overlay transition, Chrome and Edge); elsewhere it just closes.
+
+@keyframes contactBackdropIn {
+  from {
+    background-color: transparent;
+    backdrop-filter: blur(0px);
+  }
+}
+
+@keyframes contactLine1ToX {
+  from {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 75 1000;
+  }
+}
+
+@keyframes contactLine2ToX {
+  from {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 45 1000;
+  }
+}
+
+@keyframes contactTextCollapse {
+  from {
+    width: 120px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .contact-dialog {
+    transition-property: display, overlay;
+    transition-duration: 0.6s;
+    transition-behavior: allow-discrete;
+
+    &::backdrop {
+      transition-property: background-color, backdrop-filter, display, overlay;
+      transition-duration: 0.6s;
+      transition-behavior: allow-discrete;
+    }
+
+    &[open]::backdrop {
+      animation: contactBackdropIn 0.8s ease-out;
+    }
+
+    &:not([open])::backdrop {
+      background-color: transparent;
+      backdrop-filter: blur(0px);
+    }
+
+    .contact-scroll {
+      transition: opacity 0.6s ease;
+    }
+
+    &[open] .contact-scroll {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    &:not([open]) .contact-scroll {
+      opacity: 0;
+    }
+  }
+
+  .contact-close {
+    .line1 {
+      animation: contactLine1ToX 0.7s ease;
+    }
+
+    .line2 {
+      animation: contactLine2ToX 0.7s ease;
+    }
+
+    .text-container {
+      animation: contactTextCollapse 500ms ease-in-out;
+    }
+  }
+
+  // Back to the arrow while the dialog fades out, on top of the contact button doing the same
+  .contact-dialog:not([open]) .contact-close {
+    .line1,
+    .line2 {
+      stroke-dashoffset: 0;
+    }
+
+    .line1 {
+      stroke-dasharray: 75 1000;
+    }
+
+    .line2 {
+      stroke-dasharray: 45 1000;
+    }
+
+    .text-container {
+      width: 120px;
+    }
+  }
+}
+
 html:lang(ja) {
-  #contact-btn {
+  .contact-toggle {
     font-family: PPNeueMachina-InktrapMedium, $font-ja;
 
     // With line-height: normal the taller Japanese font pushed the baseline down and the 20px
@@ -302,7 +598,7 @@ html:lang(ja) {
       height: 1.25em;
       line-height: 1.25;
 
-      span {
+      > span {
         position: relative;
         top: 0.04em;
       }
@@ -310,12 +606,12 @@ html:lang(ja) {
   }
 
   // Japanese fonts have no italics, the browser would just slant them
-  .modal p {
+  .credits-disclaimer p {
     font-style: normal;
   }
 
-  // "お話ししましょう！" is a single phrase (it doesn't wrap): smaller on narrow screens so it fits
-  .modal h2 {
+  // "お気軽にご連絡ください" breaks only between its two words: smaller on narrow screens so each fits
+  .contact-dialog h2 {
     font-size: min(3em, 8.5vw);
   }
 

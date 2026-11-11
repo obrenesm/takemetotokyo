@@ -5,7 +5,7 @@ import { Content } from '../components/Content';
 import { Nav } from '../components/Nav';
 import { MouseTracker } from '../components/MouseTracker'
 import { Cursor, followCursorEvent } from '../components/cursor/Cursor';
-import { CamDeviationContext, ContactContext, Context } from '../providers/contextProvider';
+import { CamDeviationContext, ContactContext, Context, useContactState } from '../providers/contextProvider';
 import { initialSceneState, sceneReducer } from '../reducers/scene.reducer';
 import { getActionByCursor } from '../utils/sceneActions'
 import { isTouchEnabled } from '../utils/utils'
@@ -15,7 +15,7 @@ import '../App.scss';
 
 export function Home() {
   const [currentScene, setCurrentScene] = useState(0);
-  const [toggleCont, setToggleCont] = useState(false);
+  const contact = useContactState();
   const [camDeviation, setCamDeviation] = useState([0, 0]);
   const mouseRef = useRef();
   const [sceneState, dispatch] = useReducer(sceneReducer, initialSceneState);
@@ -25,14 +25,14 @@ export function Home() {
   return (
     <div id="main" style={{ width: '100vw', height: '100vh' }} 
       onMouseMove={isTouchEnabled() ? undefined : (e) => followCursorEvent(mouseRef)(e)}
-      onTouchStart={!toggleCont ? (e) => onTouchStart(e, setTouchStart, setTouchEnd) : null}
-      onTouchMove={!toggleCont ? (e) => onTouchMove(e, setTouchEnd) : null}
-      onTouchEnd={!toggleCont ? (e) => { 
+      onTouchStart={!contact.open ? (e) => onTouchStart(e, setTouchStart, setTouchEnd) : null}
+      onTouchMove={!contact.open ? (e) => onTouchMove(e, setTouchEnd) : null}
+      onTouchEnd={!contact.open ? (e) => {
         dispatch({ type: onTouchEnd(sceneState.currentScene, touchStart, touchEnd)})} : null}
       >
       <Context.Provider value={[currentScene, setCurrentScene]}>
         <CamDeviationContext.Provider value={[camDeviation, setCamDeviation]}>
-          <ContactContext.Provider value={[toggleCont, setToggleCont]}>
+          <ContactContext.Provider value={contact}>
             <Nav/>
             <Content currentScene={sceneState.currentScene} />
             {isTouchEnabled() ? undefined : <Cursor currentScene={sceneState.currentScene} ref={mouseRef} />}

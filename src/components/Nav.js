@@ -1,28 +1,29 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { ContactMe } from './contactme/ContactMe'
+import { ContactToggleContent } from './contactme/ContactToggle'
 import { LanguageSwitch } from './languageswitch/LanguageSwitch'
-import { ContactContext } from '../providers/contextProvider'
+import { useContact } from '../providers/contextProvider'
 import { useLanguage } from '../providers/languageProvider'
 
 export function Nav(props) {
-    const [toggleCont, setToggleCont] = useContext(ContactContext)
+    const { open, openContact } = useContact()
     const { t } = useLanguage()
-
-    const toggleContactState = () => {
-      setToggleCont(current => !current);
-    };
 
   return (
     <>
         <LanguageSwitch/>
-        <button id="contact-btn" onClick={toggleContactState} className={toggleCont ? 'open' : ''}>
-            <div className='text-container'>
-              <span>{t('nav.contact')}</span>
-            </div>
-            <svg width="30" height="30" viewBox="0 0 100 100" fill='none'>
-              <path strokeWidth='6' className="line line1" d="M 5,29 H 80 C 80,29 94.5,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75,74 75,74 L 25,25" />
-              <path strokeWidth='6' className="line line2" d="M 5,70 H 80 C 80,70 94.5,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75,25 75,25 L 25,74" />
-            </svg>
+        {/* It only opens the dialog: while it's open everything outside it is inert, so the
+            dialog has its own Close button drawn in this same spot */}
+        <button
+          type="button"
+          id="contact-btn"
+          className={`contact-toggle ${open ? 'open' : ''}`}
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          aria-controls="contact-dialog"
+          onClick={(event) => openContact(event.currentTarget)}
+        >
+          <ContactToggleContent text={t('nav.contact')} />
         </button>
         <ContactMe/>
     </>

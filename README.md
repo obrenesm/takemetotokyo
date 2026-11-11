@@ -14,6 +14,8 @@ It makes use of a couple of libraries:
 - React Three Fiber for the 3D stuff
 - Gsap for animations
 
+The contact form posts to a small Cloudflare Worker that checks the Turnstile token and e-mails the message, see [workers/contact](workers/contact/README.md).
+
 
 #
 

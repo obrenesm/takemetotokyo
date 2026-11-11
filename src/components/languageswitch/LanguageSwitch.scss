@@ -11,7 +11,8 @@
     // half of this button's height
     top: calc(20px + 1px + 25px / 2 - 34px / 2);
     left: calc(10% - 8px);
-    // Above the 3D canvas, the scene texts and the contact modal (9), below the cursor (999)
+    // Above the 3D canvas and the scene texts, below the cursor (999). The contact dialog covers
+    // it (a modal dialog is drawn in the top layer, above any z-index)
     z-index: 10;
     display: flex;
     align-items: center;
