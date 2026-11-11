@@ -106,7 +106,7 @@ export const translations = {
         lead: 'The road ',
         highlight: 'so far',
       },
-      intro: "Code, bikes, teams and a lot of kanji. Here's everything that got me here, newest first. Use the filters to follow just one side of the story.",
+      intro: 'Code, bikes, community, and a bit of kanji in the mix. Everything that shaped my journey, listed from newest to oldest. Filter by category to explore just one side of the story.',
       filters: {
         label: 'Show',
         all: 'All',
@@ -374,7 +374,7 @@ export const translations = {
         lead: 'これまでの',
         highlight: '道のり',
       },
-      intro: 'コード、自転車、チーム、そしてたくさんの漢字。ここに至るまでの歩みを、新しい順にまとめました。フィルターを使えば、気になる分野だけをたどることもできます。',
+      intro: 'コード、自転車、コミュニティ、そして少しの漢字。これまでの歩みを形づくってきたものを、新しい順に並べました。カテゴリーで絞り込めば、ひとつの側面だけをたどることもできます。',
       filters: {
         label: '表示',
         all: 'すべて',
