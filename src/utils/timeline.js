@@ -91,42 +91,45 @@ export function toggleCategory(selected, category) {
 export const isCategoryShown = (selected, category) => selected.length === 0 || selected.includes(category)
 
 // -- Overview chart layout --------------------------------------------------------------------
-// Bars of the same lane that overlap in time share its width, side by side, like events in a
-// calendar day: each bar gets a track and the number of tracks of its group of overlapping bars.
+// Bars of the same lane share its width only while they overlap, like events in a calendar day:
+// a bar is full width on its own and narrows to its side of the lane during an overlap (a bar
+// keeps its side through it). Courses (minor items) stay out of the chart, the list has them.
+// Returns, for each bar, its pieces in time order: { from, to } in years, { left, width } as
+// fractions of the lane.
 export function layoutLanes(items) {
   const layout = {}
 
   CATEGORIES.forEach((category) => {
     const bars = items
-      .filter((item) => item.category === category && item.end)
+      .filter((item) => item.category === category && item.end && !item.minor)
       .map((item) => ({ id: item.id, from: toYearFraction(item.start), to: toYearFraction(item.end, 'end') }))
       .sort((a, b) => a.from - b.from)
 
-    let group = []
-    let groupEnd = -Infinity
+    const trackEnds = []
+    bars.forEach((bar) => {
+      let track = trackEnds.findIndex((end) => end <= bar.from)
+      if (track === -1) track = trackEnds.length
+      trackEnds[track] = bar.to
+      bar.track = track
+    })
 
-    const closeGroup = () => {
-      const trackEnds = []
-      group.forEach((bar) => {
-        let track = trackEnds.findIndex((end) => end <= bar.from)
-        if (track === -1) track = trackEnds.length
-        trackEnds[track] = bar.to
-        bar.track = track
-      })
-      group.forEach((bar) => {
-        layout[bar.id] = { track: bar.track, tracks: trackEnds.length }
-      })
-    }
+    const cuts = [...new Set(bars.flatMap((bar) => [bar.from, bar.to]))].sort((a, b) => a - b)
 
     bars.forEach((bar) => {
-      if (bar.from >= groupEnd && group.length) {
-        closeGroup()
-        group = []
+      const pieces = []
+      for (let k = 0; k < cuts.length - 1; k++) {
+        const from = cuts[k]
+        const to = cuts[k + 1]
+        if (from < bar.from || to > bar.to) continue
+        const active = bars.filter((other) => other.from <= from && other.to >= to).sort((a, b) => a.track - b.track)
+        const width = 1 / active.length
+        const left = active.indexOf(bar) * width
+        const last = pieces[pieces.length - 1]
+        if (last && last.left === left && last.width === width) last.to = to
+        else pieces.push({ from, to, left, width })
       }
-      group.push(bar)
-      groupEnd = Math.max(groupEnd, bar.to)
+      layout[bar.id] = pieces
     })
-    if (group.length) closeGroup()
   })
 
   return layout

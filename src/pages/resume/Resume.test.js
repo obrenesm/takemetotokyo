@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { Resume } from './Resume'
-import { formatPeriod, parseFilter, toggleCategory } from '../../utils/timeline'
+import { formatPeriod, layoutLanes, parseFilter, toggleCategory } from '../../utils/timeline'
 
 let location
 function LocationSpy() {
@@ -102,6 +102,17 @@ describe('timeline helpers', () => {
     expect(formatPeriod('2023-11', '2026-02', 'ja')).toBe('2023年11月〜2026年2月')
     expect(formatPeriod('2015-01', '2015-12', 'ja')).toBe('2015年1月〜12月')
     expect(formatPeriod('2011', '2015', 'ja')).toBe('2011年〜2015年')
+  })
+
+  test('in the overview, bars only share their lane while they overlap, and courses stay out', () => {
+    const layout = layoutLanes([
+      { id: 'degree', category: 'studies', start: '2011-01', end: '2015-07' },
+      { id: 'diploma', category: 'studies', start: '2015-01', end: '2015-12' },
+      { id: 'course', category: 'studies', start: '2015', minor: true },
+    ])
+    expect(layout.degree.map((piece) => [piece.left, piece.width])).toEqual([[0, 1], [0, 0.5]])
+    expect(layout.diploma.map((piece) => [piece.left, piece.width])).toEqual([[0.5, 0.5], [0, 1]])
+    expect(layout.course).toBeUndefined()
   })
 
   test('filters ignore unknown categories and treat "all of them" as everything', () => {

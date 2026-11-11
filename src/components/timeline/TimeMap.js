@@ -46,29 +46,35 @@ export function TimeMap({ items, selected, current, hover, onHover, onSelect }) 
 
     const start = toYearFraction(item.start)
     const end = toYearFraction(item.end, 'end')
-    const { track, tracks } = lanes[item.id]
-    const style = { top: `${y(end)}%`, height: `${y(start) - y(end)}%`, '--track': track, '--tracks': tracks }
+    const pieces = lanes[item.id]
+    const span = end - start
+    const vertical = (from, to) => ({ top: ((end - to) / span) * 100, height: ((to - from) / span) * 100 })
 
-    // One block per role, split by a gap of the background color
-    const segments = (item.path || []).map((date, index, path) => {
-      const segmentStart = toYearFraction(date)
-      const segmentEnd = index < path.length - 1 ? toYearFraction(path[index + 1]) : end
+    // A bar that never shares its lane can show its roles instead: one block per role, 2px of
+    // background between them (1px less at each end; a short role is still a sliver)
+    const roles = pieces.length === 1 && item.path?.length > 1
+      ? item.path.map((date, index, path) => {
+        const { top, height } = vertical(toYearFraction(date), index < path.length - 1 ? toYearFraction(path[index + 1]) : end)
+        return { top: `calc(${top}% + 1px)`, height: `max(2px, calc(${height}% - 2px))`, left: '0%', width: '100%', className: 'tl-map__piece is-role' }
+      })
+      : null
+
+    // Otherwise the pieces: full width, or half of the lane (2px apart) while it overlaps another
+    const blocks = roles || pieces.map((piece, index) => {
+      const { top, height } = vertical(piece.from, piece.to)
+      const side = piece.width < 1
       return {
-        top: ((end - segmentEnd) / (end - start)) * 100,
-        height: ((segmentEnd - segmentStart) / (end - start)) * 100,
+        top: `${top}%`,
+        height: `${height}%`,
+        left: side && piece.left > 0 ? `calc(${piece.left * 100}% + 1px)` : `${piece.left * 100}%`,
+        width: side ? `calc(${piece.width * 100}% - 1px)` : '100%',
+        className: ['tl-map__piece', index === 0 && 'is-first', index === pieces.length - 1 && 'is-last'].filter(Boolean).join(' '),
       }
     })
 
     return (
-      <div key={item.id} {...markProps(item)} style={style} data-segmented={segments.length > 1 || undefined}>
-        {segments.length > 1 && segments.map((segment, index) => (
-          <span
-            key={index}
-            className="tl-map__segment"
-            // 1px less at each end leaves 2px between two roles; a short role is still a sliver
-            style={{ top: `calc(${segment.top}% + 1px)`, height: `max(2px, calc(${segment.height}% - 2px))` }}
-          />
-        ))}
+      <div key={item.id} {...markProps(item)} style={{ top: `${y(end)}%`, height: `${y(start) - y(end)}%` }}>
+        {blocks.map(({ className, ...style }, index) => <span key={index} className={className} style={style} />)}
       </div>
     )
   }
@@ -111,7 +117,7 @@ export function TimeMap({ items, selected, current, hover, onHover, onSelect }) 
             className={`tl-map__lane tl-cat--${category}${isCategoryShown(selected, category) ? '' : ' is-off'}`}
             style={{ '--lane': index }}
           >
-            {items.filter((item) => item.category === category).map(renderMark)}
+            {items.filter((item) => item.category === category && !item.minor).map(renderMark)}
           </div>
         ))}
 

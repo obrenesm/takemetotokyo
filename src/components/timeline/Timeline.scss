@@ -194,13 +194,19 @@ $fold: 0.45s;
   transition: transform 0.25s ease;
 }
 
-.tl-entry--minor .tl-entry__dot {
-  top: 17px;
-  left: calc(var(--tl-rail-x) - 5px);
-  width: 10px;
-  height: 10px;
-  background: var(--tl-bg);
-  box-shadow: inset 0 0 0 2px var(--cat), 0 0 0 3px var(--tl-bg);
+.tl-entry--minor {
+  .tl-entry__body {
+    padding-bottom: 4px;
+  }
+
+  .tl-entry__dot {
+    top: 11px;
+    left: calc(var(--tl-rail-x) - 4px);
+    width: 8px;
+    height: 8px;
+    background: var(--tl-bg);
+    box-shadow: inset 0 0 0 2px var(--cat), 0 0 0 3px var(--tl-bg);
+  }
 }
 
 .tl-card {
@@ -490,27 +496,56 @@ $fold: 0.45s;
   }
 }
 
-// Courses, a certificate, a milestone: a lighter, smaller card
+// Courses and certificates: notes along the rail rather than cards, so the degrees and the
+// jobs lead. No box until hovered, a lighter face, and the text lined up with the cards' text.
 .tl-card--minor {
-  padding: 12px 16px;
+  padding: 6px 18px 8px;
+  border-color: transparent;
   background: transparent;
 
   .tl-card__meta {
-    margin-bottom: 6px;
+    margin-bottom: 2px;
+    font-size: 0.72rem;
+  }
+
+  .tl-card__date {
+    color: var(--tl-ink-3);
+  }
+
+  // Just the icon: the name repeated on every note was noise (screen readers still read it)
+  .tl-card__category {
+    font-size: 0;
+    letter-spacing: 0;
   }
 
   .tl-page & .tl-card__title {
     margin: 0;
-    font-size: 1rem;
+    @include brand-font(PPNeueMachina-InktrapLight);
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--tl-ink-2);
   }
 
   .tl-page & .tl-card__role {
-    margin: 2px 0 0;
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  .tl-card__org {
+    @include brand-font(PPNeueMachina-InktrapLight);
+    color: var(--tl-ink-3);
   }
 
   .tl-page & .tl-card__summary {
-    margin-top: 6px;
-    font-size: 0.92rem;
+    margin-top: 2px;
+    font-size: 0.85rem;
+    color: var(--tl-ink-3);
+  }
+}
+
+@media (hover: hover) {
+  .tl-card--minor:hover {
+    border-color: var(--tl-border);
   }
 }
 
@@ -520,7 +555,7 @@ $fold: 0.45s;
   }
 
   .tl-card--minor {
-    padding: 12px 18px;
+    padding: 6px 22px 8px;
   }
 
   .tl-page .tl-card__title {
@@ -528,7 +563,7 @@ $fold: 0.45s;
   }
 
   .tl-page .tl-card--minor .tl-card__title {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
   }
 }
 
@@ -905,25 +940,31 @@ $route-ease: cubic-bezier(0.45, 0, 0.25, 1); // same curve as the rider's keySpl
 }
 
 .tl-map__bar {
-  --bar-w: calc((var(--lane-w) - (var(--tracks) - 1) * var(--gap)) / var(--tracks));
-  left: calc(var(--track) * (var(--bar-w) + var(--gap)));
-  width: var(--bar-w);
+  left: 0;
+  width: 100%;
   min-height: 4px;
   border-radius: 4px;
-  background: var(--cat);
-
-  &[data-segmented] {
-    background: transparent;
-  }
 }
 
-// A role inside a bar, 2px of background between two roles
-.tl-map__segment {
+// The colored blocks of a bar: pieces (full width, or a side of the lane while overlapping
+// another bar) or roles. Pieces are in time order, so the first is at the bottom.
+.tl-map__piece {
   position: absolute;
-  left: 0;
-  right: 0;
-  border-radius: 3px;
   background: var(--cat);
+
+  &.is-role {
+    border-radius: 3px;
+  }
+
+  &.is-first {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  &.is-last {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
 }
 
 .tl-map__dot {

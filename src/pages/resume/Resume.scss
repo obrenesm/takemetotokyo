@@ -276,6 +276,18 @@ body.timeline-page {
   }
 }
 
+// Years with only courses: the heading stays for screen readers, out of sight
+.tl-page .tl-year--notes .tl-year__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 
 // NOW: the top of the timeline ----------------------------------------------------------------
 

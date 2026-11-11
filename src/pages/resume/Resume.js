@@ -204,8 +204,11 @@ export function Resume() {
 
             {yearGroups.map(({ year, items }) => {
               const groupHidden = !items.some(isShown)
+              // A year with only courses gets no big number: their own date is enough
+              const notesOnly = items.every((item) => item.minor)
+              const classes = ['tl-year', notesOnly && 'tl-year--notes', groupHidden && 'is-hidden'].filter(Boolean).join(' ')
               return (
-                <li key={year} className={`tl-year${groupHidden ? ' is-hidden' : ''}`} {...hiddenProps(groupHidden)}>
+                <li key={year} className={classes} {...hiddenProps(groupHidden)}>
                   <div className="tl-year__clip">
                     <h2 className="tl-year__label">{year}</h2>
                     <ol className="tl-year__items">

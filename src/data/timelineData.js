@@ -23,7 +23,7 @@ export const timelineItems = [
   { id: 'uci', category: 'studies', start: '2012-11', minor: true },
   { id: 'creativa', category: 'studies', start: '2011-01', end: '2015-07' },
   { id: 'freelance', category: 'work', start: '2011', end: '2015' },
-  { id: 'acica', category: 'cycling', start: '2011', end: '2012' },
+  { id: 'acica', category: 'cycling', start: '2010', end: '2012' },
   { id: 'mtbAssociation', category: 'volunteering', start: '2010', end: '2012' },
   { id: 'covao', category: 'studies', start: '2008-01', end: '2010-12' },
   { id: 'cartago', category: 'cycling', start: '2005', end: '2009' },
