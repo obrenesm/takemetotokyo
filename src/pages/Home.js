@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber';
-import React, { useRef, useState, useReducer, Suspense } from 'react';
+import React, { useEffect, useRef, useState, useReducer, Suspense } from 'react';
 import { Scenario } from '../components/3d/Scenario';
 import { Content } from '../components/Content';
 import { Nav } from '../components/Nav';
@@ -7,7 +7,8 @@ import { MouseTracker } from '../components/MouseTracker'
 import { Cursor, followCursorEvent } from '../components/cursor/Cursor';
 import { CamDeviationContext, ContactContext, Context, useContactState } from '../providers/contextProvider';
 import { initialSceneState, sceneReducer } from '../reducers/scene.reducer';
-import { getActionByCursor } from '../utils/sceneActions'
+import { getActionByCursor, SCENE_ACTIONS } from '../utils/sceneActions'
+import { getActionByKey } from '../utils/sceneKeyActions'
 import { isTouchEnabled } from '../utils/utils'
 import { onTouchStart, onTouchMove, onTouchEnd } from '../utils/sceneTouchActions'
 
@@ -19,16 +20,30 @@ export function Home() {
   const [camDeviation, setCamDeviation] = useState([0, 0]);
   const mouseRef = useRef();
   const [sceneState, dispatch] = useReducer(sceneReducer, initialSceneState);
-  const [touchStart, setTouchStart] = useState(null)
-  const [touchEnd, setTouchEnd] = useState(null)
+  const swipe = useRef(null)
+
+  // The arrow keys move between scenes too, except while the contact dialog is open (it's modal)
+  useEffect(() => {
+    if (contact.open) return undefined
+
+    const onKeyDown = (event) => {
+      const action = getActionByKey(sceneState.currentScene, event)
+      if (action === SCENE_ACTIONS.NONE) return
+      event.preventDefault()
+      dispatch({ type: action })
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [contact.open, sceneState.currentScene])
 
   return (
-    <div id="main" style={{ width: '100vw', height: '100vh' }} 
+    <div id="main" style={{ width: '100vw', height: '100vh' }}
       onMouseMove={isTouchEnabled() ? undefined : (e) => followCursorEvent(mouseRef)(e)}
-      onTouchStart={!contact.open ? (e) => onTouchStart(e, setTouchStart, setTouchEnd) : null}
-      onTouchMove={!contact.open ? (e) => onTouchMove(e, setTouchEnd) : null}
-      onTouchEnd={!contact.open ? (e) => {
-        dispatch({ type: onTouchEnd(sceneState.currentScene, touchStart, touchEnd)})} : null}
+      onTouchStart={!contact.open ? (e) => onTouchStart(e, swipe) : null}
+      onTouchMove={!contact.open ? (e) => onTouchMove(e, swipe) : null}
+      onTouchEnd={!contact.open ? () => {
+        dispatch({ type: onTouchEnd(sceneState.currentScene, swipe)})} : null}
       >
       <Context.Provider value={[currentScene, setCurrentScene]}>
         <CamDeviationContext.Provider value={[camDeviation, setCamDeviation]}>
