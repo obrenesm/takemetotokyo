@@ -69,7 +69,8 @@
       width: 120px;
       height: 20px;
       overflow: hidden;
-      transition: 500ms ease-in-out;
+      // Only the width (open/close): the height and line-height change with the language
+      transition: width 500ms ease-in-out;
 
       span {
         white-space: nowrap;
@@ -291,6 +292,21 @@
 html:lang(ja) {
   #contact-btn {
     font-family: PPNeueMachina-InktrapMedium, $font-ja;
+
+    // With line-height: normal the taller Japanese font pushed the baseline down and the 20px
+    // container cut "お問い合わせ" at the bottom. A fixed line-height lays the line out with PP Neue
+    // Machina's metrics (same baseline as in English) and the small offset centers the kana and
+    // kanji on the two lines of the icon (they are taller than the Latin capitals, so they can't
+    // span exactly from one line to the other).
+    .text-container {
+      height: 1.25em;
+      line-height: 1.25;
+
+      span {
+        position: relative;
+        top: 0.04em;
+      }
+    }
   }
 
   // Japanese fonts have no italics, the browser would just slant them
