@@ -46,7 +46,7 @@ export const translations = {
       // The button that closes the dialog (it's drawn as an X)
       close: 'Close',
       // Under the form, {email}, {linkedin} and {journey} are links ({journey} says journeyLink)
-      elsewhere: 'You can also email me at {email} or find me on {linkedin}. If you want to know more about my background, you can see my {journey}.',
+      elsewhere: 'You can also email me at {email} or find me on {linkedin}. If you want to know more about my background, check out my {journey}.',
       journeyLink: 'journey timeline',
       // The small button next to the e-mail, and what it says for a moment after a click
       copy: {
