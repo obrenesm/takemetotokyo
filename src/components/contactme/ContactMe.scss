@@ -52,6 +52,11 @@ $field-background: rgba($darkest_base, 0.6);
         white-space: nowrap;
         padding-right: 10px;
         animation: moveIn 1000ms ease-in forwards;
+        // This 20px box centered on the 25px icon leaves "Contact Me" 1px above the middle of the
+        // icon, where the language button is centered. With the 30px icon it lines up (see below),
+        // and Japanese has its own offset (at the end)
+        position: relative;
+        top: 1px;
       }
     }
 
@@ -129,6 +134,10 @@ $field-background: rgba($darkest_base, 0.6);
     svg {
       height: 30px;
       width: 30px;
+    }
+
+    .text-container > span {
+      top: 0;
     }
   }
 }

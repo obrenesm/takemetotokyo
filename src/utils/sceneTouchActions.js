@@ -1,35 +1,32 @@
-import { scenes } from '../data/scenesData';
+import { SCENE_ACTIONS, withinScenes } from './sceneActions'
 
-export const SCENE_ACTIONS = {
-  NEXT: 'Next',
-  BACK: 'Back',
-  RETURN: 'Return',
-  NONE: ''
+// A swipe has to be longer than this (px): anything shorter is a tap
+const MIN_SWIPE_DISTANCE = 20
+
+const touchPoint = (e) => ({ x: e.targetTouches[0].clientX, y: e.targetTouches[0].clientY })
+
+// `swipe` is a ref, so following the finger doesn't re-render the page
+export const onTouchStart = (e, swipe) => {
+  // No end until the finger moves, so a tap is never a swipe
+  swipe.current = { start: touchPoint(e), end: null }
 }
 
-export const onTouchStart = (e, setTouchStart, setTouchEnd) => {
-  setTouchEnd(null) // otherwise the swipe is fired even with usual touch events
-  setTouchStart(e.targetTouches[0].clientY)
+export const onTouchMove = (e, swipe) => {
+  if (swipe.current) swipe.current.end = touchPoint(e)
 }
 
-export const onTouchMove = (e, setTouchEnd) => setTouchEnd(e.targetTouches[0].clientY)
+// Up or left goes forward, down or right goes back. The hint only says "swipe" and the globe spins
+// sideways between scenes, so people try sideways swipes too (left for the next one, like a carousel).
+// The way the finger moved the most decides.
+export const onTouchEnd = (currentScene, swipe) => {
+  const { start, end } = swipe.current ?? {}
+  swipe.current = null
+  if (!start || !end) return SCENE_ACTIONS.NONE
 
-export const onTouchEnd = (currentScene, touchStart, touchEnd) => {
-  if (!touchStart || !touchEnd) return (
-    SCENE_ACTIONS.NONE
-    )
-  
-  const distance = touchStart - touchEnd
-  // 20 is the minSwipeDistance
-  const isDownSwipe = distance > 20
-  const isUpSwipe = distance < -20
+  const dx = end.x - start.x
+  const dy = end.y - start.y
+  const distance = Math.abs(dx) > Math.abs(dy) ? dx : dy
 
-  if (isUpSwipe && currentScene > 0 ) {
-    return SCENE_ACTIONS.BACK
-    
-  } else if (isDownSwipe && currentScene < scenes.length - 1) {
-    return SCENE_ACTIONS.NEXT;
-  } else {
-    return SCENE_ACTIONS.NONE;
-  }
+  if (Math.abs(distance) <= MIN_SWIPE_DISTANCE) return SCENE_ACTIONS.NONE
+  return withinScenes(currentScene, distance < 0 ? SCENE_ACTIONS.NEXT : SCENE_ACTIONS.BACK)
 }
