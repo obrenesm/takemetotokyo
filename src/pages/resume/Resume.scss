@@ -1,177 +1,613 @@
-
-// RESUME
-
 @import './../../utils/scss/colors.scss';
+@import './../../utils/scss/typography.scss';
 
-// XS Mobile
-@media (min-width: 0px) {
+// RESUME: the timeline page. Its parts (filters, entries, overview chart) are styled in
+// components/timeline/Timeline.scss
 
-  body {
-    &.cv {
-      overflow: auto;
-      height: fit-content;
-      background-color: $dark_base;
-  
-      #root {
-      overflow: auto;
-      height: fit-content;
-      background-color: $dark_base;
-      }
-  
-      cursor: url('../../assets/pointer.svg'), auto;
-      user-select: text;
-      
-      ::-moz-selection { 
-        background: $highlight;
-      }
-      
-      ::selection {
-        background: $highlight;
-      }
-  
-  
-      h3, h4, h5 {
-        font-weight: 400;
-      }
-      
-      h3 {
-        font-size: 2.5em;
-        font-weight: 600;
-        margin: 5em 0 2.5em;
-      }
-      
-      h4 {
-        font-size: 2em;
-        font-weight: 400;
-        margin: 1em 0 0;
-        &:first-child {
-          margin: 2em 0 0;
-        }
-      }
-      
-      h5 {
-        font-size: 1.4em;
-        font-weight: 400;
-        margin: 0.3em 0;
-        color: $mid_grey;
-      }
-      
-      h6 {
-        font-size: 1.2em;
-        font-weight: 300;
-        margin: 0.5em 0;
-        color: $mid_grey;
-      }
-  
-      section:first-of-type {
-        h3 {
-          margin-top: 150px;
-        }
-      }
-  
-      section:last-child {
-        margin-bottom: 6em;
-      }
-      
-    }
-  }
+$ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
 
-  .principal {
+// The rest of the site is a fixed, full screen 3D scene: this page scrolls like a document,
+// lets people select its text and uses the regular cursor
+body.timeline-page {
+  width: auto;
+  height: auto;
+  overflow: auto;
+  background: $dark_base;
+  cursor: auto;
+  -webkit-touch-callout: default;
+  -webkit-user-select: text;
+  user-select: text;
+
+  #root {
+    width: auto;
+    height: auto;
+    overflow: visible;
+    background: $dark_base;
+    -webkit-user-select: text;
     user-select: text;
   }
-  
-  .minimap {
-    display: none;
-  }
-  
-  .curriculum {
-    margin-left: 10%;
-    margin-right: 10%;
-  }
-  
-  #resume {
-    width: 100%;
-    margin: 0 auto;
-  }
 
+  ::selection {
+    background: $highlight;
+    color: $white;
+  }
 }
 
-// Mobile
+.tl-page {
+  --tl-bg: #{$dark_base};
+  --tl-surface: rgba(255, 255, 255, 0.04);
+  --tl-surface-hover: rgba(255, 255, 255, 0.07);
+  --tl-border: rgba(255, 255, 255, 0.1);
+  --tl-border-strong: rgba(255, 255, 255, 0.24);
+  --tl-ink-2: rgba(255, 255, 255, 0.8);
+  --tl-ink-3: rgba(255, 255, 255, 0.6);
+  --tl-gutter: 16px;
+  --tl-filters-h: 64px;
+  // The rail of the timeline and where the cards start
+  --tl-rail-x: 9px;
+  --tl-content-x: 32px;
+
+  position: relative;
+  min-height: 100vh;
+  // Nothing scrolls sideways (clip, unlike hidden, keeps the sticky bars working)
+  overflow-x: clip;
+  color: $white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background:
+    radial-gradient(900px 520px at 100% -8%, rgba($base, 0.95), rgba($base, 0) 72%),
+    $dark_base;
+}
+
+.tl-wrap {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 var(--tl-gutter);
+}
+
+
+// TOP BAR -------------------------------------------------------------------------------------
+
+.tl-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 64px;
+}
+
+.tl-topbar__home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: -8px;
+  padding: 8px;
+  border-radius: 8px;
+  color: var(--tl-ink-2);
+  @include brand-font(PPNeueMachina-InktrapMedium, 600);
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  .tl-page & {
+    color: var(--tl-ink-2);
+  }
+
+  span {
+    position: relative;
+    top: 0.06em;
+  }
+
+  svg {
+    transition: transform 0.25s $ease-out;
+  }
+
+  @media (hover: hover) {
+    .tl-page &:hover {
+      color: $white;
+
+      svg {
+        transform: translateX(-3px);
+      }
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $white;
+  }
+}
+
+// The site's language button, placed in the bar instead of its corner of the 3D scene
+.tl-topbar #language-btn {
+  position: static;
+  margin-right: -8px;
+  font-size: 1rem;
+  animation: none;
+}
+
+
+// HERO ----------------------------------------------------------------------------------------
+
+.tl-hero {
+  padding-top: 24px;
+  padding-bottom: 28px;
+}
+
+.tl-page .tl-hero__kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  @include brand-font(PPNeueMachina-InktrapMedium, 600);
+  font-size: 0.78rem;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--tl-ink-2);
+
+  &::before {
+    content: '';
+    width: 28px;
+    height: 2px;
+    border-radius: 1px;
+    background: $highlight;
+  }
+}
+
+.tl-page .tl-hero__title {
+  margin: 0;
+  @include brand-font(PPNeueMachina-InktrapUltraBold, 800);
+  font-size: clamp(2.75rem, 13vw, 6.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  color: $white;
+
+  span {
+    color: $highlight;
+  }
+}
+
+.tl-page .tl-hero__intro {
+  max-width: 34em;
+  margin: 22px 0 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  text-align: left;
+  color: var(--tl-ink-2);
+}
+
+
+// FILTERS BAR ---------------------------------------------------------------------------------
+
+.tl-sentinel {
+  height: 1px;
+  margin-bottom: -1px;
+}
+
+.tl-filters {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid transparent;
+  background: rgba($dark_base, 0.86);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &.is-stuck {
+    border-bottom-color: var(--tl-border);
+    box-shadow: 0 14px 30px -22px rgba(0, 0, 0, 0.8);
+  }
+}
+
+.tl-filters__inner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: var(--tl-filters-h);
+}
+
+
+// LAYOUT --------------------------------------------------------------------------------------
+
+.tl-layout {
+  padding-top: 36px;
+}
+
+.tl-layout__map {
+  display: none;
+}
+
+// The rail runs down the whole list; each entry puts its dot on it
+.tl-list {
+  position: relative;
+  max-width: 760px;
+  margin: 0;
+  padding: 0 0 8px;
+  list-style: none;
+  scroll-margin-top: calc(var(--tl-filters-h) + 28px);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    bottom: 0;
+    left: calc(var(--tl-rail-x) - 1px);
+    width: 2px;
+    border-radius: 1px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.12) 85%, rgba(255, 255, 255, 0));
+  }
+}
+
+.tl-entry {
+  scroll-margin-top: calc(var(--tl-filters-h) + 28px);
+}
+
+.tl-year__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tl-page .tl-year__label {
+  position: relative;
+  margin: 0;
+  padding: 30px 0 14px var(--tl-content-x);
+  @include brand-font(PPNeueMachina-InktrapUltraBold, 800);
+  font-size: 2rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.55);
+
+  // A ring on the rail
+  &::before {
+    content: '';
+    position: absolute;
+    top: calc(30px + 0.5em - 7px);
+    left: calc(var(--tl-rail-x) - 7px);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--tl-bg);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.6), 0 0 0 3px var(--tl-bg);
+  }
+}
+
+
+// NOW: the top of the timeline ----------------------------------------------------------------
+
+.tl-now {
+  position: relative;
+  padding: 0 0 10px var(--tl-content-x);
+}
+
+.tl-now__dot {
+  position: absolute;
+  top: 2px;
+  left: calc(var(--tl-rail-x) - 8px);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: $white;
+  box-shadow: 0 0 0 4px var(--tl-bg);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid $white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: tl-pulse 2.4s ease-out infinite;
+  }
+}
+
+@keyframes tl-pulse {
+  from {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(2.8);
+  }
+}
+
+.tl-page .tl-now__label {
+  margin: 0 0 8px;
+  @include brand-font(PPNeueMachina-InktrapMedium, 600);
+  font-size: 0.75rem;
+  line-height: 20px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--tl-ink-2);
+}
+
+.tl-page .tl-now__title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 0 0 10px;
+  @include brand-font(PPNeueMachina-InktrapUltraBold, 800);
+  font-size: clamp(1.75rem, 7vw, 2.5rem);
+  line-height: 1.05;
+
+  svg {
+    flex: none;
+    color: $highlight;
+  }
+}
+
+.tl-page .tl-now__text {
+  max-width: 34em;
+  margin: 0 0 16px;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: left;
+  color: var(--tl-ink-2);
+}
+
+.tl-page .tl-now__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  @include brand-font(PPNeueMachina-InktrapMedium, 600);
+  font-size: 1rem;
+  line-height: 1.2;
+  color: $white;
+  text-decoration: none;
+  background: linear-gradient($highlight, $highlight) 0 100% / 100% 2px no-repeat;
+  transition: gap 0.25s $ease-out, background-size 0.25s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      gap: 12px;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $white;
+    outline-offset: 4px;
+  }
+}
+
+
+// FOOTER --------------------------------------------------------------------------------------
+
+.tl-footer {
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+.tl-page .tl-footer__title {
+  margin: 0 0 14px;
+  @include brand-font(PPNeueMachina-InktrapUltraBold, 800);
+  font-size: clamp(2.4rem, 10vw, 4.5rem);
+  line-height: 1;
+  color: $highlight;
+}
+
+.tl-page .tl-footer__text {
+  max-width: 32em;
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  text-align: left;
+  color: var(--tl-ink-2);
+}
+
+.tl-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 28px 0 40px;
+}
+
+.tl-page .tl-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 22px;
+  border: 1px solid $white;
+  border-radius: 999px;
+  background: $white;
+  color: $dark_base;
+  @include brand-font(PPNeueMachina-InktrapMedium, 600);
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: $light_grey;
+      background: $light_grey;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $white;
+    outline-offset: 3px;
+  }
+
+  &--ghost {
+    border-color: var(--tl-border-strong);
+    background: transparent;
+    color: $white;
+
+    @media (hover: hover) {
+      &:hover {
+        border-color: $white;
+        background: rgba(255, 255, 255, 0.08);
+      }
+    }
+  }
+}
+
+.tl-page .tl-footer__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  @include brand-font(PPNeueMachina-InktrapMedium, 600);
+  font-size: 0.95rem;
+  color: var(--tl-ink-2);
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      color: $white;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $white;
+    outline-offset: 4px;
+  }
+}
+
+
+// BREAKPOINTS ---------------------------------------------------------------------------------
+
 @media (min-width: 380px) {
-
-  .minimap {
-    display: block;
-    scale: 0.1;
-    position: fixed;
-    transform-origin: 0 0;
-    pointer-events: none;
-    left: 5%;
-  
-    .box {
-      width: 100vw;
-      height: 100vh;
-      border: $highlight solid 10px;
-      position: absolute;
-    }
-  
-    .curriculum {
-      width: 60vw;
-    }
-  }
-
-  .curriculum {
-    margin-left: 30%;
+  .tl-page {
+    --tl-gutter: 20px;
+    --tl-rail-x: 10px;
+    --tl-content-x: 36px;
   }
 }
 
-
-// Tablet
 @media (min-width: 768px) {
-
-  body {
-    &.cv {
-      section:first-of-type {
-        h3 {
-          margin-top: 190px;
-        }
-      }
-    }
+  .tl-page {
+    --tl-gutter: 32px;
+    --tl-filters-h: 72px;
+    --tl-content-x: 44px;
   }
 
-  .minimap {
-    scale: 0.15;
-    top: 165px;
-    left: 5%;
+  .tl-topbar {
+    height: 80px;
   }
 
-  .curriculum {
-    margin-left: 40%;
-    margin-right: 5%;
+  .tl-hero {
+    padding-top: 48px;
+    padding-bottom: 40px;
+  }
+
+  .tl-page .tl-hero__intro {
+    font-size: 1.2rem;
+  }
+
+  .tl-page .tl-year__label {
+    font-size: 2.5rem;
   }
 }
 
-// Desktop
-@media (min-width: 1200px) {
+// Room for the "Show" label and the count next to the filters
+@media (min-width: 1024px) {
+  .tl-page .tl-filters__label,
+  .tl-page .tl-filters__status {
+    display: block;
+  }
+}
 
-  body {
-    &.cv {
-      section:first-of-type {
-        h3 {
-          margin-top: 300px;
-        }
-      }
+// Wide and tall enough: the overview chart sticks next to the list
+@media (min-width: 1200px) and (min-height: 640px) {
+  .tl-page {
+    --tl-gutter: 48px;
+  }
+
+  .tl-layout {
+    display: grid;
+    grid-template-columns: 196px minmax(0, 760px);
+    column-gap: 80px;
+    align-items: start;
+  }
+
+  .tl-layout__map {
+    display: block;
+    position: sticky;
+    // Above the cards, for the tooltip that overflows onto them
+    z-index: 2;
+    top: calc(var(--tl-filters-h) + 36px);
+    height: calc(100vh - var(--tl-filters-h) - 72px);
+    max-height: 760px;
+
+    .tl-map {
+      height: 100%;
     }
   }
+}
 
-  .minimap {
-    scale: 0.15;
-    top: 260px;
-    left: 5%;
+@media (prefers-reduced-motion: reduce) {
+  .tl-now__dot::after {
+    animation: none;
+  }
+}
+
+
+// JAPANESE ------------------------------------------------------------------------------------
+
+html:lang(ja) .tl-page {
+  .tl-hero__kicker,
+  .tl-now__label,
+  .tl-card__category,
+  .tl-details__title,
+  .tl-map__title,
+  .tl-filters__label {
+    letter-spacing: 0.06em;
   }
 
-  .curriculum {
-    margin-right: 5%;
+  .tl-hero__title {
+    font-size: clamp(2.2rem, 10.5vw, 5.5rem);
+    line-height: 1.1;
   }
 
+  .tl-now__title {
+    line-height: 1.25;
+  }
 
+  .tl-hero__intro,
+  .tl-now__text,
+  .tl-card__summary,
+  .tl-details__list li,
+  .tl-footer__text {
+    line-height: 1.85;
+    line-break: strict;
+  }
+
+  .tl-footer__title {
+    font-size: clamp(2rem, 8.5vw, 3.5rem);
+  }
+
+  // Roles are long compound words ("フロントエンド開発者"): break between words, not inside them
+  .tl-card__role,
+  .tl-path li {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+
+    @supports (word-break: auto-phrase) {
+      word-break: auto-phrase;
+    }
+  }
+}
+
+// Fewer lonely last words where the browser can balance the lines
+.tl-page {
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
 }
