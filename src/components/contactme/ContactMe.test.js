@@ -1,6 +1,5 @@
 import { act, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter } from 'react-router-dom'
 import { Nav } from '../Nav'
 import { Content } from '../Content'
 import { ContactContext, useContactState } from '../../providers/contextProvider'
@@ -48,12 +47,10 @@ afterEach(() => {
 function ContactHarness({ scene = 0 }) {
   const contact = useContactState()
   return (
-    <MemoryRouter>
-      <ContactContext.Provider value={contact}>
-        <Nav />
-        <Content currentScene={scene} />
-      </ContactContext.Provider>
-    </MemoryRouter>
+    <ContactContext.Provider value={contact}>
+      <Nav />
+      <Content currentScene={scene} />
+    </ContactContext.Provider>
   )
 }
 
@@ -304,7 +301,9 @@ test('without an endpoint or a Turnstile key it shows the e-mail and LinkedIn in
   expect(window.turnstile.render).not.toHaveBeenCalled()
 })
 
-test('under the form, a link leads to the journey timeline', async () => {
+test('under the form, a link opens the journey timeline in a new tab', async () => {
   const dialog = await openContact()
-  expect(within(dialog).getByRole('link', { name: 'journey timeline' })).toHaveAttribute('href', '/journey')
+  const link = within(dialog).getByRole('link', { name: 'journey timeline' })
+  expect(link).toHaveAttribute('href', '/journey')
+  expect(link).toHaveAttribute('target', '_blank')
 })

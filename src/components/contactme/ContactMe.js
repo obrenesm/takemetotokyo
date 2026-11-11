@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
 import { useContact } from '../../providers/contextProvider'
 import { useLanguage } from '../../providers/languageProvider'
 import { LanguageSwitch } from '../languageswitch/LanguageSwitch'
@@ -87,7 +86,8 @@ export function ContactMe() {
                     </span>
                   ),
                   linkedin,
-                  journey: <Link to='/journey'>{t('contact.journeyLink')}</Link>,
+                  // A new tab, so whoever is filling in the form doesn't lose it
+                  journey: <a href='/journey' target='_blank' rel='noopener noreferrer'>{t('contact.journeyLink')}</a>,
                 })}
               </p>
             </>
