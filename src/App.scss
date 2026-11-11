@@ -1,5 +1,6 @@
 @import './utils/scss/animations.scss';
 @import './utils/scss/colors.scss';
+@import './utils/scss/typography.scss';
 
 
 @font-face {
@@ -299,5 +300,50 @@
         right: 50px;
       }
     }
+  }
+}
+
+// Japanese: native Japanese fonts after the brand font, more line spacing,
+// and no line breaks before small kana or closing punctuation
+html:lang(ja) {
+  body {
+    font-family: PPNeueMachina-InktrapLight, $font-ja;
+  }
+
+  #intro .headline h1 {
+    font-family: PPNeueMachina-InktrapUltraBold, $font-ja;
+  }
+
+  // "連れてって、" has to fit in one line on phones
+  @media (max-width: 767px) {
+    #intro .headline h1 {
+      font-size: min(4em, 14vw);
+    }
+  }
+
+  p {
+    line-height: 1.75em;
+    line-break: strict;
+  }
+
+  // Headings break between words, never in the middle of one: Chrome finds the words itself
+  // (auto-phrase), the other browsers only break after punctuation or at a ​ (keep-all).
+  // A word that doesn't fit at all still breaks instead of overflowing
+  h1, h2, h3 {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    // Proportional kana and punctuation, usual for Japanese display text: a "、" at the end
+    // of a line no longer leaves a full blank square that pushes the line off center
+    font-feature-settings: 'palt';
+  }
+
+  @supports (word-break: auto-phrase) {
+    h1, h2, h3 {
+      word-break: auto-phrase;
+    }
+  }
+
+  .modal-cta {
+    white-space: nowrap;
   }
 }

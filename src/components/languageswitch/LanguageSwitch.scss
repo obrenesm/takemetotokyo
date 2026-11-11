@@ -1,0 +1,78 @@
+@import './../../utils/scss/animations.scss';
+@import './../../utils/scss/colors.scss';
+@import './../../utils/scss/typography.scss';
+
+// Mobile: top left, on the same line as the contact button (top right)
+@media (min-width: 0px) {
+
+  #language-btn {
+    position: absolute;
+    // Vertically centered with the contact button
+    top: 17px;
+    left: calc(10% - 8px);
+    // Above the 3D canvas, the scene texts and the contact modal (9), below the cursor (999)
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    padding: 0 8px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: $light_grey;
+    font-size: 1.1em;
+    line-height: 1;
+    font-family: PPNeueMachina-InktrapMedium, montserrat, -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
+    segoe ui, arial, sans-serif;
+    transition: color 0.4s ease;
+    animation: lateFadeIn 1.2s ease-out;
+
+    // "日本語" is shown while the site is in English
+    &:lang(ja) {
+      font-family: PPNeueMachina-InktrapMedium, $font-ja;
+    }
+
+    svg {
+      flex: none;
+      stroke: currentColor;
+    }
+
+    span {
+      white-space: nowrap;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        color: $white;
+        cursor: pointer;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid $highlight;
+      outline-offset: 2px;
+    }
+  }
+}
+
+@media (min-width: 380px) {
+  #language-btn {
+    font-size: 1.2em;
+  }
+}
+
+// Desktop: bottom left, a corner no scene text uses
+@media (min-width: 768px) {
+  #language-btn {
+    top: auto;
+    bottom: 20px;
+    left: 22px;
+  }
+}
+
+@media (min-width: 1200px) {
+  #language-btn {
+    left: 42px;
+  }
+}

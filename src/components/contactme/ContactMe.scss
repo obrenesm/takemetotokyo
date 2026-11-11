@@ -1,5 +1,6 @@
 @import './../../utils/scss/animations.scss';
 @import './../../utils/scss/colors.scss';
+@import './../../utils/scss/typography.scss';
 
 // Default & Mobile
 @media (min-width: 0px) {
@@ -268,10 +269,12 @@
     }
     .credits-disclaimer {
       bottom: 2em;
+      // Clears the language button in the bottom left corner when the text wraps (tablet)
+      margin: 0 max(10vw, 170px);
     }
 
     .extLinks {
-      
+
       a {
         display: inline-block;
       }
@@ -282,5 +285,25 @@
 @media (min-width: 1200px) {
   #contact-btn {
     right: 32px;
+  }
+}
+
+html:lang(ja) {
+  #contact-btn {
+    font-family: PPNeueMachina-InktrapMedium, $font-ja;
+  }
+
+  // Japanese fonts have no italics, the browser would just slant them
+  .modal p {
+    font-style: normal;
+  }
+
+  // "お話ししましょう！" is a single phrase (it doesn't wrap): smaller on narrow screens so it fits
+  .modal h2 {
+    font-size: min(3em, 8.5vw);
+  }
+
+  .credits-disclaimer a {
+    white-space: nowrap;
   }
 }

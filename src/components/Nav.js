@@ -1,9 +1,12 @@
 import React, { useContext } from 'react'
 import { ContactMe } from './contactme/ContactMe'
+import { LanguageSwitch } from './languageswitch/LanguageSwitch'
 import { ContactContext } from '../providers/contextProvider'
+import { useLanguage } from '../providers/languageProvider'
 
 export function Nav(props) {
     const [toggleCont, setToggleCont] = useContext(ContactContext)
+    const { t } = useLanguage()
 
     const toggleContactState = () => {
       setToggleCont(current => !current);
@@ -11,9 +14,10 @@ export function Nav(props) {
 
   return (
     <>
+        <LanguageSwitch/>
         <button id="contact-btn" onClick={toggleContactState} className={toggleCont ? 'open' : ''}>
             <div className='text-container'>
-              <span>{toggleCont ? 'Contact Me' : 'Contact Me'}</span>
+              <span>{t('nav.contact')}</span>
             </div>
             <svg width="30" height="30" viewBox="0 0 100 100" fill='none'>
               <path strokeWidth='6' className="line line1" d="M 5,29 H 80 C 80,29 94.5,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75,74 75,74 L 25,25" />

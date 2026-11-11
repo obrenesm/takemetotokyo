@@ -4,8 +4,41 @@ import { Planet } from './../../components/3d/Planet'
 import { Airplane } from './../../components/3d/Airplane'
 import { useFrame } from '@react-three/fiber'
 import { a } from '@react-spring/three'
+import { LanguageSwitch } from './../../components/languageswitch/LanguageSwitch'
+import { useLanguage } from './../../providers/languageProvider'
 
 import './Credits.scss';
+
+// The texts live in their own component: changing the language re-renders only them, not
+// Credits, which would recreate ThumbnailPlanet and restart the planet's rotation
+function CreditsTexts() {
+    const { t } = useLanguage()
+
+    return (
+        <>
+            <div className='center'>
+                <h1>{t('credits.title')}</h1>
+                <p>{t('credits.intro')}</p>
+            </div>
+            <div className='grid plain'>
+                <div className='left'>
+                </div>
+                <div className='right'>
+                    <h3>{t('credits.airplane.name')}</h3>
+                    <a href='https://skfb.ly/o7IGr' target="_blank" rel="noreferrer">{t('credits.airplane.author')}</a>
+                    <p>{t('credits.airplane.changes')}</p>
+                </div>
+            </div>
+            <div className='grid planet'>
+                <div className='left'>
+                    <h3>{t('credits.planet.name')}</h3>
+                    <a href='https://skfb.ly/6YERJ' target="_blank" rel="noreferrer">{t('credits.planet.author')}</a>
+                    <p>{t('credits.planet.changes')}</p>
+                </div>
+            </div>
+        </>
+    )
+}
 
 export function Credits(props) {
 
@@ -31,26 +64,8 @@ export function Credits(props) {
   return (
     <>
         <div id="main" style={{ width: '100vw', height: '100vh' }}>
-            <div className='center'>
-                <h1> Credits </h1>
-                <p>I used and modified this two 3D files under the Attribution-NonCommercial 4.0 International license</p>
-            </div>
-            <div className='grid plain'>
-                <div className='left'>
-                </div>
-                <div className='right'>
-                    <h3> Airplane </h3>
-                    <a href='https://skfb.ly/o7IGr' target="_blank" rel="noreferrer">by mizda3d</a>
-                    <p>Modified the colors and changed the animation</p>
-                </div>
-            </div>
-            <div className='grid planet'>
-                <div className='left'>
-                    <h3> Planet Earth </h3>
-                    <a href='https://skfb.ly/6YERJ' target="_blank" rel="noreferrer">by BamPistache</a>
-                    <p>Updated the shape for Costa Rica and Japan, replaced the water sphere, and changed the colors</p>
-                </div>
-            </div>
+            <LanguageSwitch/>
+            <CreditsTexts/>
         <Canvas camera={{ fov: 75, near: 0.1, far: 100, position: [0, 0, 15] }}>
             <ambientLight intensity={0.5} />
             <spotLight position={[200, 300, -100]} angle={0.3} intensity={0.4} />
