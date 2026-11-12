@@ -81,8 +81,10 @@ export const translations = {
           text: "Thanks, {name}! I'll get back to you at {email} soon.",
         },
       },
-      creditsDisclaimer: 'I used and modified assets under a creative commons license. If you want to check the authors, or just see what I modified {link}',
-      creditsLink: 'click here',
+      // At the bottom of the dialog, {link} says creditsLink and opens /credits. The link text has
+      // to say where it goes on its own: "click here" fails Lighthouse's descriptive link text check
+      creditsDisclaimer: 'I used and modified assets under a creative commons license. If you want to check the authors, or just see what I modified, have a look at the {link}.',
+      creditsLink: 'credits for the 3D models',
     },
     credits: {
       title: 'Credits',
@@ -351,8 +353,8 @@ export const translations = {
           text: '{name}さん、ありがとうございます！{email}宛てに、近いうちにお返事します。',
         },
       },
-      creditsDisclaimer: 'このサイトでは、クリエイティブ・コモンズ・ライセンスの素材を使用・改変しています。作者や変更内容は{link}からご覧いただけます。',
-      creditsLink: 'こちら',
+      creditsDisclaimer: 'このサイトでは、クリエイティブ・コモンズ・ライセンスの素材を使用・改変しています。作者や変更内容は、{link}でご覧いただけます。',
+      creditsLink: '3Dモデルのクレジットページ',
     },
     credits: {
       title: 'クレジット',
