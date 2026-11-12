@@ -1,4 +1,4 @@
-import gsap from 'gsap'
+import gsap from 'gsap/gsap-core'
 import { planeRestPosition, planeTurn } from '../data/scenesData'
 
 const TAU = Math.PI * 2

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import { useThree } from '@react-three/fiber'
-import gsap from 'gsap'
+import gsap from 'gsap/gsap-core'
 
 import { CamDeviationContext } from '../providers/contextProvider'
 

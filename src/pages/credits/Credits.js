@@ -3,7 +3,6 @@ import { Canvas } from '@react-three/fiber';
 import { Planet } from './../../components/3d/Planet'
 import { Airplane } from './../../components/3d/Airplane'
 import { useFrame } from '@react-three/fiber'
-import { a } from '@react-spring/three'
 import { LanguageSwitch } from './../../components/languageswitch/LanguageSwitch'
 import { useLanguage } from './../../providers/languageProvider'
 
@@ -53,9 +52,9 @@ export function Credits(props) {
 
         return (
             <>
-                <a.group ref={planet} scale={0.22} position={[3,-3,0]} rotation={[0, Math.PI / 3.4, 0]}>
+                <group ref={planet} scale={0.22} position={[3,-3,0]} rotation={[0, Math.PI / 3.4, 0]}>
                     <Planet/>
-                </a.group>
+                </group>
             </>
         )
     }
@@ -72,9 +71,9 @@ export function Credits(props) {
             <spotLight position={[-200, -400, 100]} angle={1} intensity={0.2} />
             <pointLight position={[-235, 235, 0]} intensity={0.2} />
             <Suspense fallback={null}>
-                <a.group ref={airplane} scale={2} position={[-3,0.5,0]} rotation={[(Math.PI / 1.5), (Math.PI / 1), -(Math.PI / 0.7)]} >
+                <group ref={airplane} scale={2} position={[-3,0.5,0]} rotation={[(Math.PI / 1.5), (Math.PI / 1), -(Math.PI / 0.7)]} >
                     <Airplane />
-                </a.group>
+                </group>
                 <ThumbnailPlanet/>
             </Suspense>
         </Canvas>
