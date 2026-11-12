@@ -22,6 +22,18 @@ export function Home() {
   const [sceneState, dispatch] = useReducer(sceneReducer, initialSceneState);
   const swipe = useRef(null)
 
+  // The 3D canvas mounts one frame after the rest of the page. react-three-fiber measures its
+  // container as soon as it mounts, reading the styles of every element up the page: mounted with
+  // the page, that made the browser work out all its styles in the middle of the first render
+  // (Lighthouse's "Forced reflow"). A frame later the browser has done that on its own, and the
+  // models are still downloading anyway
+  const [showScene, setShowScene] = useState(false)
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setShowScene(true))
+    return () => cancelAnimationFrame(frame)
+  }, [])
+
   // The arrow keys move between scenes too, except while the contact dialog is open (it's modal)
   useEffect(() => {
     if (contact.open) return undefined
@@ -51,6 +63,7 @@ export function Home() {
             <Nav/>
             <Content currentScene={sceneState.currentScene} />
             {isTouchEnabled() ? undefined : <Cursor currentScene={sceneState.currentScene} ref={mouseRef} />}
+            {showScene && (
             <Canvas camera={{ fov: 75, near: 0.1, far: 100, position: [-5, -4, 13] }}
             onClick={isTouchEnabled() ? undefined : (e) => dispatch({ type: getActionByCursor(sceneState.currentScene, camDeviation)})}
             >
@@ -64,6 +77,7 @@ export function Home() {
                 </MouseTracker>
               </Suspense>
             </Canvas>
+            )}
           </ContactContext.Provider>
         </CamDeviationContext.Provider>
       </Context.Provider>
