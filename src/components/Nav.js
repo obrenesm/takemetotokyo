@@ -21,7 +21,7 @@ export function Nav(props) {
           aria-haspopup="dialog"
           aria-expanded={open}
           aria-controls="contact-dialog"
-          onClick={(event) => openContact(event.currentTarget)}
+          onClick={(event) => openContact(event.currentTarget, 'nav')}
         >
           <ContactToggleContent text={t('nav.contact')} />
         </button>

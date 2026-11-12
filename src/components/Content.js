@@ -43,7 +43,7 @@ export function Content({currentScene}) {
                         type="button"
                         className='modal-cta'
                         aria-haspopup="dialog"
-                        onClick={(event) => openContact(event.currentTarget)}
+                        onClick={(event) => openContact(event.currentTarget, 'cta')}
                       >
                         {t('home.jpn.cta')}
                       </button>
