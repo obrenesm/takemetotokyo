@@ -4,25 +4,37 @@ import gsap from 'gsap'
 
 import { CamDeviationContext } from '../providers/contextProvider'
 
-let centerWidth = window.innerWidth/2
-let centerHeight = window.innerHeight/2
+// The middle of the window, measured on the first mouse move and again after a resize. Reading the
+// window size while this module loads made the browser lay out the page in the middle of starting
+// the app (Lighthouse's "Forced reflow")
+let center = null
+
+function getCenter() {
+  if (!center) center = { width: window.innerWidth / 2, height: window.innerHeight / 2 }
+  return center
+}
+
+function forgetCenter() {
+  center = null
+}
 
 let camHorizontalOffset = 0
 let camVerticalOffset = 0
 
-export function MouseTracker({currentScene, children}){  
+export function MouseTracker({currentScene, children}){
   const cam = useThree(state => state.camera)
   const [, setCamDeviation] = useContext(CamDeviationContext)
 
-  function onResize() { 
-    centerWidth = window.innerWidth/2
-    centerHeight = window.innerHeight/2
-  }
-  
+  useEffect(() => {
+    window.addEventListener('resize', forgetCenter)
+    return () => window.removeEventListener('resize', forgetCenter)
+  }, [])
+
   const calculateDeviation = (event) => {
     event.preventDefault()
 
     if (currentScene !== 0){
+      const { width: centerWidth, height: centerHeight } = getCenter()
       const verticalDeviation = centerHeight - event.pageY
       const horizontalDeviation = event.pageX - centerWidth
       
@@ -47,8 +59,7 @@ export function MouseTracker({currentScene, children}){
     const canvas = document.querySelector('canvas')
 
     canvas.addEventListener('mousemove', calculateDeviation);
-    window.addEventListener("resize", onResize);  
-    
+
     return () => {
       canvas.removeEventListener('mousemove', calculateDeviation);
     };
