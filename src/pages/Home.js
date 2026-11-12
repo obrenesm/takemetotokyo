@@ -1,9 +1,6 @@
-import { Canvas } from '@react-three/fiber';
-import React, { useEffect, useRef, useState, useReducer, Suspense } from 'react';
-import { Scenario } from '../components/3d/Scenario';
+import React, { lazy, useEffect, useRef, useState, useReducer, Suspense } from 'react';
 import { Content } from '../components/Content';
 import { Nav } from '../components/Nav';
-import { MouseTracker } from '../components/MouseTracker'
 import { Cursor, followCursorEvent } from '../components/cursor/Cursor';
 import { CamDeviationContext, ContactContext, Context, useContactState } from '../providers/contextProvider';
 import { initialSceneState, sceneReducer } from '../reducers/scene.reducer';
@@ -14,6 +11,14 @@ import { onTouchStart, onTouchMove, onTouchEnd } from '../utils/sceneTouchAction
 
 import '../App.scss';
 
+const HomeScene = lazy(() => import('../components/3d/HomeScene').then((module) => ({ default: module.HomeScene })))
+
+// The browser paints the headline in full a frame or two after its fade-in ends: the scene waits
+// that long, so its download doesn't start before that paint
+const SCENE_DELAY_AFTER_INTRO = 100
+// In case the fade-in never ends (it isn't running, the tab is hidden...): the scene loads anyway
+const SCENE_FALLBACK_DELAY = 1500
+
 export function Home() {
   const [currentScene, setCurrentScene] = useState(0);
   const contact = useContactState();
@@ -22,17 +27,23 @@ export function Home() {
   const [sceneState, dispatch] = useReducer(sceneReducer, initialSceneState);
   const swipe = useRef(null)
 
-  // The 3D canvas mounts one frame after the rest of the page. react-three-fiber measures its
-  // container as soon as it mounts, reading the styles of every element up the page: mounted with
-  // the page, that made the browser work out all its styles in the middle of the first render
-  // (Lighthouse's "Forced reflow"). A frame later the browser has done that on its own, and the
-  // models are still downloading anyway
+  // The 3D scene loads once the intro headline has faded in. The headline is the page's Largest
+  // Contentful Paint, which Chrome records when that fade-in ends: loading three.js and the models
+  // before it put all that downloading and work ahead of it (slow on phones). Mounting it after the
+  // first render also keeps react-three-fiber from measuring the page in the middle of laying it
+  // out (Lighthouse's "Forced reflow")
+  const [introDone, setIntroDone] = useState(false)
   const [showScene, setShowScene] = useState(false)
 
   useEffect(() => {
-    const frame = requestAnimationFrame(() => setShowScene(true))
-    return () => cancelAnimationFrame(frame)
-  }, [])
+    if (showScene) return undefined
+    const timer = setTimeout(() => setShowScene(true), introDone ? SCENE_DELAY_AFTER_INTRO : SCENE_FALLBACK_DELAY)
+    return () => clearTimeout(timer)
+  }, [showScene, introDone])
+
+  const onAnimationEnd = (event) => {
+    if (event.animationName === 'intro') setIntroDone(true)
+  }
 
   // The arrow keys move between scenes too, except while the contact dialog is open (it's modal)
   useEffect(() => {
@@ -56,6 +67,7 @@ export function Home() {
       onTouchMove={!contact.open ? (e) => onTouchMove(e, swipe) : null}
       onTouchEnd={!contact.open ? () => {
         dispatch({ type: onTouchEnd(sceneState.currentScene, swipe)})} : null}
+      onAnimationEnd={introDone ? undefined : onAnimationEnd}
       >
       <Context.Provider value={[currentScene, setCurrentScene]}>
         <CamDeviationContext.Provider value={[camDeviation, setCamDeviation]}>
@@ -64,19 +76,12 @@ export function Home() {
             <Content currentScene={sceneState.currentScene} />
             {isTouchEnabled() ? undefined : <Cursor currentScene={sceneState.currentScene} ref={mouseRef} />}
             {showScene && (
-            <Canvas camera={{ fov: 75, near: 0.1, far: 100, position: [-5, -4, 13] }}
-            onClick={isTouchEnabled() ? undefined : (e) => dispatch({ type: getActionByCursor(sceneState.currentScene, camDeviation)})}
-            >
-              <ambientLight intensity={0.5} />
-              <spotLight position={[200, 300, -100]} angle={0.3} intensity={0.4} />
-              <spotLight position={[-200, -400, 100]} angle={1} intensity={0.2} />
-              <pointLight position={[-235, 235, 0]} intensity={0.2} />
               <Suspense fallback={null}>
-                <MouseTracker currentScene={sceneState.currentScene}>
-                  <Scenario currentScene={sceneState.currentScene} />
-                </MouseTracker>
+                <HomeScene
+                  currentScene={sceneState.currentScene}
+                  onClick={isTouchEnabled() ? undefined : () => dispatch({ type: getActionByCursor(sceneState.currentScene, camDeviation)})}
+                />
               </Suspense>
-            </Canvas>
             )}
           </ContactContext.Provider>
         </CamDeviationContext.Provider>

@@ -3,10 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { Home } from './Home'
 
 // No WebGL in jsdom: the 3D scene stays out, the texts show which scene is on
-jest.mock('@react-three/fiber', () => ({ Canvas: () => null }))
-jest.mock('@react-three/drei', () => ({}))
-jest.mock('../components/3d/Scenario', () => ({ Scenario: () => null }))
-jest.mock('../components/MouseTracker', () => ({ MouseTracker: () => null }))
+jest.mock('../components/3d/HomeScene', () => ({ HomeScene: () => null }))
 
 // jsdom 16 knows <dialog> but none of its methods: just what the browser does that matters here
 beforeAll(() => {
