@@ -86,6 +86,25 @@ test('the contact button opens a modal dialog and moves the focus into it', asyn
   await waitFor(() => expect(window.turnstile.render).toHaveBeenCalledTimes(1))
 })
 
+test('each opening of the dialog is counted, with where it was opened from', async () => {
+  window.umami = { track: jest.fn() }
+  try {
+    render(<ContactHarness scene={2} />)
+
+    userEvent.click(contactButton())
+    expect(window.umami.track).toHaveBeenLastCalledWith('contact-open', { from: 'nav' })
+    await waitFor(() => expect(window.turnstile.render).toHaveBeenCalledTimes(1))
+
+    userEvent.click(screen.getByRole('button', { name: 'Close' }))
+    userEvent.click(screen.getByRole('button', { name: /^let's\stalk!$/i }))
+    expect(window.umami.track).toHaveBeenLastCalledWith('contact-open', { from: 'cta' })
+    expect(window.umami.track).toHaveBeenCalledTimes(2)
+    await waitFor(() => expect(window.turnstile.render).toHaveBeenCalledTimes(2))
+  } finally {
+    delete window.umami
+  }
+})
+
 test('Close shuts the dialog and gives the focus back to the contact button', async () => {
   const dialog = await openContact()
 
