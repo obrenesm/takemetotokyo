@@ -92,13 +92,18 @@ test('each opening of the dialog is counted, with where it was opened from', asy
     render(<ContactHarness scene={2} />)
 
     userEvent.click(contactButton())
+    // A view of /contact, as if it were a page of its own
+    const pageView = window.umami.track.mock.calls[0][0]
+    expect(pageView({ url: '/', title: 'Oscar Brenes', website: 'id' })).toEqual({
+      url: '/contact', title: 'Contact', website: 'id',
+    })
     expect(window.umami.track).toHaveBeenLastCalledWith('contact-open', { from: 'nav' })
     await waitFor(() => expect(window.turnstile.render).toHaveBeenCalledTimes(1))
 
     userEvent.click(screen.getByRole('button', { name: 'Close' }))
     userEvent.click(screen.getByRole('button', { name: /^let's\stalk!$/i }))
     expect(window.umami.track).toHaveBeenLastCalledWith('contact-open', { from: 'cta' })
-    expect(window.umami.track).toHaveBeenCalledTimes(2)
+    expect(window.umami.track).toHaveBeenCalledTimes(4)
     await waitFor(() => expect(window.turnstile.render).toHaveBeenCalledTimes(2))
   } finally {
     delete window.umami
