@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useLanguage } from '../../providers/languageProvider'
+import './CopyEmail.scss'
 
 // Without clipboard permission (some embedded browsers and privacy settings) the old copy command
 // still works: it copies what's selected, so the text goes in a hidden field for a moment. The field
@@ -39,7 +40,8 @@ async function copyText(text, container) {
 
 // A small button that copies the e-mail address. For a moment, a bubble above it says whether it
 // worked, and screen readers announce the same text (the bubble is a polite live region).
-export function CopyEmail({ email }) {
+// `className` goes on the wrapper, for pages that restyle it.
+export function CopyEmail({ email, className }) {
   const { t } = useLanguage()
   // null, 'copied' or 'failed'
   const [result, setResult] = useState(null)
@@ -57,7 +59,7 @@ export function CopyEmail({ email }) {
   }
 
   return (
-    <span className='contact-copy' ref={wrapperRef}>
+    <span className={['contact-copy', className].filter(Boolean).join(' ')} ref={wrapperRef}>
       <button
         type='button'
         className={`contact-copy-button ${result === 'copied' ? 'copied' : ''}`}

@@ -4,6 +4,7 @@ import { CATEGORIES, timelineItems } from '../../data/timelineData'
 import { useLanguage } from '../../providers/languageProvider'
 import { groupByYear, isCategoryShown, parseFilter, sortNewestFirst, toggleCategory } from '../../utils/timeline'
 import { LanguageSwitch } from '../../components/languageswitch/LanguageSwitch'
+import { CopyEmail } from '../../components/contactme/CopyEmail'
 import { TimelineFilters } from '../../components/timeline/TimelineFilters'
 import { TimelineEntry, hiddenProps } from '../../components/timeline/TimelineEntry'
 import { TimeMap } from '../../components/timeline/TimeMap'
@@ -236,7 +237,11 @@ export function Journey() {
         <h2 className="tl-footer__title">{t('contact.title')}</h2>
         <p className="tl-footer__text">{t('timeline.footer.text')}</p>
         <div className="tl-footer__links">
-          <a className="tl-button" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+          {/* Together, so the copy button never wraps away from the address */}
+          <span className="tl-footer__email">
+            <a className="tl-button" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+            <CopyEmail email={EMAIL} className="tl-copy" />
+          </span>
           <a className="tl-button tl-button--ghost" href={LINKEDIN} target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
         <Link to="/" className="tl-footer__back">

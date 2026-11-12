@@ -93,6 +93,19 @@ test('details open and close', async () => {
   expect(within(details).getByText(/two-year roadmap/i)).toBeInTheDocument()
 })
 
+test('at the end, the button next to the e-mail copies it', async () => {
+  const writeText = jest.fn().mockResolvedValue()
+  Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true })
+  renderTimeline()
+
+  const footer = screen.getByRole('contentinfo')
+  userEvent.click(within(footer).getByRole('button', { name: 'Copy email address' }))
+
+  expect(await within(footer).findByText('Copied!')).toBeInTheDocument()
+  expect(writeText).toHaveBeenCalledWith('oscar@take-me.jp')
+  delete navigator.clipboard
+})
+
 describe('timeline helpers', () => {
   test('dates read naturally in each language', () => {
     expect(formatPeriod('2023-11', '2026-02', 'en')).toBe('Nov 2023 – Feb 2026')
