@@ -1,0 +1,74 @@
+@import './../../utils/scss/colors.scss';
+@import './../../utils/scss/typography.scss';
+
+// COPY EMAIL: the small button that copies the e-mail address, with its "Copied!" bubble. Sized to
+// sit in a line of text (the contact dialog); a page can make it bigger (the end of /journey).
+
+.contact-copy {
+  position: relative;
+}
+
+.contact-copy-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  // 24px is big enough to hit; the negative margins keep the line as tall as the text
+  width: 24px;
+  height: 24px;
+  margin: -4px 0 -4px 0.25em;
+  padding: 0;
+  vertical-align: middle;
+  color: $light_grey;
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+
+  svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      color: $white;
+      background-color: rgba($white, 0.12);
+    }
+  }
+
+  &.copied {
+    color: $white;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $highlight;
+    outline-offset: 1px;
+  }
+}
+
+// "Copied!" in a small bubble above the button, for a moment. Empty, it takes no room (it stays
+// in the page, so screen readers announce what shows up in it)
+.contact-copy-result {
+  @include brand-font(PPNeueMachina-InktrapMedium, 500);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: calc(50% + 0.125em);
+  transform: translateX(-50%);
+  padding: 0.35em 0.65em;
+  border-radius: 4px;
+  background-color: $white;
+  color: $darkest_base;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+
+  &:empty {
+    padding: 0;
+  }
+}
