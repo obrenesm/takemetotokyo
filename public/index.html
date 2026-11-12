@@ -5,15 +5,6 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico?v=2" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <!--
-      The brand fonts are requested by the stylesheet, so on their own they would only start
-      downloading once it has arrived. Preloaded, they download alongside it. Webpack adds a
-      content hash to their names, so they're looked up among the files of the build.
-    -->
-    <% for (const file of Object.keys(compilation.assets)) {
-      if (/^static\/media\/PPNeueMachina-[\w.-]+\.woff2$/.test(file)) { %>
-    <link rel="preload" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="font" type="font/woff2" crossorigin />
-    <% } } %>
     <meta
       name="description"
       content="Follow me on this jorney"
