@@ -3,9 +3,9 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { Planet } from './Planet'
 import { Airplane } from './Airplane'
 import { Pin } from './Pin'
-import gsap from 'gsap'
+import gsap from 'gsap/gsap-core'
 import { camPositions, planetRotations, planeRestPosition, planeTurn } from './../../data/scenesData'
-import { animate3D } from './../../utils/utils'
+import { animate3D } from './../../utils/animate3D'
 import { createTurnAroundTimeline, settlePlane } from './../../utils/planeManeuvers'
 
 export function Scenario({currentScene, ...props}) {

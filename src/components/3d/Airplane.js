@@ -8,8 +8,7 @@ title: Lowpoly Airplane
 
 import React, { useRef, useEffect } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { a } from '@react-spring/three'
-import gsap from 'gsap'
+import gsap from 'gsap/gsap-core'
 import { planeTurn } from '../../data/scenesData'
 
 const PLANE_SCALE = 0.2
@@ -48,7 +47,7 @@ export function Airplane({props, position, loopRef, rollRef}) {
   },[])
 
   return (
-    <a.group scale={PLANE_SCALE} position={position} rotation={[Math.PI / 2, Math.PI / 1.7, 0]} ref={group} {...props} dispose={null}>
+    <group scale={PLANE_SCALE} position={position} rotation={[Math.PI / 2, Math.PI / 1.7, 0]} ref={group} {...props} dispose={null}>
       {/* Pivots for the turn-around maneuver, in the plane's own axes (x: wings, y: up, z: nose).
           loop pitches the plane around a point above it, so the half loop draws an arc;
           roll rolls it around its centre. At rest the three offsets cancel out. */}
@@ -71,7 +70,7 @@ export function Airplane({props, position, loopRef, rollRef}) {
           </group>
         </group>
       </group>
-    </a.group>
+    </group>
   )
 }
 
