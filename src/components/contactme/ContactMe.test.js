@@ -307,3 +307,8 @@ test('under the form, a link opens the journey timeline in a new tab', async () 
   expect(link).toHaveAttribute('href', '/journey')
   expect(link).toHaveAttribute('target', '_blank')
 })
+
+test('the credits link says where it goes instead of "click here"', async () => {
+  const dialog = await openContact()
+  expect(within(dialog).getByRole('link', { name: 'credits for the 3D models' })).toHaveAttribute('href', '/credits')
+})

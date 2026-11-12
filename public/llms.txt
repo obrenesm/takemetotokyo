@@ -1,0 +1,34 @@
+# Oscar Brenes
+
+> Personal website of Oscar Brenes (take-me.jp): a frontend developer and former CTO from Costa Rica, looking for opportunities in Japan that bring together design, technology and community-driven projects.
+
+I'm Oscar. I spent seven and a half years at Critical Mass (formerly Hangar), going from production designer to frontend developer on the BMW USA website, and then became CTO at Buzz, where I built the tech department from the ground up. In early 2026 I left that role to focus on building a long-term future in Japan. Bonus points if an opportunity involves cycling, my other passion.
+
+The site is a single-page React app: its pages are rendered with JavaScript, so this file sums up what they say. Everything is available in English and Japanese on the same URLs: the language follows the browser's preference, and the language button switches it.
+
+Highlights of the timeline, newest first:
+
+- 2026: Bike tour from Tokyo to Nagasaki and back to Nagoya: 2,874 km, 22,799 m of climbing and 161 h in the saddle.
+- 2024–2026: Japanese language student at ARC Academy in Tokyo. Passed the JLPT N4 and made it to N3-level classes.
+- 2023–2026: Buzz, senior frontend developer and, three months later, CTO. Hiring, budgets, workflows, KPIs and a two-year roadmap for a remote team of developers and designers.
+- 2016–2023: Critical Mass, production designer for GoDaddy, then content developer and frontend developer for BMW USA. Created and taught the team's Adobe Experience Manager training.
+- 2013–2017: Sports director and coach of Los Santos C&R, a youth cycling team in a mountain region, then founder of Clean Cycling, the foundation it became, for young riders mostly from low-income families. The riders won national titles, and everyone who stayed in the program went on to higher education. Studied sports management at the Costa Rica Institute of Technology (TEC) along the way.
+- 2011–2015: Freelance web and graphic designer (clients included Deloitte and the National Olympic Committee) while studying web design and development at Creativa University.
+- 2005–2012: Road and mountain bike racer, builder of the XCO and XCC courses for Costa Rica's National MTB Cup, and UCI level 1 cycling coach. Technical high school diploma in graphic design (COVAO).
+
+## Pages
+
+- [Home](https://take-me.jp/): A 3D story in three scenes, with an airplane flying around a planet: who I am, my career so far, and why Japan. Scroll, swipe or use the arrow keys to move between scenes. The "Contact Me" button opens a contact form.
+- [Journey](https://take-me.jp/journey): The full timeline of work, studies, volunteering and cycling, newest first, with a route map of the Japan bike tour. The `show` parameter filters it by a comma-separated list of categories (work, volunteering, studies, cycling), for example `/journey?show=work`.
+- [Credits](https://take-me.jp/credits): Authors of the two 3D models the site uses, their license (CC BY-NC 4.0) and what I changed in them.
+
+## Contact
+
+- [Email](mailto:oscar@take-me.jp): oscar@take-me.jp, the most direct way to reach me.
+- [LinkedIn](https://www.linkedin.com/in/obrenesm): Professional profile.
+
+## Optional
+
+- [Source code](https://github.com/obrenesm/takemetotokyo): The site itself: React, React Three Fiber and GSAP, plus a Cloudflare Worker for the contact form.
+- [Airplane 3D model](https://skfb.ly/o7IGr): By mizda3d on Sketchfab, CC BY-NC 4.0.
+- [Planet Earth 3D model](https://skfb.ly/6YERJ): By BamPistache on Sketchfab, CC BY-NC 4.0.
