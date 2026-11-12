@@ -14,6 +14,19 @@
       if (/^static\/media\/PPNeueMachina-[\w.-]+\.woff2$/.test(file)) { %>
     <link rel="preload" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="font" type="font/woff2" crossorigin />
     <% } } %>
+    <!--
+      The only other site the home page loads from: Google's CDN, for the decoder the 3D airplane
+      model needs. Connecting right away saves the handshake when the scene asks for it. It's
+      fetched with CORS, hence crossorigin.
+    -->
+    <link rel="preconnect" href="https://www.gstatic.com" crossorigin />
+    <!--
+      Cloudflare Turnstile and the contact Worker are only reached once someone opens the contact
+      form and sends it: just their DNS lookup now. A preconnect would sit idle (Chrome drops an
+      unused connection after about 10 seconds) and Lighthouse flags it as "Unused preconnect".
+    -->
+    <link rel="dns-prefetch" href="https://challenges.cloudflare.com" />
+    <link rel="dns-prefetch" href="%REACT_APP_CONTACT_ENDPOINT%" />
     <meta
       name="description"
       content="Follow me on this jorney"
