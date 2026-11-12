@@ -148,7 +148,9 @@
         segoe ui, arial, sans-serif;;
         font-weight: 900;
         color: $highlight;
-        animation: intro 1s ease-out 1;
+        // The headline is the page's Largest Contentful Paint, and Chrome counts it only once this
+        // fade-in ends: every bit shorter shows up in LCP (1s took 0.3s more)
+        animation: intro 0.7s ease-out 1;
       }
     }
   }
